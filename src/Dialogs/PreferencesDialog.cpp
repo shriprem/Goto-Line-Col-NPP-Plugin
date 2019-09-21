@@ -1,7 +1,6 @@
 #include "PreferencesDialog.h"
 
-void PreferencesDialog::doDialog(HINSTANCE hInst)
-{
+void PreferencesDialog::doDialog(HINSTANCE hInst) {
    if (!isCreated()) {
       Window::init(hInst, nppData._nppHandle);
       create(IDD_PREFERENCES_DIALOG);
@@ -26,14 +25,11 @@ void PreferencesDialog::doDialog(HINSTANCE hInst)
    }
 }
 
-INT_PTR CALLBACK PreferencesDialog::run_dlgProc(UINT message, WPARAM wParam, LPARAM lParam)
-{
-   switch (message)
-   {
+INT_PTR CALLBACK PreferencesDialog::run_dlgProc(UINT message, WPARAM wParam, LPARAM lParam) {
+   switch (message) {
       case WM_COMMAND:
       {
-         switch LOWORD(wParam)
-         {
+         switch LOWORD(wParam) {
 
          case IDOK:
             savePreferences();
@@ -133,8 +129,7 @@ void PreferencesDialog::savePreferences() {
    GotoLineColDlgLoadPreferences();
 }
 
-void PreferencesDialog::createTooltips()
-{
+void PreferencesDialog::createTooltips() {
    if (!hTooltips[0])
       hTooltips[0] = createToolTip(_hSelf, IDC_PREFS_AFON_FOCUS, PREFS_LABEL_AF_ONFOCUS, PREFS_TIP_AF_ONFOCUS);
    if (!hTooltips[1])
@@ -161,17 +156,14 @@ void PreferencesDialog::createTooltips()
       hTooltips[10] = createToolTip(_hSelf, IDC_PREFS_CARET_FLASH_VALUE, PREFS_LABEL_CARET_FLASH, PREFS_TIP_CARET_FLASH);
 }
 
-void PreferencesDialog::setTooltipsDuration(int duration)
-{
+void PreferencesDialog::setTooltipsDuration(int duration) {
    for (int i = 0; i < 11; i++) {
-      if (hTooltips[i]) {
+      if (hTooltips[i])
          ::SendMessage(hTooltips[i], TTM_SETDELAYTIME, TTDT_AUTOPOP, (LPARAM)(duration * 1000));
-      }
    }
 }
 
-void PreferencesDialog::destroyTooltips()
-{
+void PreferencesDialog::destroyTooltips() {
    for (int i = 0; i < 11; i++) {
       if (hTooltips[i]) {
          ::DestroyWindow(hTooltips[i]);
@@ -179,4 +171,3 @@ void PreferencesDialog::destroyTooltips()
       }
    }
 }
-

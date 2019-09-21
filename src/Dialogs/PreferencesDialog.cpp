@@ -27,45 +27,48 @@ void PreferencesDialog::doDialog(HINSTANCE hInst) {
 
 INT_PTR CALLBACK PreferencesDialog::run_dlgProc(UINT message, WPARAM wParam, LPARAM lParam) {
    switch (message) {
-      case WM_COMMAND:
-      {
-         switch LOWORD(wParam) {
+   case WM_COMMAND:
+   {
+      switch LOWORD(wParam) {
+      case IDOK:
+         savePreferences();
+         display(FALSE);
+         break;
 
-         case IDOK:
-            savePreferences();
-            display(FALSE);
-            break;
+      case IDCANCEL:
+         display(FALSE);
+         break;
 
-         case IDCANCEL:
-            display(FALSE);
-            break;
+      case IDC_PREFS_DEFAULTS:
+         loadPreferences(false);
+         break;
 
-         case IDC_PREFS_DEFAULTS:
-            loadPreferences(false);
-            break;
+      case IDC_PREFS_TOOLTIP_SHOW:
+         getCheckedState(IDC_PREFS_TOOLTIP_SHOW) ? createTooltips() : destroyTooltips();
+         break;
 
-         case IDC_PREFS_TOOLTIP_SHOW:
-            getCheckedState(IDC_PREFS_TOOLTIP_SHOW) ? createTooltips() : destroyTooltips();
-            break;
-         }
-
-
-         return FALSE;
+      case IDC_PREFS_TOOLTIP_DURATION:
+         if (HIWORD(wParam) == EN_KILLFOCUS)
+            setTooltipsDuration(getEditValue(IDC_PREFS_TOOLTIP_DURATION));
+         break;
       }
 
-      case WM_HSCROLL:
-      {
-         if (lParam == (LPARAM)hEdgeBuffer)
-            syncTbarToText(hEdgeBuffer, IDC_PREFS_EDGE_BUFFER_VALUE);
-         else if (lParam == (LPARAM)hCaretFlash)
-            syncTbarToText(hCaretFlash, IDC_PREFS_CARET_FLASH_VALUE);
+      return FALSE;
+   }
 
-         return FALSE;
-      }
+   case WM_HSCROLL:
+   {
+      if (lParam == (LPARAM)hEdgeBuffer)
+         syncTbarToText(hEdgeBuffer, IDC_PREFS_EDGE_BUFFER_VALUE);
+      else if (lParam == (LPARAM)hCaretFlash)
+         syncTbarToText(hCaretFlash, IDC_PREFS_CARET_FLASH_VALUE);
 
-      default:
-         return 0;
-      }
+      return FALSE;
+   }
+
+   default:
+      return 0;
+   }
 }
 
 int PreferencesDialog::getCheckedState(int controlID) {

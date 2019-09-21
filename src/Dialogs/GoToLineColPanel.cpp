@@ -16,42 +16,47 @@
 #include <time.h>
 
 INT_PTR CALLBACK GotoLineColDlg::run_dlgProc(UINT message, WPARAM wParam, LPARAM lParam) {
-   switch (message) 
+   switch (message) {
+   case WM_COMMAND :
    {
-      case WM_COMMAND : 
-      {
-         switch LOWORD(wParam)
-         {
-            case IDC_GOLINE_EDIT :
-               updateColumnRangeText(getInputLineValidated());
-               break;
+      switch LOWORD(wParam) {
+      case IDC_GOLINE_EDIT:
+         updateColumnRangeText(getInputLineValidated());
+         break;
 
-            case IDOK : 
-               navigateToColPos();
-               break;
+      case IDOK :
+         navigateToColPos();
+         break;
 
-            case IDCANCEL :
-               setFocusOnEditor();
-               ShowGotoLineColPanel(false);
-               break;
+      case IDCANCEL:
+      case IDCLOSE :
+         setFocusOnEditor();
+         ShowGotoLineColPanel(false);
+         break;
 
-            case IDC_GOLINECOL_PREFS:
-               ShowPreferencesDialog();
-               break;
-         }
-         
-         return FALSE;
-      }
-
-      case WM_SETFOCUS :
-      {
-         if (allPrefs.fillOnFocus)
-            updatePanelColPos();
+      case IDC_GOLINECOL_PREFS:
+         ShowPreferencesDialog();
          break;
       }
 
-      default :
-         return DockingDlgInterface::run_dlgProc(message, wParam, lParam);
+      return FALSE;
+   }
+
+   case WM_LBUTTONDOWN:
+   case WM_MBUTTONDOWN:
+   case WM_RBUTTONDOWN:
+      ::SetFocus(_hSelf);
+      // fall-through to WM_SETFOCUS
+
+   case WM_SETFOCUS :
+   {
+      if (allPrefs.fillOnFocus)
+         updatePanelColPos();
+      break;
+   }
+
+   default :
+      return DockingDlgInterface::run_dlgProc(message, wParam, lParam);
    }
 
    return FALSE;
@@ -86,7 +91,7 @@ void GotoLineColDlg::updatePanelColPos() {
 
    ::SetDlgItemText(_hSelf, IDC_GOCOL_EDIT, TO_LPCWSTR(col));
    updateColumnRangeText(line);
-   
+
    // Clear Idem Potent key if it's still set from a premature program termination
    _prefsIO.setIdemPotentKey(FALSE);
 }
@@ -151,13 +156,13 @@ int GotoLineColDlg::getDocumentColumn(HWND hScintilla, int pos, int line) {
 }
 
 void GotoLineColDlg::setDocumentColumn(HWND hScintilla, int line, int lineStartPos, int lineMaxPos, int column) {
-   column = (column < 1) ? 1 : 
+   column = (column < 1) ? 1 :
             (column > lineMaxPos) ? lineMaxPos : column;
 
    int gotoPos = (allPrefs.expandTabs) ?
                   (int)::SendMessage(hScintilla, SCI_FINDCOLUMN, line - 1, column - 1) :
                   lineStartPos + column - 1;
-      
+
    ::SendMessage(hScintilla, SCI_GOTOPOS, gotoPos, 0);
 }
 
@@ -268,6 +273,6 @@ DWORD WINAPI GotoLineColDlg::threadPositionHighlighter(void*) {
 
    // Clear Idem Potency Hold
    _prefsIO.setIdemPotentKey(FALSE);
-   
+
    return TRUE;
 }

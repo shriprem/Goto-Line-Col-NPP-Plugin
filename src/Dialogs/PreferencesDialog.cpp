@@ -20,8 +20,10 @@ void PreferencesDialog::doDialog(HINSTANCE hInst)
 
    loadPreferences(true);
 
-   if (getCheckedState(IDC_PREFS_TOOLTIP_SHOW))
-      showTooltips();
+   if (getCheckedState(IDC_PREFS_TOOLTIP_SHOW)) {
+      createTooltips();
+      setTooltipsDuration(getEditValue(IDC_PREFS_TOOLTIP_DURATION));
+   }
 }
 
 INT_PTR CALLBACK PreferencesDialog::run_dlgProc(UINT message, WPARAM wParam, LPARAM lParam)
@@ -45,9 +47,9 @@ INT_PTR CALLBACK PreferencesDialog::run_dlgProc(UINT message, WPARAM wParam, LPA
          case IDC_PREFS_DEFAULTS:
             loadPreferences(false);
             break;
-         
+
          case IDC_PREFS_TOOLTIP_SHOW:
-            getCheckedState(IDC_PREFS_TOOLTIP_SHOW) ? showTooltips() : hideTooltips();
+            getCheckedState(IDC_PREFS_TOOLTIP_SHOW) ? createTooltips() : destroyTooltips();
             break;
          }
 
@@ -66,7 +68,7 @@ INT_PTR CALLBACK PreferencesDialog::run_dlgProc(UINT message, WPARAM wParam, LPA
       }
 
       default:
-         return 0; 
+         return 0;
       }
 }
 
@@ -131,37 +133,44 @@ void PreferencesDialog::savePreferences() {
    GotoLineColDlgLoadPreferences();
 }
 
-void PreferencesDialog::showTooltips()
+void PreferencesDialog::createTooltips()
 {
-   int duration = getEditValue(IDC_PREFS_TOOLTIP_DURATION);
-
    if (!hTooltips[0])
-      hTooltips[0] = createToolTip(_hSelf, IDC_PREFS_AFON_FOCUS, PREFS_LABEL_AF_ONFOCUS, PREFS_TIP_AF_ONFOCUS, duration);
+      hTooltips[0] = createToolTip(_hSelf, IDC_PREFS_AFON_FOCUS, PREFS_LABEL_AF_ONFOCUS, PREFS_TIP_AF_ONFOCUS);
    if (!hTooltips[1])
-      hTooltips[1] = createToolTip(_hSelf, IDC_PREFS_AFON_TABCHANGE, PREFS_LABEL_AF_ONTABCHANGE, PREFS_TIP_AF_ONTABCHANGE, duration);
+      hTooltips[1] = createToolTip(_hSelf, IDC_PREFS_AFON_TABCHANGE, PREFS_LABEL_AF_ONTABCHANGE, PREFS_TIP_AF_ONTABCHANGE);
    if (!hTooltips[2])
-      hTooltips[2] = createToolTip(_hSelf, IDC_PREFS_SHOW_CALLTIP, PREFS_LABEL_SHOW_CALLTIP, PREFS_TIP_SHOW_CALLTIP, duration);
+      hTooltips[2] = createToolTip(_hSelf, IDC_PREFS_SHOW_CALLTIP, PREFS_LABEL_SHOW_CALLTIP, PREFS_TIP_SHOW_CALLTIP);
    if (!hTooltips[3])
-      hTooltips[3] = createToolTip(_hSelf, IDC_PREFS_BRACE_HILITE, PREFS_LABEL_BRACE_HILITE, PREFS_TIP_BRACE_HILITE, duration);
+      hTooltips[3] = createToolTip(_hSelf, IDC_PREFS_BRACE_HILITE, PREFS_LABEL_BRACE_HILITE, PREFS_TIP_BRACE_HILITE);
    if (!hTooltips[4])
-      hTooltips[4] = createToolTip(_hSelf, IDC_PREFS_EXPAND_TABS, PREFS_LABEL_EXPAND_TABS, PREFS_TIP_EXPAND_TABS, duration);
+      hTooltips[4] = createToolTip(_hSelf, IDC_PREFS_EXPAND_TABS, PREFS_LABEL_EXPAND_TABS, PREFS_TIP_EXPAND_TABS);
 
    if (!hTooltips[5])
-      hTooltips[5] = createToolTip(_hSelf, IDC_PREFS_EDGE_BUFFER_LABEL, PREFS_LABEL_EDGE_BUFFER, PREFS_TIP_EDGE_BUFFER, duration);
+      hTooltips[5] = createToolTip(_hSelf, IDC_PREFS_EDGE_BUFFER_LABEL, PREFS_LABEL_EDGE_BUFFER, PREFS_TIP_EDGE_BUFFER);
    if (!hTooltips[6])
-      hTooltips[6] = createToolTip(_hSelf, IDC_PREFS_EDGE_BUFFER_SLIDER, PREFS_LABEL_EDGE_BUFFER, PREFS_TIP_EDGE_BUFFER, duration);
+      hTooltips[6] = createToolTip(_hSelf, IDC_PREFS_EDGE_BUFFER_SLIDER, PREFS_LABEL_EDGE_BUFFER, PREFS_TIP_EDGE_BUFFER);
    if (!hTooltips[7])
-      hTooltips[7] = createToolTip(_hSelf, IDC_PREFS_EDGE_BUFFER_VALUE, PREFS_LABEL_EDGE_BUFFER, PREFS_TIP_EDGE_BUFFER, duration);
+      hTooltips[7] = createToolTip(_hSelf, IDC_PREFS_EDGE_BUFFER_VALUE, PREFS_LABEL_EDGE_BUFFER, PREFS_TIP_EDGE_BUFFER);
 
    if (!hTooltips[8])
-      hTooltips[8] = createToolTip(_hSelf, IDC_PREFS_CARET_FLASH_LABEL, PREFS_LABEL_CARET_FLASH, PREFS_TIP_CARET_FLASH, duration);
+      hTooltips[8] = createToolTip(_hSelf, IDC_PREFS_CARET_FLASH_LABEL, PREFS_LABEL_CARET_FLASH, PREFS_TIP_CARET_FLASH);
    if (!hTooltips[9])
-      hTooltips[9] = createToolTip(_hSelf, IDC_PREFS_CARET_FLASH_SLIDER, PREFS_LABEL_CARET_FLASH, PREFS_TIP_CARET_FLASH, duration);
+      hTooltips[9] = createToolTip(_hSelf, IDC_PREFS_CARET_FLASH_SLIDER, PREFS_LABEL_CARET_FLASH, PREFS_TIP_CARET_FLASH);
    if (!hTooltips[10])
-      hTooltips[10] = createToolTip(_hSelf, IDC_PREFS_CARET_FLASH_VALUE, PREFS_LABEL_CARET_FLASH, PREFS_TIP_CARET_FLASH, duration);
+      hTooltips[10] = createToolTip(_hSelf, IDC_PREFS_CARET_FLASH_VALUE, PREFS_LABEL_CARET_FLASH, PREFS_TIP_CARET_FLASH);
 }
 
-void PreferencesDialog::hideTooltips()
+void PreferencesDialog::setTooltipsDuration(int duration)
+{
+   for (int i = 0; i < 11; i++) {
+      if (hTooltips[i]) {
+         ::SendMessage(hTooltips[i], TTM_SETDELAYTIME, TTDT_AUTOPOP, (LPARAM)(duration * 1000));
+      }
+   }
+}
+
+void PreferencesDialog::destroyTooltips()
 {
    for (int i = 0; i < 11; i++) {
       if (hTooltips[i]) {
@@ -170,3 +179,4 @@ void PreferencesDialog::hideTooltips()
       }
    }
 }
+

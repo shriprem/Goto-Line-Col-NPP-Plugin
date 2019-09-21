@@ -41,18 +41,14 @@ GotoLineColDlg _goToLine;
 PreferencesDialog _prefsDlg;
 AboutDialog _aboutDlg;
 
-void pluginInit(HANDLE hModule)
-{
+void pluginInit(HANDLE hModule) {
    _gModule = (HINSTANCE)hModule;
    _goToLine.init(_gModule, NULL);
 }
 
-void pluginCleanUp()
-{
-}
+void pluginCleanUp(){}
 
-void commandMenuInit()
-{
+void commandMenuInit() {
    _prefsIO.init();
 
    ShortcutKey *shKeyOpen = new ShortcutKey;
@@ -80,16 +76,14 @@ void commandMenuInit()
 }
 
 
-void commandMenuCleanUp()
-{
+void commandMenuCleanUp() {
    delete funcItem[INDEX_GOTO_PANEL]._pShKey;
    delete funcItem[INDEX_PREFS_DIALOG]._pShKey;
    delete funcItem[INDEX_ABOUT_DIALOG]._pShKey;
 }
 
 // Initialize plugin commands
-bool setCommand(size_t index, TCHAR *cmdName, PFUNCPLUGINCMD pFunc, ShortcutKey *sk, bool checkOnInit)
-{
+bool setCommand(size_t index, TCHAR *cmdName, PFUNCPLUGINCMD pFunc, ShortcutKey *sk, bool checkOnInit) {
     if (index >= nbFunc)
         return false;
 
@@ -104,12 +98,10 @@ bool setCommand(size_t index, TCHAR *cmdName, PFUNCPLUGINCMD pFunc, ShortcutKey 
     return true;
 }
 
-HWND createToolTip(HWND hDlg, int toolID, LPWSTR pTitle, LPWSTR pMessage, int duration)
-{
+HWND createToolTip(HWND hDlg, int toolID, LPWSTR pTitle, LPWSTR pMessage) {
    if (!toolID || !hDlg || !pMessage)
-   {
       return FALSE;
-   }
+
    // Get the window of the tool.
    HWND hwndTool = GetDlgItem(hDlg, toolID);
 
@@ -122,9 +114,7 @@ HWND createToolTip(HWND hDlg, int toolID, LPWSTR pTitle, LPWSTR pMessage, int du
       _gModule, NULL);
 
    if (!hwndTool || !hwndTip)
-   {
       return (HWND)NULL;
-   }
 
    // Associate the tooltip with the tool.
    TOOLINFO toolInfo = { 0 };
@@ -136,23 +126,19 @@ HWND createToolTip(HWND hDlg, int toolID, LPWSTR pTitle, LPWSTR pMessage, int du
    ::SendMessage(hwndTip, TTM_ADDTOOL, 0, (LPARAM)& toolInfo);
    ::SendMessage(hwndTip, TTM_SETTITLE, TTI_INFO, (LPARAM)pTitle);
    ::SendMessage(hwndTip, TTM_SETMAXTIPWIDTH, 0, (LPARAM)PREFS_TIP_MAX_WIDTH);
-   ::SendMessage(hwndTip, TTM_SETDELAYTIME, TTDT_AUTOPOP, (LPARAM)(duration * 1000));
 
    return hwndTip;
 }
 
 // Dockable GotoLineCol Dialog
-void ToggleGotoLineColPanel()
-{
+void ToggleGotoLineColPanel() {
    bool hidden = !_goToLine.isVisible();
 
-   if (hidden)
-   {
+   if (hidden) {
       _goToLine.setParent(nppData._nppHandle);
       tTbData  data = { 0 };
 
-      if (!_goToLine.isCreated())
-      {
+      if (!_goToLine.isCreated()) {
          _goToLine.create(&data);
 
          data.uMask = DWS_DF_CONT_RIGHT;
@@ -165,8 +151,7 @@ void ToggleGotoLineColPanel()
    ShowGotoLineColPanel(hidden);
 }
 
-void ShowGotoLineColPanel(bool show)
-{
+void ShowGotoLineColPanel(bool show) {
    _goToLine.display(show);
    if (show)
       _goToLine.loadPreferences();
@@ -175,8 +160,7 @@ void ShowGotoLineColPanel(bool show)
                MF_BYCOMMAND | (show ? MF_CHECKED : MF_UNCHECKED));
 }
 
-void GotoLineColDlgLoadPreferences()
-{
+void GotoLineColDlgLoadPreferences() {
    if (_goToLine.isVisible())
       _goToLine.loadPreferences();
 }
@@ -185,7 +169,6 @@ void ShowPreferencesDialog() {
    _prefsDlg.doDialog((HINSTANCE)_gModule);
 }
 
-void ShowAboutDialog()
-{
+void ShowAboutDialog() {
    _aboutDlg.doDialog((HINSTANCE)_gModule);
 }

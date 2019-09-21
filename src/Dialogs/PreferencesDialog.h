@@ -28,8 +28,9 @@ protected:
    void loadPreferences(bool iniFile);
    void savePreferences();
 
-   void showTooltips();
-   void hideTooltips();
+   void createTooltips();
+   void setTooltipsDuration(int duration);
+   void destroyTooltips();
 };
 
 #endif // _PREFERENCESDIALOG_H

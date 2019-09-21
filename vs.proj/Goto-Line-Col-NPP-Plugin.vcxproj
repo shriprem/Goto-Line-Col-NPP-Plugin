@@ -174,7 +174,7 @@
       <ImportLibrary>$(TargetName).lib</ImportLibrary>
     </Link>
     <PostBuildEvent>
-      <Command>START /MIN ..\bin\copy.cmd</Command>
+      <Command>START /D ..\bin /MIN copy.cmd</Command>
     </PostBuildEvent>
     <CustomBuildStep />
   </ItemDefinitionGroup>

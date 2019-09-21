@@ -36,7 +36,7 @@ void pluginCleanUp();
 void commandMenuInit();
 void commandMenuCleanUp();
 bool setCommand(size_t index, TCHAR *cmdName, PFUNCPLUGINCMD pFunc, ShortcutKey *sk = NULL, bool checkOnInit = false);
-HWND createToolTip(HWND hDlg, int toolID, LPWSTR pTitle, LPWSTR pMessage, int duration);
+HWND createToolTip(HWND hDlg, int toolID, LPWSTR pTitle, LPWSTR pMessage);
 
 // Plugin Command Functions
 void ToggleGotoLineColPanel();

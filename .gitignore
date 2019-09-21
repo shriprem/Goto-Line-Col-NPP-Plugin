@@ -328,3 +328,4 @@ ASALocalRun/
 
 # MFractors (Xamarin productivity tool) working folder 
 .mfractor/
+/vs.proj/Goto-Line-Col-NPP-Plugin.sln

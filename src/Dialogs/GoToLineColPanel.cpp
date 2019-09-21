@@ -35,18 +35,19 @@ INT_PTR CALLBACK GotoLineColDlg::run_dlgProc(UINT message, WPARAM wParam, LPARAM
          break;
 
       case IDC_GOLINECOL_PREFS:
+         ::SetFocus(_hSelf);
          ShowPreferencesDialog();
          break;
       }
 
-      return FALSE;
+      break;
    }
 
    case WM_LBUTTONDOWN:
    case WM_MBUTTONDOWN:
    case WM_RBUTTONDOWN:
       ::SetFocus(_hSelf);
-      // fall-through to WM_SETFOCUS
+      break;
 
    case WM_SETFOCUS :
    {

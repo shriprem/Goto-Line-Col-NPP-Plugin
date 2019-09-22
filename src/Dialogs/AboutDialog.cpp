@@ -9,6 +9,7 @@ void AboutDialog::doDialog(HINSTANCE hInst)
 
    localize();
    goToCenter();
+
    ::SendMessage(_hParent, NPPM_DMMSHOW, 0, (LPARAM)_hSelf);
 }
 

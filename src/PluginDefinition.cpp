@@ -35,6 +35,7 @@ FuncItem funcItem[nbFunc];
 
 NppData nppData;
 HINSTANCE _gModule;
+int _gLanguage = LANG_ENGLISH;
 
 PreferencesIO _prefsIO;
 GotoLineColDlg _gotoPanel;
@@ -57,29 +58,29 @@ void commandMenuInit() {
    shKeyOpen->_isShift = false;
    shKeyOpen->_key = VK_F7;
 
-   ShortcutKey *shKeyPrefs = new ShortcutKey;
-   shKeyPrefs->_isAlt = false;
-   shKeyPrefs->_isCtrl = true;
-   shKeyPrefs->_isShift = false;
-   shKeyPrefs->_key = VK_F8;
+   //ShortcutKey *shKeyPrefs = new ShortcutKey;
+   //shKeyPrefs->_isAlt = false;
+   //shKeyPrefs->_isCtrl = true;
+   //shKeyPrefs->_isShift = false;
+   //shKeyPrefs->_key = VK_F8;
 
-   ShortcutKey *shKeyAbout = new ShortcutKey;
-   shKeyAbout->_isAlt = false;
-   shKeyAbout->_isCtrl = true;
-   shKeyAbout->_isShift = false;
-   shKeyAbout->_key = VK_F9;
+   //ShortcutKey *shKeyAbout = new ShortcutKey;
+   //shKeyAbout->_isAlt = false;
+   //shKeyAbout->_isCtrl = true;
+   //shKeyAbout->_isShift = false;
+   //shKeyAbout->_key = VK_F9;
 
    setCommand(INDEX_GOTO_PANEL, MENU_SHOW_PANEL, ToggleGotoLineColPanel, shKeyOpen, _gotoPanel.isVisible());
-   setCommand(INDEX_PREFS_DIALOG, MENU_PREFERENCES, ShowPreferencesDialog, shKeyPrefs, 0);
+   setCommand(INDEX_PREFS_DIALOG, MENU_PREFERENCES, ShowPreferencesDialog, 0, 0);
    setCommand(2, TEXT("-"), NULL, NULL, false);
-   setCommand(INDEX_ABOUT_DIALOG, MENU_ABOUT, ShowAboutDialog, shKeyAbout, 0);
+   setCommand(INDEX_ABOUT_DIALOG, MENU_ABOUT, ShowAboutDialog, 0, 0);
 }
 
 
 void commandMenuCleanUp() {
    delete funcItem[INDEX_GOTO_PANEL]._pShKey;
-   delete funcItem[INDEX_PREFS_DIALOG]._pShKey;
-   delete funcItem[INDEX_ABOUT_DIALOG]._pShKey;
+   //delete funcItem[INDEX_PREFS_DIALOG]._pShKey;
+   //delete funcItem[INDEX_ABOUT_DIALOG]._pShKey;
 }
 
 // Initialize plugin commands
@@ -147,7 +148,9 @@ void ToggleGotoLineColPanel() {
          data.pszName = MENU_PANEL_NAME;
 
          ::SendMessage(nppData._nppHandle, NPPM_DMMREGASDCKDLG, 0, (LPARAM)& data);
-         _gotoPanel.localize();
+
+         if (_prefsIO.allPrefs.language != LANG_ENGLISH)
+            _gotoPanel.localize();
       }
    }
    ShowGotoLineColPanel(hidden);

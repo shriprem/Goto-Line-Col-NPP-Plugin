@@ -32,9 +32,8 @@
     <ClInclude Include="..\src\NPP\StaticDialog.h" />
     <ClInclude Include="..\src\NPP\Window.h" />
     <ClInclude Include="..\src\PreferencesIO.h" />
-    <ClInclude Include="..\src\Resources\dialog_defs.h" />
-    <ClInclude Include="..\src\Resources\version_defs.h" />
     <ClInclude Include="..\src\PluginDefinition.h" />
+    <ClInclude Include="..\src\Resources\localization.h" />
     <ClInclude Include="..\src\Resources\resource.h" />
   </ItemGroup>
   <ItemGroup>

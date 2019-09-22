@@ -7,12 +7,19 @@ void AboutDialog::doDialog(HINSTANCE hInst)
       create(IDD_ABOUT_DIALOG);
    }
 
-   ::SetDlgItemText(_hSelf, IDC_ABOUT_NAME, PLUGIN_NAME);
-   ::SetDlgItemText(_hSelf, IDC_ABOUT_VERSION, PLUGIN_VERSION);
-   ::SetDlgItemText(_hSelf, IDC_ABOUT_ATTRIBUTION, PLUGIN_ATTRIBUTION);
-
+   localize();
    goToCenter();
    ::SendMessage(_hParent, NPPM_DMMSHOW, 0, (LPARAM)_hSelf);
+}
+
+void AboutDialog::localize()
+{
+   ::SetWindowText(_hSelf, ABOUT_DIALOG_TITLE);
+
+   ::SetDlgItemText(_hSelf, IDC_ABOUT_NAME, ABOUT_PLUGIN_NAME);
+   ::SetDlgItemText(_hSelf, IDC_ABOUT_VERSION, PLUGIN_VERSION);
+   ::SetDlgItemText(_hSelf, IDC_ABOUT_ATTRIBUTION, PLUGIN_ATTRIBUTION);
+   ::SetDlgItemText(_hSelf, IDOK, PREFS_BTN_LABEL_OK);
 }
 
 INT_PTR CALLBACK AboutDialog::run_dlgProc(UINT message, WPARAM wParam, LPARAM lParam)
@@ -23,8 +30,8 @@ INT_PTR CALLBACK AboutDialog::run_dlgProc(UINT message, WPARAM wParam, LPARAM lP
       {
          switch LOWORD(wParam)
          {
-         case IDCLOSE:
          case IDCANCEL:
+         case IDOK:
             display(FALSE);
             return TRUE;
          }

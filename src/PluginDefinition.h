@@ -26,8 +26,8 @@
 #include "NPP/PluginInterface.h"
 #include "PreferencesIO.h"
 #include "Resources/resource.h"
+#include "Resources/localization.h"
 
-const TCHAR NPP_PLUGIN_NAME[] = TEXT("Goto Line, Column");
 const int nbFunc = 4;
 
 void pluginInit(HANDLE hModule);

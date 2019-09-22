@@ -17,7 +17,6 @@
 
 #include "../PluginDefinition.h"
 #include "../NPP/DockingDlgInterface.h"
-#include "../Resources/dialog_defs.h"
 
 extern NppData nppData;
 extern PreferencesIO _prefsIO;
@@ -26,7 +25,8 @@ class GotoLineColDlg : public DockingDlgInterface {
 public :
    GotoLineColDlg() :DockingDlgInterface(IDD_GOTOLINECOL_DOCKPANEL) {};
 
-   virtual void display(bool toShow = true) const;
+   void localize();
+   virtual void display(bool toShow=true);
    void setParent(HWND parent2set);
    void loadPreferences();
    void updatePanelColPos();

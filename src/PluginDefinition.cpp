@@ -37,13 +37,13 @@ NppData nppData;
 HINSTANCE _gModule;
 
 PreferencesIO _prefsIO;
-GotoLineColDlg _goToLine;
+GotoLineColDlg _gotoPanel;
 PreferencesDialog _prefsDlg;
 AboutDialog _aboutDlg;
 
 void pluginInit(HANDLE hModule) {
    _gModule = (HINSTANCE)hModule;
-   _goToLine.init(_gModule, NULL);
+   _gotoPanel.init(_gModule, NULL);
 }
 
 void pluginCleanUp(){}
@@ -69,10 +69,10 @@ void commandMenuInit() {
    shKeyAbout->_isShift = false;
    shKeyAbout->_key = VK_F9;
 
-   setCommand(INDEX_GOTO_PANEL, TEXT("Show Panel"), ToggleGotoLineColPanel, shKeyOpen, _goToLine.isVisible());
-   setCommand(INDEX_PREFS_DIALOG, TEXT("Preferences"), ShowPreferencesDialog, shKeyPrefs, 0);
+   setCommand(INDEX_GOTO_PANEL, MENU_SHOW_PANEL, ToggleGotoLineColPanel, shKeyOpen, _gotoPanel.isVisible());
+   setCommand(INDEX_PREFS_DIALOG, MENU_PREFERENCES, ShowPreferencesDialog, shKeyPrefs, 0);
    setCommand(2, TEXT("-"), NULL, NULL, false);
-   setCommand(INDEX_ABOUT_DIALOG, TEXT("About"), ShowAboutDialog, shKeyAbout, 0);
+   setCommand(INDEX_ABOUT_DIALOG, MENU_ABOUT, ShowAboutDialog, shKeyAbout, 0);
 }
 
 
@@ -132,37 +132,39 @@ HWND createToolTip(HWND hDlg, int toolID, LPWSTR pTitle, LPWSTR pMessage) {
 
 // Dockable GotoLineCol Dialog
 void ToggleGotoLineColPanel() {
-   bool hidden = !_goToLine.isVisible();
+   bool hidden = !_gotoPanel.isVisible();
 
    if (hidden) {
-      _goToLine.setParent(nppData._nppHandle);
+      _gotoPanel.setParent(nppData._nppHandle);
       tTbData  data = { 0 };
 
-      if (!_goToLine.isCreated()) {
-         _goToLine.create(&data);
+      if (!_gotoPanel.isCreated()) {
+         _gotoPanel.create(&data);
 
          data.uMask = DWS_DF_CONT_RIGHT;
-         data.pszModuleName = _goToLine.getPluginFileName();
+         data.pszModuleName = _gotoPanel.getPluginFileName();
          data.dlgID = INDEX_GOTO_PANEL;
+         data.pszName = MENU_PANEL_NAME;
 
          ::SendMessage(nppData._nppHandle, NPPM_DMMREGASDCKDLG, 0, (LPARAM)& data);
+         _gotoPanel.localize();
       }
    }
    ShowGotoLineColPanel(hidden);
 }
 
 void ShowGotoLineColPanel(bool show) {
-   _goToLine.display(show);
+   _gotoPanel.display(show);
    if (show)
-      _goToLine.loadPreferences();
+      _gotoPanel.loadPreferences();
 
    ::CheckMenuItem(::GetMenu(nppData._nppHandle), funcItem[INDEX_GOTO_PANEL]._cmdID,
                MF_BYCOMMAND | (show ? MF_CHECKED : MF_UNCHECKED));
 }
 
 void GotoLineColDlgLoadPreferences() {
-   if (_goToLine.isVisible())
-      _goToLine.loadPreferences();
+   if (_gotoPanel.isVisible())
+      _gotoPanel.loadPreferences();
 }
 
 void ShowPreferencesDialog() {

@@ -1594,8 +1594,8 @@
 #define IDC_GOLINECOL_PREFS             9014
 #define IDC_GOLINECOL_EXPAND_TABS       9015
 #define IDD_PREFERENCES_DIALOG          9100
-#define IDC_PREFS_AFON_FOCUS            9101
-#define IDC_PREFS_AFON_TABCHANGE        9102
+#define IDC_PREFS_AF_ONFOCUS            9101
+#define IDC_PREFS_AF_ONTABCHANGE        9102
 #define IDC_PREFS_SHOW_CALLTIP          9103
 #define IDC_PREFS_BRACE_HILITE          9104
 #define IDC_PREFS_EXPAND_TABS           9105
@@ -1617,7 +1617,7 @@
 #define IDC_ABOUT_PROD_URL              9204
 
 // Next default values for new objects
-// 
+//
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NO_MFC                     1

@@ -18,7 +18,7 @@
 extern FuncItem funcItem[nbFunc];
 extern NppData nppData;
 
-extern GotoLineColDlg _goToLine;
+extern GotoLineColDlg _gotoPanel;
 
 BOOL APIENTRY DllMain(HANDLE hModule, DWORD  reasonForCall, LPVOID /*lpReserved*/)
 {
@@ -51,7 +51,7 @@ extern "C" __declspec(dllexport) void setInfo(NppData notpadPlusData)
 
 extern "C" __declspec(dllexport) const TCHAR * getName()
 {
-   return NPP_PLUGIN_NAME;
+   return MENU_PANEL_NAME;
 }
 
 extern "C" __declspec(dllexport) FuncItem * getFuncsArray(int *nbF)
@@ -67,8 +67,8 @@ extern "C" __declspec(dllexport) void beNotified(SCNotification *notifyCode)
    {
       case NPPN_BUFFERACTIVATED:
       {
-         if (_prefsIO.allPrefs.fillOnTabChange && _goToLine.isVisible())
-            _goToLine.updatePanelColPos();
+         if (_prefsIO.allPrefs.fillOnTabChange && _gotoPanel.isVisible())
+            _gotoPanel.updatePanelColPos();
       }
       break;
 

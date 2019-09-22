@@ -4,6 +4,7 @@ void PreferencesDialog::doDialog(HINSTANCE hInst) {
    if (!isCreated()) {
       Window::init(hInst, nppData._nppHandle);
       create(IDD_PREFERENCES_DIALOG);
+      localize();
    }
 
    goToCenter();
@@ -23,6 +24,27 @@ void PreferencesDialog::doDialog(HINSTANCE hInst) {
       createTooltips();
       setTooltipsDuration(getEditValue(IDC_PREFS_TOOLTIP_DURATION));
    }
+}
+
+void PreferencesDialog::localize()
+{
+   ::SetWindowText(_hSelf, PREFS_DIALOG_TITLE);
+
+   ::SetDlgItemText(_hSelf, IDC_PREFS_AF_ONFOCUS, PREFS_LABEL_AF_ONFOCUS);
+   ::SetDlgItemText(_hSelf, IDC_PREFS_AF_ONTABCHANGE, PREFS_LABEL_AF_ONTABCHANGE);
+   ::SetDlgItemText(_hSelf, IDC_PREFS_SHOW_CALLTIP, PREFS_LABEL_SHOW_CALLTIP);
+   ::SetDlgItemText(_hSelf, IDC_PREFS_BRACE_HILITE, PREFS_LABEL_BRACE_HILITE);
+   ::SetDlgItemText(_hSelf, IDC_PREFS_EXPAND_TABS, PREFS_LABEL_EXPAND_TABS);
+   ::SetDlgItemText(_hSelf, IDC_PREFS_EDGE_BUFFER_LABEL, PREFS_LABEL_EDGE_BUFFER);
+   ::SetDlgItemText(_hSelf, IDC_PREFS_CARET_FLASH_LABEL, PREFS_LABEL_CARET_FLASH);
+
+   ::SetDlgItemText(_hSelf, IDOK, PREFS_BTN_LABEL_OK);
+   ::SetDlgItemText(_hSelf, IDCANCEL, PREFS_BTN_LABEL_CANCEL);
+   ::SetDlgItemText(_hSelf, IDC_PREFS_DEFAULTS, PREFS_BTN_LABEL_DEFAULTS);
+
+   ::SetDlgItemText(_hSelf, IDC_PREFS_TOOLTIP_BOX, PREFS_LABEL_TOOLTIP_BOX);
+   ::SetDlgItemText(_hSelf, IDC_PREFS_TOOLTIP_SHOW, PREFS_LABEL_TOOLTIP_SHOW);
+   ::SetDlgItemText(_hSelf, IDC_PREFS_TOOLTIP_DUR_LABEL, PREFS_LABEL_TOOLTIP_DUR);
 }
 
 INT_PTR CALLBACK PreferencesDialog::run_dlgProc(UINT message, WPARAM wParam, LPARAM lParam) {
@@ -100,8 +122,8 @@ void PreferencesDialog::syncTbarToText(HWND hCtrl, int controlID, int optVal) {
 void PreferencesDialog::loadPreferences(bool iniFile) {
    ALL_PREFERENCES tPrefs = (iniFile) ? _prefsIO.loadPreferences() : _prefsIO.resetPreferences();
 
-   setCheckedState(IDC_PREFS_AFON_FOCUS, tPrefs.fillOnFocus);
-   setCheckedState(IDC_PREFS_AFON_TABCHANGE, tPrefs.fillOnTabChange);
+   setCheckedState(IDC_PREFS_AF_ONFOCUS, tPrefs.fillOnFocus);
+   setCheckedState(IDC_PREFS_AF_ONTABCHANGE, tPrefs.fillOnTabChange);
    setCheckedState(IDC_PREFS_SHOW_CALLTIP, tPrefs.showCallTip);
    setCheckedState(IDC_PREFS_BRACE_HILITE, tPrefs.braceHilite);
    setCheckedState(IDC_PREFS_EXPAND_TABS, tPrefs.expandTabs);
@@ -116,8 +138,8 @@ void PreferencesDialog::loadPreferences(bool iniFile) {
 void PreferencesDialog::savePreferences() {
    ALL_PREFERENCES tPrefs;
 
-   tPrefs.fillOnFocus = getCheckedState(IDC_PREFS_AFON_FOCUS);
-   tPrefs.fillOnTabChange = getCheckedState(IDC_PREFS_AFON_TABCHANGE);
+   tPrefs.fillOnFocus = getCheckedState(IDC_PREFS_AF_ONFOCUS);
+   tPrefs.fillOnTabChange = getCheckedState(IDC_PREFS_AF_ONTABCHANGE);
    tPrefs.showCallTip = getCheckedState(IDC_PREFS_SHOW_CALLTIP);
    tPrefs.braceHilite = getCheckedState(IDC_PREFS_BRACE_HILITE);
    tPrefs.expandTabs = getCheckedState(IDC_PREFS_EXPAND_TABS);
@@ -134,9 +156,9 @@ void PreferencesDialog::savePreferences() {
 
 void PreferencesDialog::createTooltips() {
    if (!hTooltips[0])
-      hTooltips[0] = createToolTip(_hSelf, IDC_PREFS_AFON_FOCUS, PREFS_LABEL_AF_ONFOCUS, PREFS_TIP_AF_ONFOCUS);
+      hTooltips[0] = createToolTip(_hSelf, IDC_PREFS_AF_ONFOCUS, PREFS_LABEL_AF_ONFOCUS, PREFS_TIP_AF_ONFOCUS);
    if (!hTooltips[1])
-      hTooltips[1] = createToolTip(_hSelf, IDC_PREFS_AFON_TABCHANGE, PREFS_LABEL_AF_ONTABCHANGE, PREFS_TIP_AF_ONTABCHANGE);
+      hTooltips[1] = createToolTip(_hSelf, IDC_PREFS_AF_ONTABCHANGE, PREFS_LABEL_AF_ONTABCHANGE, PREFS_TIP_AF_ONTABCHANGE);
    if (!hTooltips[2])
       hTooltips[2] = createToolTip(_hSelf, IDC_PREFS_SHOW_CALLTIP, PREFS_LABEL_SHOW_CALLTIP, PREFS_TIP_SHOW_CALLTIP);
    if (!hTooltips[3])

@@ -64,8 +64,17 @@ INT_PTR CALLBACK GotoLineColDlg::run_dlgProc(UINT message, WPARAM wParam, LPARAM
    return FALSE;
 }
 
-void GotoLineColDlg::display(bool toShow) const {
+void GotoLineColDlg::localize() {
+   ::SetDlgItemText(_hSelf, IDC_GOLINE_STATIC, GOLINECOL_LABEL_GOLINE);
+   ::SetDlgItemText(_hSelf, IDC_GOCOL_STATIC, GOLINECOL_LABEL_GOCOL);
+   ::SetDlgItemText(_hSelf, IDOK, GOLINECOL_LABEL_BTN_GO);
+   ::SetDlgItemText(_hSelf, IDCLOSE, GOLINECOL_LABEL_BTN_CLOSE);
+   ::SetDlgItemText(_hSelf, IDC_GOLINECOL_PREFS, MENU_PREFERENCES);
+}
+
+void GotoLineColDlg::display(bool toShow) {
    DockingDlgInterface::display(toShow);
+
    if (toShow) {
       ::SetFocus(::GetDlgItem(_hSelf, IDC_GOLINE_EDIT));
    }
@@ -197,11 +206,11 @@ int GotoLineColDlg::getInputColumn() const {
 };
 
 void GotoLineColDlg::updateLineRangeText() {
-   ::SetDlgItemText(_hSelf, IDC_GOLINE_RANGE, (L"Max for file:  " + TO_WSTR(getLineCount())).c_str());
+   ::SetDlgItemText(_hSelf, IDC_GOLINE_RANGE, (GOLINECOL_MAX_FOR_FILE + TO_WSTR(getLineCount()) + L"]").c_str());
 }
 
 void GotoLineColDlg::updateColumnRangeText(int line) {
-   ::SetDlgItemText(_hSelf, IDC_GOCOL_RANGE, (L"Max for line:  " + TO_WSTR(getLineMaxPos(line))).c_str());
+   ::SetDlgItemText(_hSelf, IDC_GOCOL_RANGE, (GOLINECOL_MAX_FOR_LINE + TO_WSTR(getLineMaxPos(line)) + L"]").c_str());
 }
 
 int GotoLineColDlg::navigateToColPos() {

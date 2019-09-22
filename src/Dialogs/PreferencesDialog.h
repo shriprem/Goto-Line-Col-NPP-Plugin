@@ -3,7 +3,6 @@
 
 #include "../PluginDefinition.h"
 #include "../NPP/StaticDialog.h"
-#include "../Resources/dialog_defs.h"
 
 extern NppData nppData;
 extern PreferencesIO _prefsIO;
@@ -18,6 +17,7 @@ protected:
    HWND hEdgeBuffer, hCaretFlash, hTooltips[11];
 
    INT_PTR CALLBACK run_dlgProc(UINT Message, WPARAM wParam, LPARAM lParam);
+   void localize();
 
    int getCheckedState(int controlID);
    void setCheckedState(int controlID, int val);

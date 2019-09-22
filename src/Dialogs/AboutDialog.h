@@ -1,9 +1,12 @@
 #ifndef _ABOUTDIALOG_H
 #define _ABOUTDIALOG_H
 
+#define PLUGIN_VERSION              L"Version 1.0"
+#define PLUGIN_ATTRIBUTION          L"(c) 2019, Shridhar Kumar"
+#define PLUGIN_GITHUB_PAGE          L"https://github.com/shriprem/Goto-Line-Col-NPP-Plugin"
+
 #include "../PluginDefinition.h"
 #include "../NPP/StaticDialog.h"
-#include "../Resources/version_defs.h"
 
 extern NppData nppData;
 
@@ -15,7 +18,7 @@ public:
 
 protected:
    INT_PTR CALLBACK run_dlgProc(UINT Message, WPARAM wParam, LPARAM lParam);
-
+   void localize();
 };
 
 #endif // _ABOUTDIALOG_H

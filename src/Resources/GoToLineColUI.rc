@@ -37,7 +37,7 @@ BEGIN
     DEFPUSHBUTTON   "&Go",IDOK,15,52,50,14
     PUSHBUTTON      "&Close",IDCLOSE,78,52,50,14
     PUSHBUTTON      "&Preferences",IDC_GOLINECOL_PREFS,141,52,50,14
-    LTEXT           "*column positioning will NOT count width of tabs (=4 spaces)",IDC_GOLINECOL_EXPAND_TABS,4,79,194,18
+    LTEXT           "*column positioning will NOT count width of tabs [4 spaces]",IDC_GOLINECOL_EXPAND_TABS,4,79,194,18
 END
 
 IDD_PREFERENCES_DIALOG DIALOGEX 26, 41, 335, 251
@@ -88,17 +88,17 @@ END
 // TEXTINCLUDE
 //
 
-1 TEXTINCLUDE 
+1 TEXTINCLUDE
 BEGIN
     "resource.h\0"
 END
 
-2 TEXTINCLUDE 
+2 TEXTINCLUDE
 BEGIN
     "#include <windows.h>\0"
 END
 
-3 TEXTINCLUDE 
+3 TEXTINCLUDE
 BEGIN
     "\0"
 END

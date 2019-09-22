@@ -69,7 +69,9 @@
     <ClInclude Include="..\src\PreferencesIO.h">
       <Filter>Base</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\Resources\localization.h" />
+    <ClInclude Include="..\src\Resources\localization.h">
+      <Filter>Resources</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="..\src\Resources\GoToLineColUI.rc">

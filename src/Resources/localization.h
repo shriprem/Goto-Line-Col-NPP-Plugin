@@ -18,7 +18,7 @@
 #define GOLINECOL_MAX_FOR_FILE      L"[Max for file: "
 #define GOLINECOL_MAX_FOR_LINE      L"[Max for line: "
 #define GOLINECOL_EXPAND_TABS_STATE L" NOT"
-#define GOLINECOL_EXPAND_TABS_NOTE  L"*column positioning will%ws count width of tabs (=%d spaces)"
+#define GOLINECOL_EXPAND_TABS_NOTE  L"*column positioning will%ws count width of tabs [%d spaces]"
 
 
 // Preferences Dialog

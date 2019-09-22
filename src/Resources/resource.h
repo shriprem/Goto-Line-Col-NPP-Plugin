@@ -1592,6 +1592,7 @@
 #define IDC_GOCOL_EDIT                  9012
 #define IDC_GOCOL_RANGE                 9013
 #define IDC_GOLINECOL_PREFS             9014
+#define IDC_GOLINECOL_EXPAND_TABS       9015
 #define IDD_PREFERENCES_DIALOG          9100
 #define IDC_PREFS_AFON_FOCUS            9101
 #define IDC_PREFS_AFON_TABCHANGE        9102

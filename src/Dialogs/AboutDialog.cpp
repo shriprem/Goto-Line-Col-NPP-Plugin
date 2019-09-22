@@ -45,6 +45,6 @@ INT_PTR CALLBACK AboutDialog::run_dlgProc(UINT message, WPARAM wParam, LPARAM lP
       }
 
       default:
-         return FALSE; 
+         return FALSE;
       }
 }

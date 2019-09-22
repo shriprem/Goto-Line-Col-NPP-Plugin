@@ -25,7 +25,6 @@
 
 #include "NPP/PluginInterface.h"
 #include "PreferencesIO.h"
-#include "Resources/plugin_defs.h"
 #include "Resources/resource.h"
 
 const TCHAR NPP_PLUGIN_NAME[] = TEXT("Goto Line, Column");

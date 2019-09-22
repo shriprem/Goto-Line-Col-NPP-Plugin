@@ -63,14 +63,17 @@
     <ClInclude Include="..\src\Dialogs\PreferencesDialog.h">
       <Filter>Dialogs</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\Resources\plugin_defs.h">
-      <Filter>Resources</Filter>
-    </ClInclude>
     <ClInclude Include="..\src\Resources\resource.h">
       <Filter>Resources</Filter>
     </ClInclude>
     <ClInclude Include="..\src\PreferencesIO.h">
       <Filter>Base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Resources\dialog_defs.h">
+      <Filter>Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Resources\version_defs.h">
+      <Filter>Resources</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

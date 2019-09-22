@@ -14,6 +14,7 @@
 
 #include "GoToLineColPanel.h"
 #include <time.h>
+#include <wchar.h>
 
 INT_PTR CALLBACK GotoLineColDlg::run_dlgProc(UINT message, WPARAM wParam, LPARAM lParam) {
    switch (message) {
@@ -75,7 +76,17 @@ void GotoLineColDlg::setParent(HWND parent2set) {
 };
 
 void GotoLineColDlg::loadPreferences() {
+   HWND hScintilla = getCurrentScintilla();
+   if (!hScintilla)
+      return;
+
    allPrefs = _prefsIO.loadPreferences();
+
+   wchar_t note[100];
+   swprintf(note, 100, GOLINECOL_EXPAND_TABS_NOTE,
+                     allPrefs.expandTabs ? L"" : GOLINECOL_EXPAND_TABS_STATE,
+                     (int)::SendMessage(hScintilla, SCI_GETTABWIDTH, 0, 0));
+   ::SetDlgItemText(_hSelf, IDC_GOLINECOL_EXPAND_TABS, note);
 }
 
 void GotoLineColDlg::updatePanelColPos() {

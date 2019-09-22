@@ -1,21 +1,20 @@
-#ifndef PLUGIN_INFO_H
-#define PLUGIN_INFO_H
+#ifndef DIALOG_DEFS_H
+#define DIALOG_DEFS_H
 
-#define PLUGIN_NAME                 L"Goto Line, Column Plugin for Notepad++"
-#define PLUGIN_VERSION              L"Version 1.0"
-#define PLUGIN_ATTRIBUTION          L"(c) 2019, Shridhar Kumar"
-#define PLUGIN_GITHUB_PAGE          L"https://github.com/shriprem/Goto-Line-Col-NPP-Plugin"
+// Goto Line, Column Panel
+#define GOLINECOL_EXPAND_TABS_STATE L" NOT"
+#define GOLINECOL_EXPAND_TABS_NOTE  L"*column positioning will%ws count width of tabs (%d spaces)"
 
-#define PREFS_TIP_MAX_WIDTH         400
-
+// Preferences Dialog
 #define PREFS_LABEL_AF_ONFOCUS      L"Auto-fill on Panel Focus"
 #define PREFS_LABEL_AF_ONTABCHANGE  L"Auto-fill on Document Tab Change"
 #define PREFS_LABEL_SHOW_CALLTIP    L"Display character code at destination"
 #define PREFS_LABEL_BRACE_HILITE    L"Highlight character at destination"
 #define PREFS_LABEL_EXPAND_TABS     L"Expand TABS for column value computation"
-#define PREFS_LABEL_EDGE_BUFFER     L"Edge Buffer at destination"
+#define PREFS_LABEL_EDGE_BUFFER     L"Edge Buffer at destination:"
 #define PREFS_LABEL_CARET_FLASH     L"Cursor Flash duration (in seconds)"
 
+#define PREFS_TIP_MAX_WIDTH         400
 #define PREFS_TIP_AF_ONFOCUS        L"Uncheck this box if your workflow needs the Goto panel's line and column values to stay fixed regardless of the changes in current document's cursor position."
 #define PREFS_TIP_AF_ONTABCHANGE    L"Uncheck this box if your workflow needs the Goto panel's line and column values to stay fixed between tab switches in Notepad++ to a different document."
 #define PREFS_TIP_SHOW_CALLTIP      L"Uncheck this box if you do not wish to view, within a calltip, the hex code of the character at the destination position.\r\n\r\n[The calltip will disappear when the cursor is manually moved to a different line in the document.]"

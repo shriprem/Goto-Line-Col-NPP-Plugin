@@ -3,6 +3,7 @@
 
 #include "../PluginDefinition.h"
 #include "../NPP/StaticDialog.h"
+#include "../Resources/version_defs.h"
 
 extern NppData nppData;
 

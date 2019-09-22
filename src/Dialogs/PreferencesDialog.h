@@ -3,6 +3,7 @@
 
 #include "../PluginDefinition.h"
 #include "../NPP/StaticDialog.h"
+#include "../Resources/dialog_defs.h"
 
 extern NppData nppData;
 extern PreferencesIO _prefsIO;

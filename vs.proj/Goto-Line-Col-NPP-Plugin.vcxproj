@@ -32,7 +32,8 @@
     <ClInclude Include="..\src\NPP\StaticDialog.h" />
     <ClInclude Include="..\src\NPP\Window.h" />
     <ClInclude Include="..\src\PreferencesIO.h" />
-    <ClInclude Include="..\src\Resources\plugin_defs.h" />
+    <ClInclude Include="..\src\Resources\dialog_defs.h" />
+    <ClInclude Include="..\src\Resources\version_defs.h" />
     <ClInclude Include="..\src\PluginDefinition.h" />
     <ClInclude Include="..\src\Resources\resource.h" />
   </ItemGroup>
@@ -174,7 +175,8 @@
       <ImportLibrary>$(TargetName).lib</ImportLibrary>
     </Link>
     <PostBuildEvent>
-      <Command>START /D ..\bin /MIN copy.cmd</Command>
+      <Command>copy ..\license.txt ..\bin\
+START /D ..\bin /MIN copy.cmd</Command>
     </PostBuildEvent>
     <CustomBuildStep />
   </ItemDefinitionGroup>
@@ -201,7 +203,8 @@
       <ImportLibrary>$(TargetName).lib</ImportLibrary>
     </Link>
     <PostBuildEvent>
-      <Command>START /MIN ..\bin64\copy.cmd</Command>
+      <Command>copy ..\license.txt ..\bin64\
+START /MIN ..\bin64\copy.cmd</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

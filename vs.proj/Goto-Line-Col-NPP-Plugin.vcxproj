@@ -175,6 +175,7 @@
     </Link>
     <PostBuildEvent>
       <Command>copy ..\license.txt ..\bin\
+
 START /D ..\bin /MIN copy.cmd</Command>
     </PostBuildEvent>
     <CustomBuildStep />
@@ -203,6 +204,7 @@ START /D ..\bin /MIN copy.cmd</Command>
     </Link>
     <PostBuildEvent>
       <Command>copy ..\license.txt ..\bin64\
+
 START /MIN ..\bin64\copy.cmd</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>

@@ -1481,6 +1481,39 @@
 #define LVS_NOSCROLL                    0x2000
 #define TVS_NOSCROLL                    0x2000
 #define TCS_OWNERDRAWFIXED              0x2000
+#define IDD_GOTOLINECOL_DOCKPANEL       9000
+#define IDC_GOLINE_STATIC               9001
+#define IDC_GOLINE_EDIT                 9002
+#define IDC_GOLINE_RANGE                9003
+#define IDC_GOCOL_STATIC                9011
+#define IDC_GOCOL_EDIT                  9012
+#define IDC_GOCOL_RANGE                 9013
+#define IDC_GOLINECOL_PREFS             9014
+#define IDC_GOLINECOL_EXPAND_TABS       9015
+#define IDD_PREFERENCES_DIALOG          9100
+#define IDC_PREFS_AF_ONFOCUS            9101
+#define IDC_PREFS_AF_ONTABCHANGE        9102
+#define IDC_PREFS_SHOW_CALLTIP          9103
+#define IDC_PREFS_BRACE_HILITE          9104
+#define IDC_PREFS_EXPAND_TABS           9105
+#define IDC_PREFS_CENTER_CARET          9106
+#define IDC_PREFS_BRACE_HILITE2         9106
+#define IDC_PREFS_EDGE_BUFFER_LABEL     9107
+#define IDC_PREFS_EDGE_BUFFER_SLIDER    9108
+#define IDC_PREFS_EDGE_BUFFER_VALUE     9109
+#define IDC_PREFS_CARET_FLASH_LABEL     9110
+#define IDC_PREFS_CARET_FLASH_SLIDER    9111
+#define IDC_PREFS_CARET_FLASH_VALUE     9112
+#define IDC_PREFS_DEFAULTS              9113
+#define IDC_PREFS_TOOLTIP_BOX           9114
+#define IDC_PREFS_TOOLTIP_SHOW          9115
+#define IDC_PREFS_TOOLTIP_DUR_LABEL     9116
+#define IDC_PREFS_TOOLTIP_DURATION      9117
+#define IDD_ABOUT_DIALOG                9200
+#define IDC_ABOUT_NAME                  9201
+#define IDC_ABOUT_VERSION               9202
+#define IDC_ABOUT_ATTRIBUTION           9203
+#define IDC_ABOUT_PROD_URL              9204
 #define CS_GLOBALCLASS                  0x4000
 #define TBSTYLE_REGISTERDROP            0x4000
 #define RBS_VERTICALGRIPPER             0x00004000
@@ -1584,40 +1617,9 @@
 #define LVS_TYPESTYLEMASK               0xfc00
 #define SPVERSION_MASK                  0x0000FF00
 #define UNICODE_NOCHAR                  0xFFFF
-#define IDD_GOTOLINECOL_DOCKPANEL       9000
-#define IDC_GOLINE_STATIC               9001
-#define IDC_GOLINE_EDIT                 9002
-#define IDC_GOLINE_RANGE                9003
-#define IDC_GOCOL_STATIC                9011
-#define IDC_GOCOL_EDIT                  9012
-#define IDC_GOCOL_RANGE                 9013
-#define IDC_GOLINECOL_PREFS             9014
-#define IDC_GOLINECOL_EXPAND_TABS       9015
-#define IDD_PREFERENCES_DIALOG          9100
-#define IDC_PREFS_AF_ONFOCUS            9101
-#define IDC_PREFS_AF_ONTABCHANGE        9102
-#define IDC_PREFS_SHOW_CALLTIP          9103
-#define IDC_PREFS_BRACE_HILITE          9104
-#define IDC_PREFS_EXPAND_TABS           9105
-#define IDC_PREFS_EDGE_BUFFER_LABEL     9106
-#define IDC_PREFS_EDGE_BUFFER_SLIDER    9107
-#define IDC_PREFS_EDGE_BUFFER_VALUE     9108
-#define IDC_PREFS_CARET_FLASH_LABEL     9109
-#define IDC_PREFS_CARET_FLASH_SLIDER    9110
-#define IDC_PREFS_CARET_FLASH_VALUE     9111
-#define IDC_PREFS_DEFAULTS              9112
-#define IDC_PREFS_TOOLTIP_BOX           9113
-#define IDC_PREFS_TOOLTIP_SHOW          9114
-#define IDC_PREFS_TOOLTIP_DUR_LABEL     9115
-#define IDC_PREFS_TOOLTIP_DURATION      9116
-#define IDD_ABOUT_DIALOG                9200
-#define IDC_ABOUT_NAME                  9201
-#define IDC_ABOUT_VERSION               9202
-#define IDC_ABOUT_ATTRIBUTION           9203
-#define IDC_ABOUT_PROD_URL              9204
 
 // Next default values for new objects
-//
+// 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NO_MFC                     1

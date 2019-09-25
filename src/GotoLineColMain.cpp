@@ -83,6 +83,19 @@ extern "C" __declspec(dllexport) void beNotified(SCNotification *notifyCode)
       }
       break;
 
+      //case SCN_UPDATEUI:
+      //{
+      //   int which = -1;
+      //   HWND hScintilla;
+      //   ::SendMessage(nppData._nppHandle, NPPM_GETCURRENTSCINTILLA, 0, (LPARAM)&which);
+      //   hScintilla = (HWND)(which == 0) ? nppData._scintillaMainHandle : nppData._scintillaSecondHandle;
+
+      //   ::MessageBox(NULL, TO_LPCWSTR(::SendMessage(hScintilla, SCI_GETFIRSTVISIBLELINE, 0, 0)), L"First Visible Line", MB_OK);
+      //   break;
+      //}
+
+      break;
+
       default:
          return;
    }

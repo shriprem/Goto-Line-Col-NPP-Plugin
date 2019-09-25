@@ -67,7 +67,17 @@ INT_PTR CALLBACK PreferencesDialog::run_dlgProc(UINT message, WPARAM wParam, LPA
          loadPreferences(false);
          break;
 
+      case IDC_PREFS_CENTER_CARET:
+      {
+         BOOL enabled = !getCheckedState(IDC_PREFS_CENTER_CARET);
+         enableControl(IDC_PREFS_EDGE_BUFFER_LABEL, enabled);
+         enableControl(IDC_PREFS_EDGE_BUFFER_SLIDER, enabled);
+         enableControl(IDC_PREFS_EDGE_BUFFER_VALUE, enabled);
+         break;
+      }
+
       case IDC_PREFS_TOOLTIP_SHOW:
+         enableControl(IDC_PREFS_TOOLTIP_DURATION, getCheckedState(IDC_PREFS_TOOLTIP_SHOW));
          getCheckedState(IDC_PREFS_TOOLTIP_SHOW) ? createTooltips() : destroyTooltips();
          break;
 
@@ -95,6 +105,10 @@ INT_PTR CALLBACK PreferencesDialog::run_dlgProc(UINT message, WPARAM wParam, LPA
    }
 }
 
+void PreferencesDialog::enableControl(int controlID, bool enabled) {
+   ::EnableWindow(::GetDlgItem(_hSelf, controlID), enabled);
+}
+
 int PreferencesDialog::getCheckedState(int controlID) {
    return (::IsDlgButtonChecked(_hSelf, controlID) == BST_CHECKED);
 }
@@ -104,8 +118,8 @@ void PreferencesDialog::setCheckedState(int controlID, int val) {
 }
 
 int PreferencesDialog::getEditValue(int controlID) {
-   int tooltipSeconds = ::GetDlgItemInt(_hSelf, controlID, NULL, FALSE);
-   return (tooltipSeconds < 1) ? 1 : ((tooltipSeconds > 20) ? 20 : tooltipSeconds);
+   int val = ::GetDlgItemInt(_hSelf, controlID, NULL, FALSE);
+   return (val < 1) ? 1 : ((val > 20) ? 20 : val);
 }
 
 int PreferencesDialog::getTbarPosition(HWND hTBar) {
@@ -129,6 +143,11 @@ void PreferencesDialog::loadPreferences(bool iniFile) {
    setCheckedState(IDC_PREFS_SHOW_CALLTIP, tPrefs.showCallTip);
    setCheckedState(IDC_PREFS_BRACE_HILITE, tPrefs.braceHilite);
    setCheckedState(IDC_PREFS_EXPAND_TABS, tPrefs.expandTabs);
+   setCheckedState(IDC_PREFS_CENTER_CARET, tPrefs.centerCaret);
+
+   enableControl(IDC_PREFS_EDGE_BUFFER_LABEL, !tPrefs.centerCaret);
+   enableControl(IDC_PREFS_EDGE_BUFFER_SLIDER, !tPrefs.centerCaret);
+   enableControl(IDC_PREFS_EDGE_BUFFER_VALUE, !tPrefs.centerCaret);
 
    setTbarPosition(hEdgeBuffer, IDC_PREFS_EDGE_BUFFER_VALUE, tPrefs.edgeBuffer);
    setTbarPosition(hCaretFlash, IDC_PREFS_CARET_FLASH_VALUE, tPrefs.caretFlashSeconds);
@@ -145,6 +164,7 @@ void PreferencesDialog::savePreferences() {
    tPrefs.showCallTip = getCheckedState(IDC_PREFS_SHOW_CALLTIP);
    tPrefs.braceHilite = getCheckedState(IDC_PREFS_BRACE_HILITE);
    tPrefs.expandTabs = getCheckedState(IDC_PREFS_EXPAND_TABS);
+   tPrefs.centerCaret = getCheckedState(IDC_PREFS_CENTER_CARET);
 
    tPrefs.edgeBuffer = getTbarPosition(hEdgeBuffer);
    tPrefs.caretFlashSeconds = getTbarPosition(hCaretFlash);
@@ -167,31 +187,33 @@ void PreferencesDialog::createTooltips() {
       hTooltips[3] = createToolTip(_hSelf, IDC_PREFS_BRACE_HILITE, PREFS_LABEL_BRACE_HILITE, PREFS_TIP_BRACE_HILITE);
    if (!hTooltips[4])
       hTooltips[4] = createToolTip(_hSelf, IDC_PREFS_EXPAND_TABS, PREFS_LABEL_EXPAND_TABS, PREFS_TIP_EXPAND_TABS);
-
    if (!hTooltips[5])
-      hTooltips[5] = createToolTip(_hSelf, IDC_PREFS_EDGE_BUFFER_LABEL, PREFS_LABEL_EDGE_BUFFER, PREFS_TIP_EDGE_BUFFER);
-   if (!hTooltips[6])
-      hTooltips[6] = createToolTip(_hSelf, IDC_PREFS_EDGE_BUFFER_SLIDER, PREFS_LABEL_EDGE_BUFFER, PREFS_TIP_EDGE_BUFFER);
-   if (!hTooltips[7])
-      hTooltips[7] = createToolTip(_hSelf, IDC_PREFS_EDGE_BUFFER_VALUE, PREFS_LABEL_EDGE_BUFFER, PREFS_TIP_EDGE_BUFFER);
+      hTooltips[5] = createToolTip(_hSelf, IDC_PREFS_CENTER_CARET, PREFS_LABEL_CENTER_CARET, PREFS_TIP_CENTER_CURSOR);
 
+   if (!hTooltips[6])
+      hTooltips[6] = createToolTip(_hSelf, IDC_PREFS_EDGE_BUFFER_LABEL, PREFS_LABEL_EDGE_BUFFER, PREFS_TIP_EDGE_BUFFER);
+   if (!hTooltips[7])
+      hTooltips[7] = createToolTip(_hSelf, IDC_PREFS_EDGE_BUFFER_SLIDER, PREFS_LABEL_EDGE_BUFFER, PREFS_TIP_EDGE_BUFFER);
    if (!hTooltips[8])
-      hTooltips[8] = createToolTip(_hSelf, IDC_PREFS_CARET_FLASH_LABEL, PREFS_LABEL_CARET_FLASH, PREFS_TIP_CARET_FLASH);
+      hTooltips[8] = createToolTip(_hSelf, IDC_PREFS_EDGE_BUFFER_VALUE, PREFS_LABEL_EDGE_BUFFER, PREFS_TIP_EDGE_BUFFER);
+
    if (!hTooltips[9])
-      hTooltips[9] = createToolTip(_hSelf, IDC_PREFS_CARET_FLASH_SLIDER, PREFS_LABEL_CARET_FLASH, PREFS_TIP_CARET_FLASH);
+      hTooltips[9] = createToolTip(_hSelf, IDC_PREFS_CARET_FLASH_LABEL, PREFS_LABEL_CARET_FLASH, PREFS_TIP_CARET_FLASH);
    if (!hTooltips[10])
-      hTooltips[10] = createToolTip(_hSelf, IDC_PREFS_CARET_FLASH_VALUE, PREFS_LABEL_CARET_FLASH, PREFS_TIP_CARET_FLASH);
+      hTooltips[10] = createToolTip(_hSelf, IDC_PREFS_CARET_FLASH_SLIDER, PREFS_LABEL_CARET_FLASH, PREFS_TIP_CARET_FLASH);
+   if (!hTooltips[11])
+      hTooltips[11] = createToolTip(_hSelf, IDC_PREFS_CARET_FLASH_VALUE, PREFS_LABEL_CARET_FLASH, PREFS_TIP_CARET_FLASH);
 }
 
 void PreferencesDialog::setTooltipsDuration(int duration) {
-   for (int i = 0; i < 11; i++) {
+   for (int i = 0; i < TOOLTIPS_COUNT; i++) {
       if (hTooltips[i])
          ::SendMessage(hTooltips[i], TTM_SETDELAYTIME, TTDT_AUTOPOP, (LPARAM)(duration * 1000));
    }
 }
 
 void PreferencesDialog::destroyTooltips() {
-   for (int i = 0; i < 11; i++) {
+   for (int i = 0; i < TOOLTIPS_COUNT; i++) {
       if (hTooltips[i]) {
          ::DestroyWindow(hTooltips[i]);
          hTooltips[i] = (HWND)NULL;

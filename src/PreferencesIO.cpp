@@ -42,6 +42,7 @@ ALL_PREFERENCES PreferencesIO::loadPreferences() {
    allPrefs.showCallTip = (getPref(showCallTipKey, TRUE) != FALSE);
    allPrefs.braceHilite = (getPref(braceHiliteKey, TRUE) != FALSE);
    allPrefs.expandTabs = (getPref(expandTabsKey, TRUE) != FALSE);
+   allPrefs.centerCaret = (getPref(centerCaretKey, TRUE) != FALSE);
 
    int edgeBuffer = getPref(edgeBufferKey, 5);
    allPrefs.edgeBuffer = (edgeBuffer < 1) ? 1 : ((edgeBuffer > 10) ? 10 : edgeBuffer);
@@ -64,6 +65,7 @@ ALL_PREFERENCES PreferencesIO::resetPreferences() {
    defPrefs.showCallTip = TRUE;
    defPrefs.braceHilite = TRUE;
    defPrefs.expandTabs = FALSE;
+   defPrefs.expandTabs = TRUE;
    defPrefs.edgeBuffer = 5;
    defPrefs.caretFlashSeconds = 3;
    defPrefs.showTooltip = TRUE;
@@ -80,6 +82,7 @@ void PreferencesIO::savePreferences(ALL_PREFERENCES prefs) {
    setPref(showCallTipKey, prefs.showCallTip);
    setPref(braceHiliteKey, prefs.braceHilite);
    setPref(expandTabsKey, prefs.expandTabs);
+   setPref(centerCaretKey, prefs.centerCaret);
 
    setPref(edgeBufferKey, prefs.edgeBuffer);
    setPref(caretFlashSecondsKey, prefs.caretFlashSeconds);

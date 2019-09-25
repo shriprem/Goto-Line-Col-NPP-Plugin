@@ -4,6 +4,8 @@
 #include "../PluginDefinition.h"
 #include "../NPP/StaticDialog.h"
 
+#define TOOLTIPS_COUNT 12
+
 extern NppData nppData;
 extern PreferencesIO _prefsIO;
 
@@ -14,11 +16,12 @@ public:
    void doDialog(HINSTANCE hInst);
 
 protected:
-   HWND hEdgeBuffer, hCaretFlash, hTooltips[11];
+   HWND hEdgeBuffer, hCaretFlash, hTooltips[TOOLTIPS_COUNT];
 
    INT_PTR CALLBACK run_dlgProc(UINT Message, WPARAM wParam, LPARAM lParam);
    void localize();
 
+   void enableControl(int controlID, bool enabled);
    int getCheckedState(int controlID);
    void setCheckedState(int controlID, int val);
    int getEditValue(int controlID);

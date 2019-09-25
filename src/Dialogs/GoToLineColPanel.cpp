@@ -227,13 +227,21 @@ int GotoLineColDlg::navigateToColPos() {
 
    int column = getInputColumn();
 
-   // Clear a buffer of edgebuffer positions on either side if possible so that
-   // the cursor is not stuck aligned with the side margins
-   setDocumentColumn(hScintilla, line, lineStartPos, lineMaxPos, column - allPrefs.edgeBuffer);
-   setDocumentColumn(hScintilla, line, lineStartPos, lineMaxPos, column + allPrefs.edgeBuffer);
-   setDocumentColumn(hScintilla, line, lineStartPos, lineMaxPos, column);
+   if (allPrefs.centerCaret) {
+      ::SendMessage(hScintilla, SCI_SETXCARETPOLICY, CARET_JUMPS | CARET_EVEN, (LPARAM)0);
+      ::SendMessage(hScintilla, SCI_SETYCARETPOLICY, CARET_JUMPS | CARET_EVEN, (LPARAM)0);
+      //::SendMessage(hScintilla, SCI_SCROLLCARET, NULL, (LPARAM)NULL);
+   }
+   else {
+      // Clear a buffer of edgebuffer positions on either side if possible so that
+      // the cursor is not stuck aligned with the side margins
+      ::SendMessage(hScintilla, SCI_SETXCARETPOLICY, 0, (LPARAM)0);
+      ::SendMessage(hScintilla, SCI_SETYCARETPOLICY, 0, (LPARAM)0);
+      setDocumentColumn(hScintilla, line, lineStartPos, lineMaxPos, column - allPrefs.edgeBuffer);
+      setDocumentColumn(hScintilla, line, lineStartPos, lineMaxPos, column + allPrefs.edgeBuffer);
+   }
 
-   // Switch focus from the dock to the editor
+   setDocumentColumn(hScintilla, line, lineStartPos, lineMaxPos, column);
    setFocusOnEditor();
 
    // Display call tip

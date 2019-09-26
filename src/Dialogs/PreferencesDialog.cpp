@@ -14,7 +14,7 @@ void PreferencesDialog::doDialog(HINSTANCE hInst) {
 
    hEdgeBuffer = ::GetDlgItem(_hSelf, IDC_PREFS_EDGE_BUFFER_SLIDER);
    ::SendMessage(hEdgeBuffer, TBM_SETRANGEMIN, FALSE, 1);
-   ::SendMessage(hEdgeBuffer, TBM_SETRANGEMAX, FALSE, 10);
+   ::SendMessage(hEdgeBuffer, TBM_SETRANGEMAX, FALSE, 20);
 
    hCaretFlash = ::GetDlgItem(_hSelf, IDC_PREFS_CARET_FLASH_SLIDER);
    ::SendMessage(hCaretFlash, TBM_SETRANGEMIN, FALSE, 1);
@@ -26,6 +26,10 @@ void PreferencesDialog::doDialog(HINSTANCE hInst) {
       createTooltips();
       setTooltipsDuration(getEditValue(IDC_PREFS_TOOLTIP_DURATION));
    }
+
+   createToolTip(_hSelf, IDC_PREFS_TOOLTIP_SHOW, L"", PREFS_TIP_SHOW_TOOLTIPS);
+   createToolTip(_hSelf, IDC_PREFS_TOOLTIP_DUR_LABEL, L"", PREFS_TIP_TOOLTIP_DURATION);
+   createToolTip(_hSelf, IDC_PREFS_TOOLTIP_DURATION, L"", PREFS_TIP_TOOLTIP_DURATION);
 }
 
 void PreferencesDialog::localize()
@@ -77,9 +81,13 @@ INT_PTR CALLBACK PreferencesDialog::run_dlgProc(UINT message, WPARAM wParam, LPA
       }
 
       case IDC_PREFS_TOOLTIP_SHOW:
-         enableControl(IDC_PREFS_TOOLTIP_DURATION, getCheckedState(IDC_PREFS_TOOLTIP_SHOW));
-         getCheckedState(IDC_PREFS_TOOLTIP_SHOW) ? createTooltips() : destroyTooltips();
+      {
+         BOOL enabled = getCheckedState(IDC_PREFS_TOOLTIP_SHOW);
+         enableControl(IDC_PREFS_TOOLTIP_DUR_LABEL, enabled);
+         enableControl(IDC_PREFS_TOOLTIP_DURATION, enabled);
+         enabled ? createTooltips() : destroyTooltips();
          break;
+      }
 
       case IDC_PREFS_TOOLTIP_DURATION:
          if (HIWORD(wParam) == EN_KILLFOCUS)
@@ -119,7 +127,7 @@ void PreferencesDialog::setCheckedState(int controlID, int val) {
 
 int PreferencesDialog::getEditValue(int controlID) {
    int val = ::GetDlgItemInt(_hSelf, controlID, NULL, FALSE);
-   return (val < 1) ? 1 : ((val > 20) ? 20 : val);
+   return (val < 1) ? 1 : ((val > 60) ? 60 : val);
 }
 
 int PreferencesDialog::getTbarPosition(HWND hTBar) {

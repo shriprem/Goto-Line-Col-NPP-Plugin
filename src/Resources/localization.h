@@ -37,19 +37,22 @@
 #define PREFS_BTN_LABEL_DEFAULTS    L"&Defaults"
 #define PREFS_LABEL_TOOLTIP_BOX     L"Tooltips (for this dialog only)"
 #define PREFS_LABEL_TOOLTIP_SHOW    L"Show"
-#define PREFS_LABEL_TOOLTIP_DUR     L"Duration (in seconds)"
+#define PREFS_LABEL_TOOLTIP_DUR     L"Duration (in seconds):"
 
 
 // Preferences Dialog Tooltips
 #define PREFS_TIP_MAX_WIDTH         400
-#define PREFS_TIP_AF_ONFOCUS        L"Uncheck this box if your workflow needs the Goto panel's line and column values to stay fixed regardless of the changes in current document's cursor position."
-#define PREFS_TIP_AF_ONTABCHANGE    L"Uncheck this box if your workflow needs the Goto panel's line and column values to stay fixed between tab switches in Notepad++ to a different document."
+#define PREFS_TIP_AF_ONFOCUS        L"When the Goto panel regains focus, the line and column fields in it will be refreshed with the current document's current cursor position.\r\n\r\nEffective only when panel's title bar or a blank area or the Preferences button is clicked. This refresh is suppressed when the first click is within the line or column input fields or on the Goto button.\r\n\r\nUncheck this box if your workflow needs the Goto panel's line and column values to stay fixed regardless of the changes in current document's cursor position."
+#define PREFS_TIP_AF_ONTABCHANGE    L"When a different document becomes active either via a tab switch or file open or close, the line and column fields in the Goto panel will be refreshed with the newly active document's current cursor position.\r\n\r\nUncheck this box if your workflow needs the Goto panel's line and column values to stay fixed between tab switches in Notepad++ to a different document."
 #define PREFS_TIP_SHOW_CALLTIP      L"Uncheck this box if you do not wish to view, within a calltip, the hex code of the character at the destination position.\r\n\r\n[The calltip will disappear when the cursor is manually moved to a different line in the document.]"
 #define PREFS_TIP_BRACE_HILITE      L"Uncheck this box if you do not wish to have the character highlighted (after the cursor flash -- see below) at the destination position.\r\n\r\n[The highlighting will disappear when the cursor is manually moved inside the document.]"
 #define PREFS_TIP_EXPAND_TABS       L"When this box is checked, all TAB characters on the destination line will be counted using their expanded width -- a number specified in Notepad++ Preferences/Language section. In fact, Notepad++ also expands TABS in its column computation.\r\n\r\nHowever, if you are viewing files with fixed-width fields, you may want to leave this box unchecked."
 #define PREFS_TIP_CENTER_CURSOR     L"When this box is checked, the cursor will try to position as close as possible to the center of the editor view area."
 #define PREFS_TIP_EDGE_BUFFER       L"[Effective only when Centered Cursor option is unchecked]\r\n\r\nWhen the destination character shows up with the cursor stuck at either the left or right edge of the Notepad++ document view area, it will be hard to spot the cursor and the character. Hence a buffer near the edges, when possible, is desirable.\r\n\nSpecify the number of characters to have as a buffer from either of the edges for the character at the destination position."
 #define PREFS_TIP_CARET_FLASH       L"When the cursor is set at its default width of '1', it can be hard to spot the cursor at its new position. To aid quick spotting, the cursor is briefly set to block mode at the destination position.\r\n\r\nSpecify the number of seconds to have the cursor flashing in block mode at the destination position."
+
+#define PREFS_TIP_SHOW_TOOLTIPS     L"A change to this setting will be effective immediately for this Preference dialog session.\r\n\r\nThe setting will be saved for future sessions only when OK is clicked."
+#define PREFS_TIP_TOOLTIP_DURATION  L"A change to this setting will be effective for this Preference dialog session only after tabbing out of the input field.\r\n\r\nThe setting will be saved for future sessions only when OK is clicked."
 
 
 // About Dialog

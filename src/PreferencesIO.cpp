@@ -65,11 +65,11 @@ ALL_PREFERENCES PreferencesIO::resetPreferences() {
    defPrefs.showCallTip = TRUE;
    defPrefs.braceHilite = TRUE;
    defPrefs.expandTabs = FALSE;
-   defPrefs.expandTabs = TRUE;
-   defPrefs.edgeBuffer = 5;
+   defPrefs.centerCaret = TRUE;
+   defPrefs.edgeBuffer = 10;
    defPrefs.caretFlashSeconds = 3;
    defPrefs.showTooltip = TRUE;
-   defPrefs.tooltipSeconds = 10;
+   defPrefs.tooltipSeconds = 20;
 
    return defPrefs;
 }

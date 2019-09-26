@@ -20,10 +20,10 @@ struct ALL_PREFERENCES{
    int braceHilite = TRUE;
    int expandTabs = FALSE;
    int centerCaret = TRUE;
-   int edgeBuffer = 5;
+   int edgeBuffer = 10;
    int caretFlashSeconds = 3;
    int showTooltip = TRUE;
-   int tooltipSeconds = 10;
+   int tooltipSeconds = 20;
 };
 
 const int PREFS_STR_MAX_LEN = 20;

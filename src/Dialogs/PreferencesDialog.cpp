@@ -22,11 +22,6 @@ void PreferencesDialog::doDialog(HINSTANCE hInst) {
 
    loadPreferences(true);
 
-   if (getCheckedState(IDC_PREFS_TOOLTIP_SHOW)) {
-      createTooltips();
-      setTooltipsDuration(getEditValue(IDC_PREFS_TOOLTIP_DURATION));
-   }
-
    createToolTip(_hSelf, IDC_PREFS_TOOLTIP_SHOW, L"", PREFS_TIP_SHOW_TOOLTIPS);
    createToolTip(_hSelf, IDC_PREFS_TOOLTIP_DUR_LABEL, L"", PREFS_TIP_TOOLTIP_DURATION);
    createToolTip(_hSelf, IDC_PREFS_TOOLTIP_DURATION, L"", PREFS_TIP_TOOLTIP_DURATION);
@@ -153,15 +148,22 @@ void PreferencesDialog::loadPreferences(bool iniFile) {
    setCheckedState(IDC_PREFS_EXPAND_TABS, tPrefs.expandTabs);
    setCheckedState(IDC_PREFS_CENTER_CARET, tPrefs.centerCaret);
 
-   enableControl(IDC_PREFS_EDGE_BUFFER_LABEL, !tPrefs.centerCaret);
-   enableControl(IDC_PREFS_EDGE_BUFFER_SLIDER, !tPrefs.centerCaret);
-   enableControl(IDC_PREFS_EDGE_BUFFER_VALUE, !tPrefs.centerCaret);
-
    setTbarPosition(hEdgeBuffer, IDC_PREFS_EDGE_BUFFER_VALUE, tPrefs.edgeBuffer);
    setTbarPosition(hCaretFlash, IDC_PREFS_CARET_FLASH_VALUE, tPrefs.caretFlashSeconds);
 
    setCheckedState(IDC_PREFS_TOOLTIP_SHOW, tPrefs.showTooltip);
    ::SetDlgItemInt(_hSelf, IDC_PREFS_TOOLTIP_DURATION, tPrefs.tooltipSeconds, FALSE);
+
+   enableControl(IDC_PREFS_EDGE_BUFFER_LABEL, !tPrefs.centerCaret);
+   enableControl(IDC_PREFS_EDGE_BUFFER_SLIDER, !tPrefs.centerCaret);
+   enableControl(IDC_PREFS_EDGE_BUFFER_VALUE, !tPrefs.centerCaret);
+   enableControl(IDC_PREFS_TOOLTIP_DUR_LABEL, tPrefs.showTooltip);
+   enableControl(IDC_PREFS_TOOLTIP_DURATION, tPrefs.showTooltip);
+
+   if (tPrefs.showTooltip) {
+      createTooltips();
+      setTooltipsDuration(tPrefs.tooltipSeconds);
+   }
 }
 
 void PreferencesDialog::savePreferences() {

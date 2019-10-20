@@ -177,9 +177,7 @@
       <ImportLibrary>$(TargetName).lib</ImportLibrary>
     </Link>
     <PostBuildEvent>
-      <Command>copy ..\license.txt ..\bin\
-
-START /D ..\bin /MIN copy.cmd</Command>
+      <Command>START /MIN /D ..\ copyx32.cmd</Command>
     </PostBuildEvent>
     <CustomBuildStep />
   </ItemDefinitionGroup>
@@ -206,9 +204,7 @@ START /D ..\bin /MIN copy.cmd</Command>
       <ImportLibrary>$(TargetName).lib</ImportLibrary>
     </Link>
     <PostBuildEvent>
-      <Command>copy ..\license.txt ..\bin64\
-
-START /D ..\bin64 /MIN copy.cmd</Command>
+      <Command>START /MIN /D ..\ copyx64.cmd</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

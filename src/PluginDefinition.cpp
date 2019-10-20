@@ -38,7 +38,7 @@ HINSTANCE _gModule;
 int _gLanguage = LANG_ENGLISH;
 
 PreferencesIO _prefsIO;
-GotoLineColDlg _gotoPanel;
+GotoLineColPanel _gotoPanel;
 PreferencesDialog _prefsDlg;
 AboutDialog _aboutDlg;
 
@@ -58,18 +58,6 @@ void commandMenuInit() {
    shKeyOpen->_isShift = false;
    shKeyOpen->_key = VK_F7;
 
-   //ShortcutKey *shKeyPrefs = new ShortcutKey;
-   //shKeyPrefs->_isAlt = false;
-   //shKeyPrefs->_isCtrl = true;
-   //shKeyPrefs->_isShift = false;
-   //shKeyPrefs->_key = VK_F8;
-
-   //ShortcutKey *shKeyAbout = new ShortcutKey;
-   //shKeyAbout->_isAlt = false;
-   //shKeyAbout->_isCtrl = true;
-   //shKeyAbout->_isShift = false;
-   //shKeyAbout->_key = VK_F9;
-
    setCommand(INDEX_GOTO_PANEL, MENU_SHOW_PANEL, ToggleGotoLineColPanel, shKeyOpen, _gotoPanel.isVisible());
    setCommand(INDEX_PREFS_DIALOG, MENU_PREFERENCES, ShowPreferencesDialog, 0, 0);
    setCommand(2, TEXT("-"), NULL, NULL, false);
@@ -79,8 +67,6 @@ void commandMenuInit() {
 
 void commandMenuCleanUp() {
    delete funcItem[INDEX_GOTO_PANEL]._pShKey;
-   //delete funcItem[INDEX_PREFS_DIALOG]._pShKey;
-   //delete funcItem[INDEX_ABOUT_DIALOG]._pShKey;
 }
 
 // Initialize plugin commands

@@ -3,7 +3,7 @@
 void PreferencesIO::init() {
    ::SendMessage(nppData._nppHandle, NPPM_GETPLUGINSCONFIGDIR, MAX_PATH, (LPARAM)iniFilePath);
 
-   // if config path doesn't exist, create it
+   // if no existing config path, create it
    if (!PathFileExists(iniFilePath))
    {
       ::CreateDirectory(iniFilePath, NULL);
@@ -11,7 +11,7 @@ void PreferencesIO::init() {
 
    PathAppend(iniFilePath, configFileName);
 
-   // if no config file doesn't exist, create it
+   // if no existing config file, create it
    if (!PathFileExists(iniFilePath)) {
       loadPreferences();
       savePreferences(allPrefs);
@@ -39,12 +39,12 @@ void PreferencesIO::setIdemPotentKey(int val) {
 ALL_PREFERENCES PreferencesIO::loadPreferences() {
    allPrefs.fillOnFocus = (getPref(autoFillOnFocusKey, TRUE) != FALSE);
    allPrefs.fillOnTabChange = (getPref(autoFillOnTabChangeKey, TRUE) !=FALSE);
-   allPrefs.showCallTip = (getPref(showCallTipKey, TRUE) != FALSE);
+   allPrefs.showCalltip = (getPref(showCallTipKey, TRUE) != FALSE);
    allPrefs.braceHilite = (getPref(braceHiliteKey, TRUE) != FALSE);
-   allPrefs.expandTabs = (getPref(expandTabsKey, TRUE) != FALSE);
+   allPrefs.expandTabs = (getPref(expandTabsKey, FALSE) != FALSE);
    allPrefs.centerCaret = (getPref(centerCaretKey, TRUE) != FALSE);
 
-   int edgeBuffer = getPref(edgeBufferKey, 5);
+   int edgeBuffer = getPref(edgeBufferKey, 10);
    allPrefs.edgeBuffer = (edgeBuffer < 1) ? 1 : ((edgeBuffer > 10) ? 10 : edgeBuffer);
 
    int caretFlash = getPref(caretFlashSecondsKey, 3);
@@ -52,7 +52,7 @@ ALL_PREFERENCES PreferencesIO::loadPreferences() {
 
    allPrefs.showTooltip = (getPref(showTooltipKey, TRUE) != FALSE);
 
-   int tooltipSeconds = getPref(tooltipSecondsKey, 10);
+   int tooltipSeconds = getPref(tooltipSecondsKey, 20);
    allPrefs.tooltipSeconds = (tooltipSeconds < 1) ? 1 : ((tooltipSeconds > 20) ? 20 : tooltipSeconds);
 
    return allPrefs;
@@ -62,7 +62,7 @@ ALL_PREFERENCES PreferencesIO::resetPreferences() {
    ALL_PREFERENCES defPrefs;
    defPrefs.fillOnFocus = TRUE;
    defPrefs.fillOnTabChange = TRUE;
-   defPrefs.showCallTip = TRUE;
+   defPrefs.showCalltip = TRUE;
    defPrefs.braceHilite = TRUE;
    defPrefs.expandTabs = FALSE;
    defPrefs.centerCaret = TRUE;
@@ -79,7 +79,7 @@ void PreferencesIO::savePreferences(ALL_PREFERENCES prefs) {
 
    setPref(autoFillOnFocusKey, prefs.fillOnFocus);
    setPref(autoFillOnTabChangeKey, prefs.fillOnTabChange);
-   setPref(showCallTipKey, prefs.showCallTip);
+   setPref(showCallTipKey, prefs.showCalltip);
    setPref(braceHiliteKey, prefs.braceHilite);
    setPref(expandTabsKey, prefs.expandTabs);
    setPref(centerCaretKey, prefs.centerCaret);

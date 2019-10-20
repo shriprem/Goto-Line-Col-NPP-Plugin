@@ -18,7 +18,7 @@
 extern FuncItem funcItem[nbFunc];
 extern NppData nppData;
 
-extern GotoLineColDlg _gotoPanel;
+extern GotoLineColPanel _gotoPanel;
 
 BOOL APIENTRY DllMain(HANDLE hModule, DWORD  reasonForCall, LPVOID /*lpReserved*/)
 {
@@ -83,16 +83,10 @@ extern "C" __declspec(dllexport) void beNotified(SCNotification *notifyCode)
       }
       break;
 
-      //case SCN_UPDATEUI:
-      //{
-      //   int which = -1;
-      //   HWND hScintilla;
-      //   ::SendMessage(nppData._nppHandle, NPPM_GETCURRENTSCINTILLA, 0, (LPARAM)&which);
-      //   hScintilla = (HWND)(which == 0) ? nppData._scintillaMainHandle : nppData._scintillaSecondHandle;
-
-      //   ::MessageBox(NULL, TO_LPCWSTR(::SendMessage(hScintilla, SCI_GETFIRSTVISIBLELINE, 0, 0)), L"First Visible Line", MB_OK);
-      //   break;
-      //}
+      case SCN_UPDATEUI:
+      {
+         _gotoPanel.clearCalltip();
+      }
 
       break;
 
@@ -102,18 +96,8 @@ extern "C" __declspec(dllexport) void beNotified(SCNotification *notifyCode)
 }
 
 
-// Here you can process the Npp Messages
-// I will make the messages accessible little by little, according to the need of plugin development.
-// Please let me know if you need to access to some messages :
-// http://sourceforge.net/forum/forum.php?forum_id=482781
-//
 extern "C" __declspec(dllexport) LRESULT messageProc(UINT /*Message*/, WPARAM /*wParam*/, LPARAM /*lParam*/)
-{/*
-   if (Message == WM_MOVE)
-   {
-      ::MessageBox(NULL, "move", "", MB_OK);
-   }
-*/
+{
    return TRUE;
 }
 

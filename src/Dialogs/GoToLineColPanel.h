@@ -21,19 +21,21 @@
 extern NppData nppData;
 extern PreferencesIO _prefsIO;
 
-class GotoLineColDlg : public DockingDlgInterface {
+class GotoLineColPanel : public DockingDlgInterface {
 public :
-   GotoLineColDlg() :DockingDlgInterface(IDD_GOTOLINECOL_DOCKPANEL) {};
+   int instance_id = 0;
+   GotoLineColPanel() :DockingDlgInterface(IDD_GOTOLINECOL_DOCKPANEL) {};
 
    void localize();
    virtual void display(bool toShow=true);
    void setParent(HWND parent2set);
    void loadPreferences();
    void updatePanelColPos();
-   void braceHighlight();
+   void clearCalltip();
 
 protected :
    ALL_PREFERENCES allPrefs;
+   bool showingCalltip = false;
 
    virtual INT_PTR CALLBACK run_dlgProc(UINT message, WPARAM wParam, LPARAM lParam);
 

@@ -143,7 +143,7 @@ void PreferencesDialog::loadPreferences(bool iniFile) {
 
    setCheckedState(IDC_PREFS_AF_ONFOCUS, tPrefs.fillOnFocus);
    setCheckedState(IDC_PREFS_AF_ONTABCHANGE, tPrefs.fillOnTabChange);
-   setCheckedState(IDC_PREFS_SHOW_CALLTIP, tPrefs.showCallTip);
+   setCheckedState(IDC_PREFS_SHOW_CALLTIP, tPrefs.showCalltip);
    setCheckedState(IDC_PREFS_BRACE_HILITE, tPrefs.braceHilite);
    setCheckedState(IDC_PREFS_EXPAND_TABS, tPrefs.expandTabs);
    setCheckedState(IDC_PREFS_CENTER_CARET, tPrefs.centerCaret);
@@ -171,7 +171,7 @@ void PreferencesDialog::savePreferences() {
 
    tPrefs.fillOnFocus = getCheckedState(IDC_PREFS_AF_ONFOCUS);
    tPrefs.fillOnTabChange = getCheckedState(IDC_PREFS_AF_ONTABCHANGE);
-   tPrefs.showCallTip = getCheckedState(IDC_PREFS_SHOW_CALLTIP);
+   tPrefs.showCalltip = getCheckedState(IDC_PREFS_SHOW_CALLTIP);
    tPrefs.braceHilite = getCheckedState(IDC_PREFS_BRACE_HILITE);
    tPrefs.expandTabs = getCheckedState(IDC_PREFS_EXPAND_TABS);
    tPrefs.centerCaret = getCheckedState(IDC_PREFS_CENTER_CARET);

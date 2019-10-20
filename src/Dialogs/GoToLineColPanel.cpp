@@ -16,7 +16,7 @@
 #include <time.h>
 #include <wchar.h>
 
-INT_PTR CALLBACK GotoLineColDlg::run_dlgProc(UINT message, WPARAM wParam, LPARAM lParam) {
+INT_PTR CALLBACK GotoLineColPanel::run_dlgProc(UINT message, WPARAM wParam, LPARAM lParam) {
    switch (message) {
    case WM_COMMAND :
    {
@@ -64,7 +64,7 @@ INT_PTR CALLBACK GotoLineColDlg::run_dlgProc(UINT message, WPARAM wParam, LPARAM
    return FALSE;
 }
 
-void GotoLineColDlg::localize() {
+void GotoLineColPanel::localize() {
    ::SetDlgItemText(_hSelf, IDC_GOLINE_STATIC, GOLINECOL_LABEL_GOLINE);
    ::SetDlgItemText(_hSelf, IDC_GOCOL_STATIC, GOLINECOL_LABEL_GOCOL);
    ::SetDlgItemText(_hSelf, IDOK, GOLINECOL_LABEL_BTN_GO);
@@ -72,7 +72,7 @@ void GotoLineColDlg::localize() {
    ::SetDlgItemText(_hSelf, IDC_GOLINECOL_PREFS, MENU_PREFERENCES);
 }
 
-void GotoLineColDlg::display(bool toShow) {
+void GotoLineColPanel::display(bool toShow) {
    DockingDlgInterface::display(toShow);
 
    if (toShow) {
@@ -80,11 +80,11 @@ void GotoLineColDlg::display(bool toShow) {
    }
 };
 
-void GotoLineColDlg::setParent(HWND parent2set) {
+void GotoLineColPanel::setParent(HWND parent2set) {
    _hParent = parent2set;
 };
 
-void GotoLineColDlg::loadPreferences() {
+void GotoLineColPanel::loadPreferences() {
    HWND hScintilla = getCurrentScintilla();
    if (!hScintilla)
       return;
@@ -98,7 +98,7 @@ void GotoLineColDlg::loadPreferences() {
    ::SetDlgItemText(_hSelf, IDC_GOLINECOL_EXPAND_TABS, note);
 }
 
-void GotoLineColDlg::updatePanelColPos() {
+void GotoLineColPanel::updatePanelColPos() {
    HWND hScintilla = getCurrentScintilla();
    if (!hScintilla)
       return;
@@ -117,20 +117,20 @@ void GotoLineColDlg::updatePanelColPos() {
    _prefsIO.setIdemPotentKey(FALSE);
 }
 
-void GotoLineColDlg::braceHighlight() {
+void GotoLineColPanel::clearCalltip() {
    HWND hScintilla = getCurrentScintilla();
    if (!hScintilla)
       return;
 
-   int pos = (int)::SendMessage(hScintilla, SCI_GETCURRENTPOS, 0, 0);
-   ::SendMessage(hScintilla, SCI_BRACEHIGHLIGHT, pos, pos);
+   if (showingCalltip) {
+      ::SendMessage(hScintilla, SCI_CALLTIPCANCEL, NULL, NULL);
+      showingCalltip = false;
+   }
 }
 
-//
-// Private Functions:
-//
+/// *** Private Functions: *** ///
 
-HWND GotoLineColDlg::getCurrentScintilla() {
+HWND GotoLineColPanel::getCurrentScintilla() {
    int which = -1;
    ::SendMessage(nppData._nppHandle, NPPM_GETCURRENTSCINTILLA, 0, (LPARAM)& which);
    if (which < 0)
@@ -138,7 +138,7 @@ HWND GotoLineColDlg::getCurrentScintilla() {
    return (HWND)(which == 0) ? nppData._scintillaMainHandle : nppData._scintillaSecondHandle;
 }
 
-int GotoLineColDlg::getLineCount() {
+int GotoLineColPanel::getLineCount() {
    HWND hScintilla = getCurrentScintilla();
    if (!hScintilla)
       return -1;
@@ -146,7 +146,7 @@ int GotoLineColDlg::getLineCount() {
    return (int)::SendMessage(hScintilla, SCI_GETLINECOUNT, 0, 0);
 };
 
-int GotoLineColDlg::setFocusOnEditor() {
+int GotoLineColPanel::setFocusOnEditor() {
    HWND hScintilla = getCurrentScintilla();
    if (!hScintilla)
       return -1;
@@ -154,7 +154,7 @@ int GotoLineColDlg::setFocusOnEditor() {
    return (int)::SendMessage(hScintilla, SCI_GRABFOCUS, 0, 0);
 };
 
-int GotoLineColDlg::getLineMaxPos(int line) {
+int GotoLineColPanel::getLineMaxPos(int line) {
    HWND hScintilla = getCurrentScintilla();
    if (!hScintilla)
       return -1;
@@ -168,7 +168,7 @@ int GotoLineColDlg::getLineMaxPos(int line) {
    return col + 1;
 };
 
-int GotoLineColDlg::getDocumentColumn(HWND hScintilla, int pos, int line) {
+int GotoLineColPanel::getDocumentColumn(HWND hScintilla, int pos, int line) {
    int col = (allPrefs.expandTabs) ?
                (int)::SendMessage(hScintilla, SCI_GETCOLUMN, pos, 0) :
                pos - (int)::SendMessage(hScintilla, SCI_POSITIONFROMLINE, line - 1, 0);
@@ -176,7 +176,7 @@ int GotoLineColDlg::getDocumentColumn(HWND hScintilla, int pos, int line) {
    return col + 1;
 }
 
-void GotoLineColDlg::setDocumentColumn(HWND hScintilla, int line, int lineStartPos, int lineMaxPos, int column) {
+void GotoLineColPanel::setDocumentColumn(HWND hScintilla, int line, int lineStartPos, int lineMaxPos, int column) {
    column = (column < 1) ? 1 :
             (column > lineMaxPos) ? lineMaxPos : column;
 
@@ -187,7 +187,7 @@ void GotoLineColDlg::setDocumentColumn(HWND hScintilla, int line, int lineStartP
    ::SendMessage(hScintilla, SCI_GOTOPOS, gotoPos, 0);
 }
 
-int GotoLineColDlg::getInputLineValidated() {
+int GotoLineColPanel::getInputLineValidated() {
    BOOL isSuccessful;
 
    int line = ::GetDlgItemInt(_hSelf, IDC_GOLINE_EDIT, &isSuccessful, FALSE);
@@ -198,22 +198,22 @@ int GotoLineColDlg::getInputLineValidated() {
    return ((line < 0) ? 1 : ((line > lineCount) ? lineCount : line));
 };
 
-int GotoLineColDlg::getInputColumn() const {
+int GotoLineColPanel::getInputColumn() const {
    BOOL isSuccessful;
 
    int col = ::GetDlgItemInt(_hSelf, IDC_GOCOL_EDIT, &isSuccessful, FALSE);
    return (isSuccessful ? col : 1);
 };
 
-void GotoLineColDlg::updateLineRangeText() {
+void GotoLineColPanel::updateLineRangeText() {
    ::SetDlgItemText(_hSelf, IDC_GOLINE_RANGE, (GOLINECOL_MAX_FOR_FILE + TO_WSTR(getLineCount()) + L"]").c_str());
 }
 
-void GotoLineColDlg::updateColumnRangeText(int line) {
+void GotoLineColPanel::updateColumnRangeText(int line) {
    ::SetDlgItemText(_hSelf, IDC_GOCOL_RANGE, (GOLINECOL_MAX_FOR_LINE + TO_WSTR(getLineMaxPos(line)) + L"]").c_str());
 }
 
-int GotoLineColDlg::navigateToColPos() {
+int GotoLineColPanel::navigateToColPos() {
    HWND hScintilla = getCurrentScintilla();
    if (!hScintilla)
       return FALSE;
@@ -230,11 +230,10 @@ int GotoLineColDlg::navigateToColPos() {
    if (allPrefs.centerCaret) {
       ::SendMessage(hScintilla, SCI_SETXCARETPOLICY, CARET_JUMPS | CARET_EVEN, (LPARAM)0);
       ::SendMessage(hScintilla, SCI_SETYCARETPOLICY, CARET_JUMPS | CARET_EVEN, (LPARAM)0);
-      //::SendMessage(hScintilla, SCI_SCROLLCARET, NULL, (LPARAM)NULL);
    }
    else {
       // Clear a buffer of edgebuffer positions on either side if possible so that
-      // the cursor is not stuck aligned with the side margins
+      // the cursor is not stuck while being aligned with the side margins
       ::SendMessage(hScintilla, SCI_SETXCARETPOLICY, 0, (LPARAM)0);
       ::SendMessage(hScintilla, SCI_SETYCARETPOLICY, 0, (LPARAM)0);
       setDocumentColumn(hScintilla, line, lineStartPos, lineMaxPos, column - allPrefs.edgeBuffer);
@@ -245,7 +244,7 @@ int GotoLineColDlg::navigateToColPos() {
    setFocusOnEditor();
 
    // Display call tip
-   if (allPrefs.showCallTip) {
+   if (allPrefs.showCalltip) {
       int currPos = (int)::SendMessage(hScintilla, SCI_GETCURRENTPOS, 0, 0);
       int currLine = (int)::SendMessage(hScintilla, SCI_LINEFROMPOSITION, currPos, 0) + 1;
       int currCol = getDocumentColumn(hScintilla, currPos, currLine);
@@ -253,6 +252,7 @@ int GotoLineColDlg::navigateToColPos() {
 
       char callTip[100];
       sprintf(callTip, "     Line: %u\n   Column: %u\nChar Code: %u [0x%X]", currLine, currCol, posChar, posChar);
+      showingCalltip = true;
       ::SendMessage(hScintilla, SCI_CALLTIPSHOW, currPos, (LPARAM)callTip);
    }
 
@@ -264,7 +264,7 @@ int GotoLineColDlg::navigateToColPos() {
    return TRUE;
 }
 
-DWORD WINAPI GotoLineColDlg::threadPositionHighlighter(void*) {
+DWORD WINAPI GotoLineColPanel::threadPositionHighlighter(void*) {
    const int MEANING_OF_LIFE = 42;
    ALL_PREFERENCES allPrefs = _prefsIO.loadPreferences();
 

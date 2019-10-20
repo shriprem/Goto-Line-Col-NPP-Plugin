@@ -16,7 +16,7 @@ struct ALL_PREFERENCES{
    int language = LANG_ENGLISH;
    int fillOnFocus = TRUE;
    int fillOnTabChange = TRUE;
-   int showCallTip = TRUE;
+   int showCalltip = TRUE;
    int braceHilite = TRUE;
    int expandTabs = FALSE;
    int centerCaret = TRUE;

@@ -248,7 +248,7 @@ int GotoLineColPanel::navigateToColPos() {
       int currPos = (int)::SendMessage(hScintilla, SCI_GETCURRENTPOS, 0, 0);
       int currLine = (int)::SendMessage(hScintilla, SCI_LINEFROMPOSITION, currPos, 0) + 1;
       int currCol = getDocumentColumn(hScintilla, currPos, currLine);
-      int posChar = (int)::SendMessage(hScintilla, SCI_GETCHARAT, currPos, 0);
+      unsigned char posChar = (unsigned char)::SendMessage(hScintilla, SCI_GETCHARAT, currPos, 0);
 
       char callTip[100];
       sprintf(callTip, "     Line: %u\n   Column: %u\nChar Code: %u [0x%X]", currLine, currCol, posChar, posChar);

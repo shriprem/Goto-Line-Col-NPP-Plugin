@@ -41,7 +41,7 @@ BEGIN
          VALUE "FileDescription",   "Goto Line, Column plugin for Notepad++\0"
          VALUE "FileVersion", VERSION_VALUE
          VALUE "InternalName",   "GotoLineCol.dll\0"
-         VALUE "LegalCopyright", "Copyright 2019 by Shridhar Kumar\0"
+         VALUE "LegalCopyright", "Copyright 2020 by Shridhar Kumar\0"
          VALUE "OriginalFilename",  "GotoLineCol.dll\0"
          VALUE "ProductName", "GotoLineCol\0"
          VALUE "ProductVersion", VERSION_VALUE

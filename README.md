@@ -1,5 +1,5 @@
 # GotoLineCol Notepad++ Plugin
-A plugin for navigating to a specified line and column position in a file. It is handy for manually inspecting data in fixed-width format data files.
+A plugin for navigating to a specified line and column position in a file. It is handy for manually inspecting content in fixed-width format data files.
 
 The plugin has the following customizable Preference settings (default values within parantheses):
 
@@ -18,7 +18,7 @@ In some situations -- when perhaps inspecting similar datafiles, it may be prefe
 ## Display character code at destination (Checked)
 After navigating to the specified position, the plugin displays a calltip. The calltip will list the current line number, column position and the hex code value of the character at the destination position. The calltip will disappear when the document cursor position shifts.
 
-*The hex code value display is designed to work on files with ANSI encoding (or other single-byte character encodings)*. This can be handy to check, say if a character is a fancy quote: ì (ASCII 147) or î (ASCII 148) instead of the plain double quote: " (ASCII 34).
+*The hex code value display is designed to work on files with ANSI encoding (or other single-byte character encodings)*. This can be handy to check, say if a character is a fancy quote: ‚Äú (ASCII 147) or ‚Äù (ASCII 148) instead of the plain double quote: " (ASCII 34).
 
 The calltip also provides supplemental highlighting of the cursor at the destination position (see: <a href="#highlight-character-at-destination-checked">Highlight character at destination</a>).
 

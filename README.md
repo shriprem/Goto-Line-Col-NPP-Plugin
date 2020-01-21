@@ -5,9 +5,8 @@ A plugin for navigating to a specified line and column position in a file. It is
 ![GotoLineCol Panel](https://raw.githubusercontent.com/shriprem/Goto-Line-Col-NPP-Plugin/master/images/Panel.png)
 
 ## Preferences
-
-![Preferences](https://raw.githubusercontent.com/shriprem/Goto-Line-Col-NPP-Plugin/master/images/Preferences.png)
 ##### Preferences Dialog
+![Preferences](https://raw.githubusercontent.com/shriprem/Goto-Line-Col-NPP-Plugin/master/images/Preferences.png)
 
 The plugin has the following customizable Preference settings (default values within parantheses):
 
@@ -25,9 +24,8 @@ In some situations -- when perhaps inspecting similar datafiles, it may be prefe
 
 ### Display character code at destination (Checked)
 After navigating to the specified position, the plugin displays a calltip. The calltip will list the current line number, column position and the hex code value of the character at the destination position. The calltip will disappear when the document cursor position shifts.
-
-![Calltip](https://raw.githubusercontent.com/shriprem/Goto-Line-Col-NPP-Plugin/master/images/Calltip.png)
 ##### Sample Calltip display
+![Calltip](https://raw.githubusercontent.com/shriprem/Goto-Line-Col-NPP-Plugin/master/images/Calltip.png)
 
 *The hex code value display is designed to work on files with ANSI encoding (or other single-byte character encodings)*. This can be handy to check, say if a character is a fancy quote: “ (ASCII 147) or ” (ASCII 148) instead of the plain double quote: " (ASCII 34).
 

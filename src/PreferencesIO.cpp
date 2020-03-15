@@ -16,8 +16,6 @@ void PreferencesIO::init() {
       loadPreferences();
       savePreferences(allPrefs);
    }
-
-   setIdemPotentKey(FALSE);
 }
 
 int PreferencesIO::getPref(LPCWSTR key, int default) {
@@ -26,14 +24,6 @@ int PreferencesIO::getPref(LPCWSTR key, int default) {
 
 void PreferencesIO::setPref(LPCWSTR key, int val) {
    ::WritePrivateProfileString(sectionName, key, TO_LPCWSTR(val), iniFilePath);
-}
-
-int PreferencesIO::getIdemPotentKey() {
-   return getPref(caretIdemPotentKey, FALSE);
-}
-
-void PreferencesIO::setIdemPotentKey(int val) {
-   setPref(caretIdemPotentKey, val);
 }
 
 ALL_PREFERENCES PreferencesIO::loadPreferences() {

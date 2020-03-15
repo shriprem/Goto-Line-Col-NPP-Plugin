@@ -114,7 +114,7 @@ void GotoLineColPanel::updatePanelColPos() {
    updateColumnRangeText(line);
 
    // Clear Idem Potent key if it's still set from a premature program termination
-   _prefsIO.setIdemPotentKey(FALSE);
+   idemPotentKey = FALSE;
 }
 
 void GotoLineColPanel::clearCalltip() {
@@ -122,10 +122,7 @@ void GotoLineColPanel::clearCalltip() {
    if (!hScintilla)
       return;
 
-   if (showingCalltip) {
-      ::SendMessage(hScintilla, SCI_CALLTIPCANCEL, NULL, NULL);
-      showingCalltip = false;
-   }
+   ::SendMessage(hScintilla, SCI_CALLTIPCANCEL, NULL, NULL);
 }
 
 /// *** Private Functions: *** ///
@@ -176,7 +173,7 @@ int GotoLineColPanel::getDocumentColumn(HWND hScintilla, int pos, int line) {
    return col + 1;
 }
 
-void GotoLineColPanel::setDocumentColumn(HWND hScintilla, int line, int lineStartPos, int lineMaxPos, int column) {
+int GotoLineColPanel::setDocumentColumn(HWND hScintilla, int line, int lineStartPos, int lineMaxPos, int column) {
    column = (column < 1) ? 1 :
             (column > lineMaxPos) ? lineMaxPos : column;
 
@@ -185,6 +182,7 @@ void GotoLineColPanel::setDocumentColumn(HWND hScintilla, int line, int lineStar
                   lineStartPos + column - 1;
 
    ::SendMessage(hScintilla, SCI_GOTOPOS, gotoPos, 0);
+   return gotoPos;
 }
 
 int GotoLineColPanel::getInputLineValidated() {
@@ -240,20 +238,15 @@ int GotoLineColPanel::navigateToColPos() {
       setDocumentColumn(hScintilla, line, lineStartPos, lineMaxPos, column + allPrefs.edgeBuffer);
    }
 
-   setDocumentColumn(hScintilla, line, lineStartPos, lineMaxPos, column);
+   int gotoPos = setDocumentColumn(hScintilla, line, lineStartPos, lineMaxPos, column);
    setFocusOnEditor();
 
    // Display call tip
    if (allPrefs.showCalltip) {
-      int currPos = (int)::SendMessage(hScintilla, SCI_GETCURRENTPOS, 0, 0);
-      int currLine = (int)::SendMessage(hScintilla, SCI_LINEFROMPOSITION, currPos, 0) + 1;
-      int currCol = getDocumentColumn(hScintilla, currPos, currLine);
-      unsigned char posChar = (unsigned char)::SendMessage(hScintilla, SCI_GETCHARAT, currPos, 0);
+      unsigned char posChar = (unsigned char)::SendMessage(hScintilla, SCI_GETCHARAT, gotoPos, 0);
+      sprintf(callTip, "     Line: %u\n   Column: %u\nChar Code: %u [0x%X]", line, column, posChar, posChar);
 
-      char callTip[100];
-      sprintf(callTip, "     Line: %u\n   Column: %u\nChar Code: %u [0x%X]", currLine, currCol, posChar, posChar);
-      showingCalltip = true;
-      ::SendMessage(hScintilla, SCI_CALLTIPSHOW, currPos, (LPARAM)callTip);
+      ::PostMessage(hScintilla, SCI_CALLTIPSHOW, gotoPos, (LPARAM)callTip);
    }
 
    // Flash caret
@@ -265,7 +258,6 @@ int GotoLineColPanel::navigateToColPos() {
 }
 
 DWORD WINAPI GotoLineColPanel::threadPositionHighlighter(void*) {
-   const int MEANING_OF_LIFE = 42;
    ALL_PREFERENCES allPrefs = _prefsIO.loadPreferences();
 
    // Get the current scintilla
@@ -276,18 +268,13 @@ DWORD WINAPI GotoLineColPanel::threadPositionHighlighter(void*) {
 
    HWND hScintilla = (which == 0) ? nppData._scintillaMainHandle : nppData._scintillaSecondHandle;
 
-   // Get caret highlight duration
-   bool idemPotentFail;
-
    // Look for Idem Potency Hold
-   idemPotentFail = (_prefsIO.getIdemPotentKey() == MEANING_OF_LIFE);
-
-   if (idemPotentFail)
+   if (idemPotentKey)
       //  Idem Potency check failed. Another thread is processing this same function. Return immediately.
       return FALSE;
    else
       // OK to continue. Set Idem Potency Hold
-      _prefsIO.setIdemPotentKey(MEANING_OF_LIFE);
+      idemPotentKey = TRUE;
 
    // Modify caret style briefly to highlight the new position
    int currCaret = (int)::SendMessage(hScintilla, SCI_GETCARETSTYLE, 0, 0);
@@ -301,7 +288,7 @@ DWORD WINAPI GotoLineColPanel::threadPositionHighlighter(void*) {
    }
 
    // Clear Idem Potency Hold
-   _prefsIO.setIdemPotentKey(FALSE);
+   idemPotentKey = FALSE;
 
    return TRUE;
 }

@@ -35,8 +35,6 @@ public:
    void init();
    int getPref(LPCWSTR key, int default);
    void setPref(LPCWSTR key, int val);
-   int getIdemPotentKey();
-   void setIdemPotentKey(int val);
    ALL_PREFERENCES loadPreferences();
    ALL_PREFERENCES resetPreferences();
    void savePreferences(ALL_PREFERENCES prefs);
@@ -58,7 +56,6 @@ protected:
 
    const TCHAR showTooltipKey[PREFS_STR_MAX_LEN]         = L"ShowTooltip";
    const TCHAR tooltipSecondsKey[PREFS_STR_MAX_LEN]      = L"TooltipSeconds";
-   const TCHAR caretIdemPotentKey[PREFS_STR_MAX_LEN]     = L"IdemPotencyCheck";
 };
 
 #endif //_PREFERENCES_INI_H

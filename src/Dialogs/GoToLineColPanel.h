@@ -21,9 +21,11 @@
 extern NppData nppData;
 extern PreferencesIO _prefsIO;
 
+static bool idemPotentKey {FALSE};
+
 class GotoLineColPanel : public DockingDlgInterface {
 public :
-   int instance_id = 0;
+   int instance_id{ 0 };
    GotoLineColPanel() :DockingDlgInterface(IDD_GOTOLINECOL_DOCKPANEL) {};
 
    void localize();
@@ -35,7 +37,6 @@ public :
 
 protected :
    ALL_PREFERENCES allPrefs;
-   bool showingCalltip = false;
 
    virtual INT_PTR CALLBACK run_dlgProc(UINT message, WPARAM wParam, LPARAM lParam);
 
@@ -44,12 +45,13 @@ protected :
    static int setFocusOnEditor();
    int getLineMaxPos(int line);
    int getDocumentColumn(HWND hScintilla, int pos, int line);
-   void setDocumentColumn(HWND hScintilla, int line, int lineStartPos, int lineMaxPos, int column);
+   int setDocumentColumn(HWND hScintilla, int line, int lineStartPos, int lineMaxPos, int column);
    int getInputLineValidated();
    int getInputColumn() const;
    void updateLineRangeText();
    void updateColumnRangeText(int line);
    int navigateToColPos();
+   char callTip[100];
    static DWORD WINAPI threadPositionHighlighter(void*);
 };
 

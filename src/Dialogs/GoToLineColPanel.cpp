@@ -243,10 +243,7 @@ int GotoLineColPanel::navigateToColPos() {
 
    // Display call tip
    if (allPrefs.showCalltip) {
-      unsigned char posChar = (unsigned char)::SendMessage(hScintilla, SCI_GETCHARAT, gotoPos, 0);
-      sprintf(callTip, "     Line: %u\n   Column: %u\nChar Code: %u [0x%X]", line, column, posChar, posChar);
-
-      ::PostMessage(hScintilla, SCI_CALLTIPSHOW, gotoPos, (LPARAM)callTip);
+      showCalltip(hScintilla, line, column, gotoPos);
    }
 
    // Flash caret
@@ -255,6 +252,76 @@ int GotoLineColPanel::navigateToColPos() {
       ::CloseHandle(hThread);
 
    return TRUE;
+}
+
+void GotoLineColPanel::showCalltip(HWND hScintilla, int line, int column, int atPos)
+{
+   unsigned char atChar;
+   int colPos;
+   char colPosText[100]{""};
+
+   colPos = (int)::SendMessage(hScintilla, SCI_GETCOLUMN, atPos, 0) + 1;
+   if (colPos != column)
+      sprintf(colPosText, "Char Column: %u\n", colPos);
+
+   atChar = (unsigned char)::SendMessage(hScintilla, SCI_GETCHARAT, atPos, 0);
+   sprintf(callTip, "       Line: %u\n%sByte Column: %u\n\n  ANSI Byte: 0x%X [%u]",
+      line, colPosText, column, atChar, atChar);
+
+   if ((atChar & 0x80) != 0) {
+      int utf8Start{ atPos };
+      unsigned char utf8Char{ atChar };
+
+      int unicodeHead{ 0 }, unicodeVal{ 0 };
+      char unicodePoint[10];
+
+      while ((utf8Char & 0xC0) == 0x80 && atPos - utf8Start < 3) {
+         utf8Start--;
+         utf8Char = (unsigned char)::SendMessage(hScintilla, SCI_GETCHARAT, utf8Start, 0);
+      }
+
+      sprintf(callTip, "%s\nUTF-8 Bytes: %s0x%X%s", callTip,
+         (utf8Start == atPos ? "<" : ""), utf8Char, (utf8Start == atPos ? ">" : ""));
+
+      int utf8BytePos{ utf8Start + 1 };
+      unsigned char utf8ByteChar;
+
+      if ((utf8Char & 0xC0) == 0xC0) {
+         utf8ByteChar = (unsigned char)::SendMessage(hScintilla, SCI_GETCHARAT, utf8BytePos, 0);
+         sprintf(callTip, "%s %s0x%X%s", callTip,
+            (utf8BytePos == atPos ? "<" : ""), utf8ByteChar, (utf8BytePos == atPos ? ">" : ""));
+
+         unicodeHead = (utf8Char & 31) << 6;
+         unicodeVal = (utf8ByteChar & 63);
+      }
+
+      if ((utf8Char & 0xE0) == 0xE0) {
+         utf8BytePos++;
+         utf8ByteChar = (unsigned char)::SendMessage(hScintilla, SCI_GETCHARAT, utf8BytePos, 0);
+         sprintf(callTip, "%s %s0x%X%s", callTip,
+            (utf8BytePos == atPos ? "<" : ""), utf8ByteChar, (utf8BytePos == atPos ? ">" : ""));
+
+         unicodeHead = (utf8Char & 15) << 12;
+         unicodeVal = (unicodeVal << 6) + (utf8ByteChar & 63);
+      }
+
+      if ((utf8Char & 0xF0) == 0xF0) {
+         utf8BytePos++;
+         utf8ByteChar = (unsigned char)::SendMessage(hScintilla, SCI_GETCHARAT, utf8BytePos, 0);
+         sprintf(callTip, "%s %s0x%X%s", callTip,
+            (utf8BytePos == atPos ? "<" : ""), utf8ByteChar, (utf8BytePos == atPos ? ">" : ""));
+
+         unicodeHead = (utf8Char & 7) << 18;
+         unicodeVal = (unicodeVal << 6) + (utf8ByteChar & 63);
+      }
+
+      sprintf(unicodePoint, "%X", (unicodeHead + unicodeVal));
+
+      sprintf(callTip, "%s\n    Unicode: U+%s%s",
+         callTip, ((strlen(unicodePoint) % 2 == 0) ? "" : "0"), unicodePoint);
+   }
+
+   ::PostMessage(hScintilla, SCI_CALLTIPSHOW, atPos, (LPARAM)callTip);
 }
 
 DWORD WINAPI GotoLineColPanel::threadPositionHighlighter(void*) {

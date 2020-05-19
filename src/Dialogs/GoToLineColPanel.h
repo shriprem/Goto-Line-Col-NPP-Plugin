@@ -51,7 +51,7 @@ protected :
    void updateLineRangeText();
    void updateColumnRangeText(int line);
    int navigateToColPos();
-   void showCalltip(HWND hScintilla, int line, int column, int atPos);
+   void buildCalltip(HWND hScintilla, int line, int column, int atPos);
    char callTip[500];
    static DWORD WINAPI threadPositionHighlighter(void*);
 };

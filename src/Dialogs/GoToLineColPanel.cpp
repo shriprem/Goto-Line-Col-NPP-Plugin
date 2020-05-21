@@ -66,7 +66,7 @@ INT_PTR CALLBACK GotoLineColPanel::run_dlgProc(UINT message, WPARAM wParam, LPAR
 
 void GotoLineColPanel::localize() {
    ::SetDlgItemText(_hSelf, IDC_GOLINE_STATIC, GOLINECOL_LABEL_GOLINE);
-   ::SetDlgItemText(_hSelf, IDC_GOCOL_STATIC, GOLINECOL_LABEL_GOCOL);
+   ::SetDlgItemText(_hSelf, IDC_GOCOL_STATIC, GOLINECOL_LABEL_BYTE_COL);
    ::SetDlgItemText(_hSelf, IDOK, GOLINECOL_LABEL_BTN_GO);
    ::SetDlgItemText(_hSelf, IDCLOSE, GOLINECOL_LABEL_BTN_CLOSE);
    ::SetDlgItemText(_hSelf, IDC_GOLINECOL_PREFS, MENU_PREFERENCES);
@@ -91,11 +91,23 @@ void GotoLineColPanel::loadPreferences() {
 
    allPrefs = _prefsIO.loadPreferences();
 
-   wchar_t note[100];
-   swprintf(note, 100, GOLINECOL_EXPAND_TABS_NOTE,
-                     allPrefs.expandTabs ? L"" : GOLINECOL_EXPAND_TABS_STATE,
-                     (int)::SendMessage(hScintilla, SCI_GETTABWIDTH, 0, 0));
-   ::SetDlgItemText(_hSelf, IDC_GOLINECOL_EXPAND_TABS, note);
+   ::SetDlgItemText(_hSelf, IDC_GOCOL_STATIC,
+      allPrefs.useByteCol ? GOLINECOL_LABEL_BYTE_COL : GOLINECOL_LABEL_CHAR_COL);
+
+   wchar_t numColumns[20];
+   wchar_t colCountNote[100];
+
+   int tabWidth{ allPrefs.useByteCol ? 1 : (int)::SendMessage(hScintilla, SCI_GETTABWIDTH, 0, 0) };
+   if (tabWidth > 1)
+      swprintf(numColumns, 20, GOLINECOL_NUM_COLS, tabWidth);
+
+   swprintf(colCountNote, 100, GOLINECOL_TAB_CHAR_NOTE,
+      (tabWidth == 1) ? GOLINECOL_SINGLE_COL : numColumns);
+   ::SetDlgItemText(_hSelf, IDC_GOLINECOL_TAB_CHAR_NOTE, colCountNote);
+
+   swprintf(colCountNote, 100, GOLINECOL_UTF8_CHAR_NOTE,
+       allPrefs.useByteCol ? GOLINECOL_MULTI_COLS : GOLINECOL_SINGLE_COL);
+   ::SetDlgItemText(_hSelf, IDC_GOLINECOL_UTF8_CHAR_NOTE, colCountNote);
 }
 
 void GotoLineColPanel::updatePanelColPos() {
@@ -158,17 +170,17 @@ int GotoLineColPanel::getLineMaxPos(int line) {
 
    int endPos = (int)::SendMessage(hScintilla, SCI_GETLINEENDPOSITION, line - 1, 0);
 
-   int col = (allPrefs.expandTabs) ?
-               (int)::SendMessage(hScintilla, SCI_GETCOLUMN, endPos, 0) :
-               endPos - (int)::SendMessage(hScintilla, SCI_POSITIONFROMLINE, line - 1, 0);
+   int col = (allPrefs.useByteCol) ?
+      endPos - (int)::SendMessage(hScintilla, SCI_POSITIONFROMLINE, line - 1, 0) :
+      (int)::SendMessage(hScintilla, SCI_GETCOLUMN, endPos, 0);
 
    return col + 1;
 };
 
 int GotoLineColPanel::getDocumentColumn(HWND hScintilla, int pos, int line) {
-   int col = (allPrefs.expandTabs) ?
-               (int)::SendMessage(hScintilla, SCI_GETCOLUMN, pos, 0) :
-               pos - (int)::SendMessage(hScintilla, SCI_POSITIONFROMLINE, line - 1, 0);
+   int col = (allPrefs.useByteCol) ?
+      pos - (int)::SendMessage(hScintilla, SCI_POSITIONFROMLINE, line - 1, 0) :
+      (int)::SendMessage(hScintilla, SCI_GETCOLUMN, pos, 0);
 
    return col + 1;
 }
@@ -177,9 +189,9 @@ int GotoLineColPanel::setDocumentColumn(HWND hScintilla, int line, int lineStart
    column = (column < 1) ? 1 :
             (column > lineMaxPos) ? lineMaxPos : column;
 
-   int gotoPos = (allPrefs.expandTabs) ?
-                  (int)::SendMessage(hScintilla, SCI_FINDCOLUMN, line - 1, column - 1) :
-                  lineStartPos + column - 1;
+   int gotoPos = (allPrefs.useByteCol) ?
+      lineStartPos + column - 1 :
+      (int)::SendMessage(hScintilla, SCI_FINDCOLUMN, line - 1, column - 1);
 
    ::SendMessage(hScintilla, SCI_GOTOPOS, gotoPos, 0);
    return gotoPos;
@@ -259,15 +271,12 @@ void GotoLineColPanel::buildCalltip(HWND hScintilla, int line, int column, int a
 {
    unsigned char atChar;
    int colPos;
-   char colPosText[100]{""};
 
    colPos = (int)::SendMessage(hScintilla, SCI_GETCOLUMN, atPos, 0) + 1;
-   if (colPos != column)
-      sprintf(colPosText, "Char Column: %u\n", colPos);
-
    atChar = (unsigned char)::SendMessage(hScintilla, SCI_GETCHARAT, atPos, 0);
-   sprintf(callTip, "       Line: %u\n%sByte Column: %u\n\n  ANSI Byte: 0x%X [%u]",
-      line, colPosText, column, atChar, atChar);
+
+   sprintf(callTip, "       Line: %u\nChar Column: %u\nByte Column: %u\n\n  ANSI Byte: 0x%X [%u]",
+      line, colPos, column, atChar, atChar);
 
    if ((atChar & 0x80) == 0 ||
       ::SendMessage(nppData._nppHandle, NPPM_GETBUFFERENCODING,

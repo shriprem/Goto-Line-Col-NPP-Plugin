@@ -29,16 +29,17 @@ STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSM
 CAPTION "<Goto Line, Column>"
 FONT 8, "MS Shell Dlg", 400, 0, 0x0
 BEGIN
-    RTEXT           "Goto Line:",IDC_GOLINE_STATIC,5,14,41,8
-    EDITTEXT        IDC_GOLINE_EDIT,47,12,41,12,ES_NUMBER
-    LTEXT           "",IDC_GOLINE_RANGE,94,14,100,8
-    RTEXT           "At column:",IDC_GOCOL_STATIC,5,33,41,8
-    EDITTEXT        IDC_GOCOL_EDIT,47,32,41,12,ES_NUMBER
-    LTEXT           "",IDC_GOCOL_RANGE,94,33,100,8
+    RTEXT           "Goto Line:",IDC_GOLINE_STATIC,5,14,44,8
+    EDITTEXT        IDC_GOLINE_EDIT,50,12,41,12,ES_NUMBER
+    LTEXT           "",IDC_GOLINE_RANGE,95,14,100,8
+    RTEXT           "Byte column:",IDC_GOCOL_STATIC,5,33,44,8
+    EDITTEXT        IDC_GOCOL_EDIT,50,32,41,12,ES_NUMBER
+    LTEXT           "",IDC_GOCOL_RANGE,95,33,100,8
     DEFPUSHBUTTON   "&Go",IDOK,15,52,50,14
     PUSHBUTTON      "&Close",IDCLOSE,78,52,50,14
     PUSHBUTTON      "&Preferences",IDC_GOLINECOL_PREFS,141,52,50,14
-    LTEXT           "*column positioning will NOT count width of tabs [4 spaces]",IDC_GOLINECOL_EXPAND_TABS,4,79,194,18
+    LTEXT           "Each TAB char will count as 4 columns", IDC_GOLINECOL_TAB_CHAR_NOTE,4,79,194,18
+    LTEXT           "Each multibyte UTF-8 char will count as multiple columns", IDC_GOLINECOL_UTF8_CHAR_NOTE,4,89,194,18
 END
 
 IDD_PREFERENCES_DIALOG DIALOGEX 26, 41, 335, 272
@@ -53,7 +54,7 @@ BEGIN
                     "Button",BS_AUTOCHECKBOX | WS_TABSTOP,27,61,159,15,WS_EX_RIGHT
     CONTROL         "Highlight character at destination",IDC_PREFS_BRACE_HILITE,
                     "Button",BS_AUTOCHECKBOX | WS_TABSTOP,27,81,159,15,WS_EX_RIGHT
-    CONTROL         "Expand TABS for column value computation",IDC_PREFS_EXPAND_TABS,
+    CONTROL         "Use byte count for column value computation", IDC_PREFS_USE_BYTE_COL,
                     "Button",BS_AUTOCHECKBOX | WS_TABSTOP,27,101,159,15,WS_EX_RIGHT
     CONTROL         "Cursor is centered in the editor at destination",IDC_PREFS_CENTER_CARET,
                     "Button",BS_AUTOCHECKBOX | WS_TABSTOP,27,121,159,15,WS_EX_RIGHT

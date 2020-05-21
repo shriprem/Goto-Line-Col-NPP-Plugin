@@ -1489,13 +1489,14 @@
 #define IDC_GOCOL_EDIT                  9012
 #define IDC_GOCOL_RANGE                 9013
 #define IDC_GOLINECOL_PREFS             9014
-#define IDC_GOLINECOL_EXPAND_TABS       9015
+#define IDC_GOLINECOL_TAB_CHAR_NOTE     9015
+#define IDC_GOLINECOL_UTF8_CHAR_NOTE    9016
 #define IDD_PREFERENCES_DIALOG          9100
 #define IDC_PREFS_AF_ONFOCUS            9101
 #define IDC_PREFS_AF_ONTABCHANGE        9102
 #define IDC_PREFS_SHOW_CALLTIP          9103
 #define IDC_PREFS_BRACE_HILITE          9104
-#define IDC_PREFS_EXPAND_TABS           9105
+#define IDC_PREFS_USE_BYTE_COL          9105
 #define IDC_PREFS_CENTER_CARET          9106
 #define IDC_PREFS_BRACE_HILITE2         9106
 #define IDC_PREFS_EDGE_BUFFER_LABEL     9107
@@ -1619,7 +1620,7 @@
 #define UNICODE_NOCHAR                  0xFFFF
 
 // Next default values for new objects
-// 
+//
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NO_MFC                     1

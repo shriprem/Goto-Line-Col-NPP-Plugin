@@ -18,7 +18,7 @@ struct ALL_PREFERENCES{
    int fillOnTabChange = TRUE;
    int showCalltip = TRUE;
    int braceHilite = TRUE;
-   int expandTabs = FALSE;
+   int useByteCol = TRUE;
    int centerCaret = TRUE;
    int edgeBuffer = 10;
    int caretFlashSeconds = 3;
@@ -48,7 +48,7 @@ protected:
    const TCHAR autoFillOnTabChangeKey[PREFS_STR_MAX_LEN] = L"FillOnTabChange";
    const TCHAR showCallTipKey[PREFS_STR_MAX_LEN]         = L"ShowCallTip";
    const TCHAR braceHiliteKey[PREFS_STR_MAX_LEN]         = L"BraceHighlight";
-   const TCHAR expandTabsKey[PREFS_STR_MAX_LEN]          = L"ExpandTabs";
+   const TCHAR useByteColKey[PREFS_STR_MAX_LEN]          = L"UseByteCol";
    const TCHAR centerCaretKey[PREFS_STR_MAX_LEN]         = L"CenterCaret";
 
    const TCHAR edgeBufferKey[PREFS_STR_MAX_LEN]          = L"EdgeBuffer";

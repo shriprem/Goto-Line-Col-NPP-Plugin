@@ -27,12 +27,12 @@ void PreferencesIO::setPref(LPCWSTR key, int val) {
 }
 
 ALL_PREFERENCES PreferencesIO::loadPreferences() {
-   allPrefs.fillOnFocus = (getPref(autoFillOnFocusKey, TRUE) != FALSE);
-   allPrefs.fillOnTabChange = (getPref(autoFillOnTabChangeKey, TRUE) !=FALSE);
-   allPrefs.showCalltip = (getPref(showCallTipKey, TRUE) != FALSE);
-   allPrefs.braceHilite = (getPref(braceHiliteKey, TRUE) != FALSE);
-   allPrefs.expandTabs = (getPref(expandTabsKey, FALSE) != FALSE);
-   allPrefs.centerCaret = (getPref(centerCaretKey, TRUE) != FALSE);
+   allPrefs.fillOnFocus = getPref(autoFillOnFocusKey, TRUE);
+   allPrefs.fillOnTabChange = getPref(autoFillOnTabChangeKey, TRUE);
+   allPrefs.showCalltip = getPref(showCallTipKey, TRUE);
+   allPrefs.braceHilite = getPref(braceHiliteKey, TRUE);
+   allPrefs.useByteCol = getPref(useByteColKey, TRUE);
+   allPrefs.centerCaret = getPref(centerCaretKey, TRUE);
 
    int edgeBuffer = getPref(edgeBufferKey, 10);
    allPrefs.edgeBuffer = (edgeBuffer < 1) ? 1 : ((edgeBuffer > 10) ? 10 : edgeBuffer);
@@ -40,7 +40,7 @@ ALL_PREFERENCES PreferencesIO::loadPreferences() {
    int caretFlash = getPref(caretFlashSecondsKey, 3);
    allPrefs.caretFlashSeconds = (caretFlash < 1) ? 1 : ((caretFlash > 10) ? 10 : caretFlash);
 
-   allPrefs.showTooltip = (getPref(showTooltipKey, TRUE) != FALSE);
+   allPrefs.showTooltip = getPref(showTooltipKey, TRUE);
 
    int tooltipSeconds = getPref(tooltipSecondsKey, 20);
    allPrefs.tooltipSeconds = (tooltipSeconds < 1) ? 1 : ((tooltipSeconds > 20) ? 20 : tooltipSeconds);
@@ -54,7 +54,7 @@ ALL_PREFERENCES PreferencesIO::resetPreferences() {
    defPrefs.fillOnTabChange = TRUE;
    defPrefs.showCalltip = TRUE;
    defPrefs.braceHilite = TRUE;
-   defPrefs.expandTabs = FALSE;
+   defPrefs.useByteCol = TRUE;
    defPrefs.centerCaret = TRUE;
    defPrefs.edgeBuffer = 10;
    defPrefs.caretFlashSeconds = 3;
@@ -71,7 +71,7 @@ void PreferencesIO::savePreferences(ALL_PREFERENCES prefs) {
    setPref(autoFillOnTabChangeKey, prefs.fillOnTabChange);
    setPref(showCallTipKey, prefs.showCalltip);
    setPref(braceHiliteKey, prefs.braceHilite);
-   setPref(expandTabsKey, prefs.expandTabs);
+   setPref(useByteColKey, prefs.useByteCol);
    setPref(centerCaretKey, prefs.centerCaret);
 
    setPref(edgeBufferKey, prefs.edgeBuffer);

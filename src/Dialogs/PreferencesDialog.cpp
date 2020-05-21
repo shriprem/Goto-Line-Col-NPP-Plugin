@@ -35,7 +35,7 @@ void PreferencesDialog::localize()
    ::SetDlgItemText(_hSelf, IDC_PREFS_AF_ONTABCHANGE, PREFS_LABEL_AF_ONTABCHANGE);
    ::SetDlgItemText(_hSelf, IDC_PREFS_SHOW_CALLTIP, PREFS_LABEL_SHOW_CALLTIP);
    ::SetDlgItemText(_hSelf, IDC_PREFS_BRACE_HILITE, PREFS_LABEL_BRACE_HILITE);
-   ::SetDlgItemText(_hSelf, IDC_PREFS_EXPAND_TABS, PREFS_LABEL_EXPAND_TABS);
+   ::SetDlgItemText(_hSelf, IDC_PREFS_USE_BYTE_COL, PREFS_LABEL_USE_BYTE_COL);
    ::SetDlgItemText(_hSelf, IDC_PREFS_EDGE_BUFFER_LABEL, PREFS_LABEL_EDGE_BUFFER);
    ::SetDlgItemText(_hSelf, IDC_PREFS_CARET_FLASH_LABEL, PREFS_LABEL_CARET_FLASH);
 
@@ -145,7 +145,7 @@ void PreferencesDialog::loadPreferences(bool iniFile) {
    setCheckedState(IDC_PREFS_AF_ONTABCHANGE, tPrefs.fillOnTabChange);
    setCheckedState(IDC_PREFS_SHOW_CALLTIP, tPrefs.showCalltip);
    setCheckedState(IDC_PREFS_BRACE_HILITE, tPrefs.braceHilite);
-   setCheckedState(IDC_PREFS_EXPAND_TABS, tPrefs.expandTabs);
+   setCheckedState(IDC_PREFS_USE_BYTE_COL, tPrefs.useByteCol);
    setCheckedState(IDC_PREFS_CENTER_CARET, tPrefs.centerCaret);
 
    setTbarPosition(hEdgeBuffer, IDC_PREFS_EDGE_BUFFER_VALUE, tPrefs.edgeBuffer);
@@ -173,7 +173,7 @@ void PreferencesDialog::savePreferences() {
    tPrefs.fillOnTabChange = getCheckedState(IDC_PREFS_AF_ONTABCHANGE);
    tPrefs.showCalltip = getCheckedState(IDC_PREFS_SHOW_CALLTIP);
    tPrefs.braceHilite = getCheckedState(IDC_PREFS_BRACE_HILITE);
-   tPrefs.expandTabs = getCheckedState(IDC_PREFS_EXPAND_TABS);
+   tPrefs.useByteCol = getCheckedState(IDC_PREFS_USE_BYTE_COL);
    tPrefs.centerCaret = getCheckedState(IDC_PREFS_CENTER_CARET);
 
    tPrefs.edgeBuffer = getTbarPosition(hEdgeBuffer);
@@ -196,7 +196,7 @@ void PreferencesDialog::createTooltips() {
    if (!hTooltips[3])
       hTooltips[3] = createToolTip(_hSelf, IDC_PREFS_BRACE_HILITE, PREFS_LABEL_BRACE_HILITE, PREFS_TIP_BRACE_HILITE);
    if (!hTooltips[4])
-      hTooltips[4] = createToolTip(_hSelf, IDC_PREFS_EXPAND_TABS, PREFS_LABEL_EXPAND_TABS, PREFS_TIP_EXPAND_TABS);
+      hTooltips[4] = createToolTip(_hSelf, IDC_PREFS_USE_BYTE_COL, PREFS_LABEL_USE_BYTE_COL, PREFS_TIP_USE_BYTE_COL);
    if (!hTooltips[5])
       hTooltips[5] = createToolTip(_hSelf, IDC_PREFS_CENTER_CARET, PREFS_LABEL_CENTER_CARET, PREFS_TIP_CENTER_CURSOR);
 

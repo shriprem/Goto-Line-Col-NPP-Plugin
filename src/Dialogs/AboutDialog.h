@@ -1,7 +1,7 @@
 #ifndef _ABOUTDIALOG_H
 #define _ABOUTDIALOG_H
 
-#define PLUGIN_VERSION              L"Version 1.0.0.1"
+#define PLUGIN_VERSION              L"Version 1.1.0.0"
 #define PLUGIN_ATTRIBUTION          L"(c) 2020, Shridhar Kumar"
 #define PLUGIN_GITHUB_PAGE          L"https://github.com/shriprem/Goto-Line-Col-NPP-Plugin"
 

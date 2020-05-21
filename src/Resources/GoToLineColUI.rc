@@ -29,20 +29,22 @@ STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSM
 CAPTION "<Goto Line, Column>"
 FONT 8, "MS Shell Dlg", 400, 0, 0x0
 BEGIN
-    LTEXT           "ᴬᴮ",IDC_GOLINECOL_FOOTNOTE_AB,91,27,17,8
-    LTEXT           "ᴬ",IDC_GOLINECOL_FOOTNOTE_A,4,73,8,8
-    LTEXT           "ᴮ",IDC_GOLINECOL_FOOTNOTE_B,4,85,8,8
+    LTEXT           "ᴬᴮ",IDC_GOCOL_FOOTNOTE_AB,103,26,8,8
+    LTEXT           "ᴬ",IDC_GOCOL_FOOTNOTE_A,4,73,8,8
+    LTEXT           "ᴮ",IDC_GOCOL_FOOTNOTE_B,4,85,8,8
     RTEXT           "Goto Line:",IDC_GOLINE_STATIC,5,14,44,8
     EDITTEXT        IDC_GOLINE_EDIT,50,12,41,12,ES_NUMBER
-    LTEXT           "",IDC_GOLINE_RANGE,96,14,99,8
+    CONTROL         "",IDC_GOLINE_SPIN,"msctls_updown32",UDS_ARROWKEYS,91,11,10,14
+    LTEXT           "",IDC_GOLINE_RANGE,105,14,95,8
     RTEXT           "Byte column:",IDC_GOCOL_STATIC,5,33,44,8
     EDITTEXT        IDC_GOCOL_EDIT,50,32,41,12,ES_NUMBER
-    LTEXT           "",IDC_GOCOL_RANGE,96,33,99,8
+    CONTROL         "",IDC_GOCOL_SPIN,"msctls_updown32",UDS_ARROWKEYS,91,31,10,14
+    LTEXT           "",IDC_GOCOL_RANGE,105,33,95,8
     DEFPUSHBUTTON   "&Go",IDOK,15,52,50,14
     PUSHBUTTON      "&Close",IDCLOSE,78,52,50,14
     PUSHBUTTON      "&Preferences",IDC_GOLINECOL_PREFS,141,52,50,14
-    LTEXT           "Each TAB char will count as 4 columns",IDC_GOLINECOL_TAB_CHAR_NOTE,10,76,185,8
-    LTEXT           "Each multibyte UTF-8 char will count as multiple columns",IDC_GOLINECOL_UTF8_CHAR_NOTE,10,88,185,8
+    LTEXT           "Each TAB char will count as 4 columns",IDC_GOCOL_TAB_CHAR_NOTE,10,76,185,8
+    LTEXT           "Each multibyte UTF-8 char will count as multiple columns",IDC_GOCOL_UTF8_CHAR_NOTE,10,88,185,8
 END
 
 IDD_PREFERENCES_DIALOG DIALOGEX 26, 41, 335, 272
@@ -57,7 +59,7 @@ BEGIN
                     "Button",BS_AUTOCHECKBOX | WS_TABSTOP,27,61,159,15,WS_EX_RIGHT
     CONTROL         "Highlight character at destination",IDC_PREFS_BRACE_HILITE,
                     "Button",BS_AUTOCHECKBOX | WS_TABSTOP,27,81,159,15,WS_EX_RIGHT
-    CONTROL         "Use byte count for column value computation", IDC_PREFS_USE_BYTE_COL,
+    CONTROL         "Use byte count for column value computation",IDC_PREFS_USE_BYTE_COL,
                     "Button",BS_AUTOCHECKBOX | WS_TABSTOP,27,101,159,15,WS_EX_RIGHT
     CONTROL         "Cursor is centered in the editor at destination",IDC_PREFS_CENTER_CARET,
                     "Button",BS_AUTOCHECKBOX | WS_TABSTOP,27,121,159,15,WS_EX_RIGHT
@@ -95,17 +97,17 @@ END
 // TEXTINCLUDE
 //
 
-1 TEXTINCLUDE
+1 TEXTINCLUDE 
 BEGIN
     "resource.h\0"
 END
 
-2 TEXTINCLUDE
+2 TEXTINCLUDE 
 BEGIN
     "#include <windows.h>\0"
 END
 
-3 TEXTINCLUDE
+3 TEXTINCLUDE 
 BEGIN
     "\0"
 END

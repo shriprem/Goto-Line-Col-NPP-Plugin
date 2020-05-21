@@ -103,11 +103,11 @@ void GotoLineColPanel::loadPreferences() {
 
    swprintf(colCountNote, 100, GOLINECOL_TAB_CHAR_NOTE,
       (tabWidth == 1) ? GOLINECOL_SINGLE_COL : numColumns);
-   ::SetDlgItemText(_hSelf, IDC_GOLINECOL_TAB_CHAR_NOTE, colCountNote);
+   ::SetDlgItemText(_hSelf, IDC_GOCOL_TAB_CHAR_NOTE, colCountNote);
 
    swprintf(colCountNote, 100, GOLINECOL_UTF8_CHAR_NOTE,
        allPrefs.useByteCol ? GOLINECOL_MULTI_COLS : GOLINECOL_SINGLE_COL);
-   ::SetDlgItemText(_hSelf, IDC_GOLINECOL_UTF8_CHAR_NOTE, colCountNote);
+   ::SetDlgItemText(_hSelf, IDC_GOCOL_UTF8_CHAR_NOTE, colCountNote);
 }
 
 void GotoLineColPanel::updatePanelColPos() {

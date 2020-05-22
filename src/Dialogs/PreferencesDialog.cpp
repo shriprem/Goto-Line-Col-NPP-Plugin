@@ -51,7 +51,6 @@ void PreferencesDialog::localize()
 INT_PTR CALLBACK PreferencesDialog::run_dlgProc(UINT message, WPARAM wParam, LPARAM lParam) {
    switch (message) {
    case WM_COMMAND:
-   {
       switch LOWORD(wParam) {
       case IDOK:
          savePreferences();
@@ -68,19 +67,19 @@ INT_PTR CALLBACK PreferencesDialog::run_dlgProc(UINT message, WPARAM wParam, LPA
 
       case IDC_PREFS_CENTER_CARET:
       {
-         BOOL enabled = !getCheckedState(IDC_PREFS_CENTER_CARET);
-         enableControl(IDC_PREFS_EDGE_BUFFER_LABEL, enabled);
-         enableControl(IDC_PREFS_EDGE_BUFFER_SLIDER, enabled);
-         enableControl(IDC_PREFS_EDGE_BUFFER_VALUE, enabled);
+         BOOL bCenterCaret{ !getCheckedState(IDC_PREFS_CENTER_CARET) };
+         enableControl(IDC_PREFS_EDGE_BUFFER_LABEL, bCenterCaret);
+         enableControl(IDC_PREFS_EDGE_BUFFER_SLIDER, bCenterCaret);
+         enableControl(IDC_PREFS_EDGE_BUFFER_VALUE, bCenterCaret);
          break;
       }
 
       case IDC_PREFS_TOOLTIP_SHOW:
       {
-         BOOL enabled = getCheckedState(IDC_PREFS_TOOLTIP_SHOW);
-         enableControl(IDC_PREFS_TOOLTIP_DUR_LABEL, enabled);
-         enableControl(IDC_PREFS_TOOLTIP_DURATION, enabled);
-         enabled ? createTooltips() : destroyTooltips();
+         BOOL bShowTooltip{ getCheckedState(IDC_PREFS_TOOLTIP_SHOW) };
+         enableControl(IDC_PREFS_TOOLTIP_DUR_LABEL, bShowTooltip);
+         enableControl(IDC_PREFS_TOOLTIP_DURATION, bShowTooltip);
+         bShowTooltip ? createTooltips() : destroyTooltips();
          break;
       }
 
@@ -91,17 +90,14 @@ INT_PTR CALLBACK PreferencesDialog::run_dlgProc(UINT message, WPARAM wParam, LPA
       }
 
       return FALSE;
-   }
 
    case WM_HSCROLL:
-   {
       if (lParam == (LPARAM)hEdgeBuffer)
          syncTbarToText(hEdgeBuffer, IDC_PREFS_EDGE_BUFFER_VALUE);
       else if (lParam == (LPARAM)hCaretFlash)
          syncTbarToText(hCaretFlash, IDC_PREFS_CARET_FLASH_VALUE);
 
       return FALSE;
-   }
 
    default:
       return 0;

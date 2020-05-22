@@ -50,6 +50,8 @@ protected :
    int getInputColumn() const;
    void updateLineRangeText();
    void updateColumnRangeText(int line);
+   void switchLine(bool bNext);
+   void switchCol(bool bNext);
    int navigateToColPos();
    void buildCalltip(HWND hScintilla, int line, int column, int atPos);
    char callTip[500];

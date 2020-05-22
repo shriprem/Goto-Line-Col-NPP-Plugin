@@ -19,7 +19,6 @@
 INT_PTR CALLBACK GotoLineColPanel::run_dlgProc(UINT message, WPARAM wParam, LPARAM lParam) {
    switch (message) {
    case WM_COMMAND :
-   {
       switch LOWORD(wParam) {
       case IDC_GOLINE_EDIT:
          updateColumnRangeText(getInputLineValidated());
@@ -42,7 +41,6 @@ INT_PTR CALLBACK GotoLineColPanel::run_dlgProc(UINT message, WPARAM wParam, LPAR
       }
 
       break;
-   }
 
    case WM_LBUTTONDOWN:
    case WM_MBUTTONDOWN:
@@ -50,12 +48,31 @@ INT_PTR CALLBACK GotoLineColPanel::run_dlgProc(UINT message, WPARAM wParam, LPAR
       ::SetFocus(_hSelf);
       break;
 
-   case WM_SETFOCUS :
-   {
+   case WM_NOTIFY:
+      switch (((LPNMHDR)lParam)->code) {
+      case UDN_DELTAPOS:
+         bool bNext{ ((LPNMUPDOWN)lParam)->iDelta > 0 };
+
+         switch (((LPNMHDR)lParam)->idFrom) {
+         case IDC_GOLINE_SPIN:
+            switchLine(bNext);
+            //::MessageBox(NULL, bNext ? L"Up" : L"Down", L"Line", MB_OK);
+            break;
+
+         case IDC_GOCOL_SPIN:
+            switchCol(bNext);
+            //::MessageBox(NULL, bNext ? L"Up" : L"Down", L"Col", MB_OK);
+            break;
+         }
+         break;
+      }
+
+      break;
+
+   case WM_SETFOCUS:
       if (allPrefs.fillOnFocus)
          updatePanelColPos();
       break;
-   }
 
    default :
       return DockingDlgInterface::run_dlgProc(message, wParam, lParam);
@@ -221,6 +238,53 @@ void GotoLineColPanel::updateLineRangeText() {
 
 void GotoLineColPanel::updateColumnRangeText(int line) {
    ::SetDlgItemText(_hSelf, IDC_GOCOL_RANGE, (GOLINECOL_MAX_FOR_LINE + TO_WSTR(getLineMaxPos(line)) + L"]").c_str());
+}
+
+void GotoLineColPanel::switchLine(bool bNext)
+{
+   int inputLine{ getInputLineValidated() };
+
+   if (bNext) {
+      if (inputLine + 1 > getLineCount()) {
+         clearCalltip();
+         return;
+      }
+      inputLine++;
+   }
+   else {
+      if (inputLine == 1) {
+         clearCalltip();
+         return;
+      }
+      inputLine--;
+   }
+
+   ::SetDlgItemText(_hSelf, IDC_GOLINE_EDIT, TO_LPCWSTR(inputLine));
+   updateColumnRangeText(inputLine);
+   navigateToColPos();
+}
+
+void GotoLineColPanel::switchCol(bool bNext)
+{
+   int inputCol{ getInputColumn() };
+
+   if (bNext) {
+      if (inputCol + 1 > getLineMaxPos(getInputLineValidated())) {
+         clearCalltip();
+         return;
+      }
+      inputCol++;
+   }
+   else {
+      if (inputCol == 1) {
+         clearCalltip();
+         return;
+      }
+      inputCol--;
+   }
+
+   ::SetDlgItemText(_hSelf, IDC_GOCOL_EDIT, TO_LPCWSTR(inputCol));
+   navigateToColPos();
 }
 
 int GotoLineColPanel::navigateToColPos() {

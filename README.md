@@ -1,4 +1,5 @@
-# GotoLineCol Notepad++ Plugin
+# GotoLineCol Notepad++ Plugin 
+Version 1.1.0.0
 
 A plugin for navigating to a specified line and column position in a file.
 
@@ -44,12 +45,12 @@ After navigating to the specified position in a document, the plugin displays a 
 ##### Calltip display for multi-byte-based characters:
 ![Calltip](https://raw.githubusercontent.com/shriprem/Goto-Line-Col-NPP-Plugin/master/images/CalltipValidUTF-8.png)
 
-For the UTF-8 byte sequence, the byte corresponding to the *Byte Column* position is within angle brackets. Also, note the difference in the *Char Column* and *Byte Column* values in the calltip.
+In the UTF-8 byte sequence, the byte corresponding to the *Byte Column* position is within angle brackets. Also, note the difference in the *Char Column* and *Byte Column* values due to the multi-byte-based characters.
 
 ##### Calltip display for multi-byte-based characters with invalid UTF-8 byte sequence:
 ![Calltip](https://raw.githubusercontent.com/shriprem/Goto-Line-Col-NPP-Plugin/master/images/CalltipInvalidUTF-8.png)
 
-The calltip can be handy to check, say if a character is a fancy quote: “ (U+201C) or ” (U+201D) instead of the plain double quote: " (ASCII 34).
+The calltip can be handy to determine, for instance, if a character is a smart quote: “ (U+201C) or ” (U+201D) instead of the plain double quote: " (ASCII 34).
 
 The calltip also provides supplemental highlighting of the cursor at the destination position (see: <a href="#highlight-character-at-destination-checked">Highlight character at destination</a>).
 
@@ -81,3 +82,18 @@ For this setting, specify the number of characters to have as a buffer margin fr
 When the cursor is set at its default width of '1', it can be hard to spot the cursor at its new position. Especially when tired eyes have been staring at a sea of text on a widescreen monitor. To aid quick spotting, the cursor is briefly set to block mode at the destination position.
 
 For this setting, specify the number of seconds to have the cursor flashing in block mode at the destination position.
+
+
+## Change History
+
+### Version 1.1.0.0
+1. Added UTF-8 byte sequence and Unicode code point display in the calltip.
+2. Added *Char Column* and *Byte Column* display in the calltip.
+3. In the Preferences dialog, replaced option *'Expand TABS for column value computation (Unchecked)'* with *'Use byte count for column value computation (Checked)'*.
+4. Added spin controls on the Line and Column input fields for quick navigation to adjacent line or column.
+
+
+### Version 1.0.0.1
+1. Increased Line and Column input fields to accept up to 8 digits.
+
+

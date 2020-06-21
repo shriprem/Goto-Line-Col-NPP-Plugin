@@ -328,7 +328,7 @@ ASALocalRun/
 
 # MFractors (Xamarin productivity tool) working folder 
 .mfractor/
-/vs.proj/GotoLineCol.sln
+#/vs.proj/GotoLineCol.sln
 /vs.proj/GotoLineCol.lib
 /vs.proj/GotoLineCol.exp
 /bin64

@@ -82,18 +82,3 @@ For this setting, specify the number of characters to have as a buffer margin fr
 When the cursor is set at its default width of '1', it can be hard to spot the cursor at its new position. Especially when tired eyes have been staring at a sea of text on a widescreen monitor. To aid quick spotting, the cursor is briefly set to block mode at the destination position.
 
 For this setting, specify the number of seconds to have the cursor flashing in block mode at the destination position.
-
-
-## Change History
-
-### Version 1.1.0.0
-1. Added UTF-8 byte sequence and Unicode code point display in the calltip.
-2. Added *Char Column* and *Byte Column* display in the calltip.
-3. In the Preferences dialog, replaced option *'Expand TABS for column value computation (Unchecked)'* with *'Use byte count for column value computation (Checked)'*.
-4. Added spin controls on the Line and Column input fields for quick navigation to adjacent line or column.
-
-
-### Version 1.0.0.1
-1. Increased Line and Column input fields to accept up to 8 digits.
-
-

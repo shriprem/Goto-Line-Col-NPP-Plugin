@@ -7,6 +7,8 @@ It is also handy for quickly inspecting byte-level content in files. The plugin 
 
 By default, the plugin uses byte-based positioning to navigate to the specified column.
 
+## Plugin Panel
+
 ![GotoLineCol Panel](https://raw.githubusercontent.com/shriprem/Goto-Line-Col-NPP-Plugin/master/images/PanelBytePos.png)
 
 The plugin can also be configured to use character-based positioning to navigate to the specified column.
@@ -19,8 +21,8 @@ The spin controls on the line and column fields provide quick navigation between
 [*Since the line numbers increase downwards in a document, the spin control's down arrow increments the line or column number; and the up arrow decrements the line or column number. This orientation is a reversal of the typical spin control behavior in Windows; but it aligns with the document layout.*]
 
 
-## Preferences
-##### Preferences Dialog
+## Preferences Dialog
+
 ![Preferences](https://raw.githubusercontent.com/shriprem/Goto-Line-Col-NPP-Plugin/master/images/Preferencesv1.1.png)
 
 The plugin has the following customizable Preference settings (default values are within parantheses):
@@ -82,3 +84,8 @@ For this setting, specify the number of characters to have as a buffer margin fr
 When the cursor is set at its default width of '1', it can be hard to spot the cursor at its new position. Especially when tired eyes have been staring at a sea of text on a widescreen monitor. To aid quick spotting, the cursor is briefly set to block mode at the destination position.
 
 For this setting, specify the number of seconds to have the cursor flashing in block mode at the destination position.
+
+---
+### Also, see:
+1. <a href="https://github.com/shriprem/Goto-Line-Col-NPP-Plugin/blob/master/VersionHistory.md">Version History</a>
+2. <a href="https://github.com/shriprem/Goto-Line-Col-NPP-Plugin/blob/master/FAQs.md">Frequently Asked Questions</a>

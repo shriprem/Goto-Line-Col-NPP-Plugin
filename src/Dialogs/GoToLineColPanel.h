@@ -22,10 +22,12 @@ extern NppData nppData;
 extern PreferencesIO _prefsIO;
 
 static bool idemPotentKey {FALSE};
+constexpr int BUFFER_500{ 500 };
+constexpr int BUFFER_100{ 100 };
+constexpr int BUFFER_20{ 20 };
 
 class GotoLineColPanel : public DockingDlgInterface {
 public :
-   int instance_id{ 0 };
    GotoLineColPanel() :DockingDlgInterface(IDD_GOTOLINECOL_DOCKPANEL) {};
 
    void localize();
@@ -36,9 +38,8 @@ public :
    void clearCalltip();
 
 protected :
-   ALL_PREFERENCES allPrefs;
-
    virtual INT_PTR CALLBACK run_dlgProc(UINT message, WPARAM wParam, LPARAM lParam);
+   static DWORD WINAPI threadPositionHighlighter(void*);
 
    static HWND getCurrentScintilla();
    static int getLineCount();
@@ -54,8 +55,9 @@ protected :
    void switchCol(bool bNext);
    int navigateToColPos();
    void buildCalltip(HWND hScintilla, int line, int column, int atPos);
-   char callTip[500];
-   static DWORD WINAPI threadPositionHighlighter(void*);
+
+   ALL_PREFERENCES allPrefs;
+   char callTip[BUFFER_500];
 };
 
 #endif //GOTOLINECOL_DLG_H

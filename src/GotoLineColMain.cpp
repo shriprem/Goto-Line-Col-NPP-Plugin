@@ -78,11 +78,6 @@ extern "C" __declspec(dllexport) void beNotified(SCNotification *notifyCode)
       }
       break;
 
-      case SCN_CHARADDED:
-      {
-      }
-      break;
-
       case SCN_UPDATEUI:
       {
          _gotoPanel.clearCalltip();

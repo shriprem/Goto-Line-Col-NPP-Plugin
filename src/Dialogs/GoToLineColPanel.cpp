@@ -102,35 +102,33 @@ void GotoLineColPanel::setParent(HWND parent2set) {
 };
 
 void GotoLineColPanel::loadPreferences() {
-   HWND hScintilla = getCurrentScintilla();
-   if (!hScintilla)
-      return;
+   HWND hScintilla{ getCurrentScintilla() };
+   if (!hScintilla) return;
 
    allPrefs = _prefsIO.loadPreferences();
 
    ::SetDlgItemText(_hSelf, IDC_GOCOL_STATIC,
       allPrefs.useByteCol ? GOLINECOL_LABEL_BYTE_COL : GOLINECOL_LABEL_CHAR_COL);
 
-   wchar_t numColumns[20];
-   wchar_t colCountNote[100];
+   wchar_t numColumns[BUFFER_20];
+   wchar_t colCountNote[BUFFER_100];
 
    int tabWidth{ allPrefs.useByteCol ? 1 : (int)::SendMessage(hScintilla, SCI_GETTABWIDTH, 0, 0) };
    if (tabWidth > 1)
-      swprintf(numColumns, 20, GOLINECOL_NUM_COLS, tabWidth);
+      swprintf(numColumns, BUFFER_20, GOLINECOL_NUM_COLS, tabWidth);
 
-   swprintf(colCountNote, 100, GOLINECOL_TAB_CHAR_NOTE,
+   swprintf(colCountNote, BUFFER_100, GOLINECOL_TAB_CHAR_NOTE,
       (tabWidth == 1) ? GOLINECOL_SINGLE_COL : numColumns);
    ::SetDlgItemText(_hSelf, IDC_GOCOL_TAB_CHAR_NOTE, colCountNote);
 
-   swprintf(colCountNote, 100, GOLINECOL_UTF8_CHAR_NOTE,
+   swprintf(colCountNote, BUFFER_100, GOLINECOL_UTF8_CHAR_NOTE,
        allPrefs.useByteCol ? GOLINECOL_MULTI_COLS : GOLINECOL_SINGLE_COL);
    ::SetDlgItemText(_hSelf, IDC_GOCOL_UTF8_CHAR_NOTE, colCountNote);
 }
 
 void GotoLineColPanel::updatePanelColPos() {
-   HWND hScintilla = getCurrentScintilla();
-   if (!hScintilla)
-      return;
+   HWND hScintilla{ getCurrentScintilla() };
+   if (!hScintilla) return;
 
    int pos = (int)::SendMessage(hScintilla, SCI_GETCURRENTPOS, 0, 0);
    int line = (int)::SendMessage(hScintilla, SCI_LINEFROMPOSITION, pos, 0) + 1;
@@ -147,9 +145,8 @@ void GotoLineColPanel::updatePanelColPos() {
 }
 
 void GotoLineColPanel::clearCalltip() {
-   HWND hScintilla = getCurrentScintilla();
-   if (!hScintilla)
-      return;
+   HWND hScintilla{ getCurrentScintilla() };
+   if (!hScintilla) return;
 
    ::SendMessage(hScintilla, SCI_CALLTIPCANCEL, NULL, NULL);
 }
@@ -165,25 +162,22 @@ HWND GotoLineColPanel::getCurrentScintilla() {
 }
 
 int GotoLineColPanel::getLineCount() {
-   HWND hScintilla = getCurrentScintilla();
-   if (!hScintilla)
-      return -1;
+   HWND hScintilla{ getCurrentScintilla() };
+   if (!hScintilla) return -1;
 
    return (int)::SendMessage(hScintilla, SCI_GETLINECOUNT, 0, 0);
 };
 
 int GotoLineColPanel::setFocusOnEditor() {
-   HWND hScintilla = getCurrentScintilla();
-   if (!hScintilla)
-      return -1;
+   HWND hScintilla{ getCurrentScintilla() };
+   if (!hScintilla) return -1;
 
    return (int)::SendMessage(hScintilla, SCI_GRABFOCUS, 0, 0);
 };
 
 int GotoLineColPanel::getLineMaxPos(int line) {
-   HWND hScintilla = getCurrentScintilla();
-   if (!hScintilla)
-      return -1;
+   HWND hScintilla{ getCurrentScintilla() };
+   if (!hScintilla) return -1;
 
    int endPos = (int)::SendMessage(hScintilla, SCI_GETLINEENDPOSITION, line - 1, 0);
 
@@ -288,9 +282,8 @@ void GotoLineColPanel::switchCol(bool bNext)
 }
 
 int GotoLineColPanel::navigateToColPos() {
-   HWND hScintilla = getCurrentScintilla();
-   if (!hScintilla)
-      return FALSE;
+   HWND hScintilla{ getCurrentScintilla() };
+   if (!hScintilla) return FALSE;
 
    int line = getInputLineValidated();
 
@@ -339,7 +332,8 @@ void GotoLineColPanel::buildCalltip(HWND hScintilla, int line, int column, int a
    colPos = (int)::SendMessage(hScintilla, SCI_GETCOLUMN, atPos, 0) + 1;
    atChar = (unsigned char)::SendMessage(hScintilla, SCI_GETCHARAT, atPos, 0);
 
-   sprintf(callTip, "       Line: %u\nChar Column: %u\nByte Column: %u\n\n  ANSI Byte: 0x%X [%u]",
+   snprintf(callTip, BUFFER_500,
+      "       Line: %u\nChar Column: %u\nByte Column: %u\n\n  ANSI Byte: 0x%X [%u]",
       line, colPos, column, atChar, atChar);
 
    if ((atChar & 0x80) == 0 ||
@@ -356,7 +350,7 @@ void GotoLineColPanel::buildCalltip(HWND hScintilla, int line, int column, int a
    }
 
    if ((utf8StartChar & 0x40) == 0) {
-      sprintf(callTip, "%s\nInvalid UTF-8 Byte Sequence!", callTip);
+      snprintf(callTip, BUFFER_500, "%s\nInvalid UTF-8 Byte Sequence!", callTip);
       return;
    }
 
@@ -364,17 +358,17 @@ void GotoLineColPanel::buildCalltip(HWND hScintilla, int line, int column, int a
    int utf8BytePos{ utf8StartPos };
    int unicodeHead{ 0 }, unicodeTail{ 0 };
    bool atMark;
-   char utf8Text[100];
+   char utf8Text[BUFFER_100];
 
    atMark = (utf8StartPos == atPos);
-   sprintf(utf8Text, "UTF-8 Bytes: %s0x%X%s",
+   snprintf(utf8Text, BUFFER_100, "UTF-8 Bytes: %s0x%X%s",
       (atMark ? "<" : ""), utf8StartChar, (atMark ? ">" : ""));
 
    if ((utf8StartChar & 0xC0) == 0xC0) {
       atMark = (++utf8BytePos == atPos);
       utf8ByteChar = (unsigned char)::SendMessage(hScintilla, SCI_GETCHARAT, utf8BytePos, 0);
 
-      sprintf(utf8Text, "%s %s0x%X%s", utf8Text,
+      snprintf(utf8Text, BUFFER_100, "%s %s0x%X%s", utf8Text,
          (atMark ? "<" : ""), utf8ByteChar, (atMark ? ">" : ""));
 
       unicodeHead = (utf8StartChar & 31) << 6;
@@ -385,7 +379,7 @@ void GotoLineColPanel::buildCalltip(HWND hScintilla, int line, int column, int a
       atMark = (++utf8BytePos == atPos);
       utf8ByteChar = (unsigned char)::SendMessage(hScintilla, SCI_GETCHARAT, utf8BytePos, 0);
 
-      sprintf(utf8Text, "%s %s0x%X%s", utf8Text,
+      snprintf(utf8Text, BUFFER_100, "%s %s0x%X%s", utf8Text,
          (atMark ? "<" : ""), utf8ByteChar, (atMark ? ">" : ""));
 
       unicodeHead = (utf8StartChar & 15) << 12;
@@ -397,7 +391,7 @@ void GotoLineColPanel::buildCalltip(HWND hScintilla, int line, int column, int a
       utf8ByteChar = (unsigned char)::SendMessage(hScintilla, SCI_GETCHARAT, utf8BytePos, 0);
 
       atMark = (utf8BytePos == atPos);
-      sprintf(utf8Text, "%s %s0x%X%s", utf8Text,
+      snprintf(utf8Text, BUFFER_100, "%s %s0x%X%s", utf8Text,
          (atMark ? "<" : ""), utf8ByteChar, (atMark ? ">" : ""));
 
       unicodeHead = (utf8StartChar & 7) << 18;
@@ -405,14 +399,14 @@ void GotoLineColPanel::buildCalltip(HWND hScintilla, int line, int column, int a
    }
 
    if (atPos > utf8BytePos) {
-      sprintf(callTip, "%s\nInvalid UTF-8 Byte Sequence!", callTip);
+      snprintf(callTip, BUFFER_100, "%s\nInvalid UTF-8 Byte Sequence!", callTip);
       return;
    }
 
-   char unicodePoint[10];
+   char unicodePoint[BUFFER_20];
 
-   sprintf(unicodePoint, "%X", (unicodeHead + unicodeTail));
-   sprintf(callTip, "%s\n%s\n    Unicode: U+%s%s", callTip,
+   snprintf(unicodePoint, BUFFER_20, "%X", (unicodeHead + unicodeTail));
+   snprintf(callTip, BUFFER_500, "%s\n%s\n    Unicode: U+%s%s", callTip,
       utf8Text, ((strlen(unicodePoint) % 2 == 0) ? "" : "0"), unicodePoint);
 }
 

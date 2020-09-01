@@ -1506,7 +1506,6 @@
 #define IDC_PREFS_BRACE_HILITE          9104
 #define IDC_PREFS_USE_BYTE_COL          9105
 #define IDC_PREFS_CENTER_CARET          9106
-#define IDC_PREFS_BRACE_HILITE2         9106
 #define IDC_PREFS_EDGE_BUFFER_LABEL     9107
 #define IDC_PREFS_EDGE_BUFFER_SLIDER    9108
 #define IDC_PREFS_EDGE_BUFFER_VALUE     9109
@@ -1628,7 +1627,7 @@
 #define UNICODE_NOCHAR                  0xFFFF
 
 // Next default values for new objects
-// 
+//
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NO_MFC                     1

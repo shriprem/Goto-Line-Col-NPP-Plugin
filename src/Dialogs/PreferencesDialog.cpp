@@ -5,8 +5,7 @@ void PreferencesDialog::doDialog(HINSTANCE hInst) {
       Window::init(hInst, nppData._nppHandle);
       create(IDD_PREFERENCES_DIALOG);
 
-      if (_prefsIO.allPrefs.language != LANG_ENGLISH)
-         localize();
+      if (_gLanguage != LANG_ENGLISH) localize();
    }
 
    goToCenter();

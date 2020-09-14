@@ -13,7 +13,6 @@ extern NppData nppData;
 #define TO_LPCWSTR(str) std::to_wstring(str).c_str()
 
 struct ALL_PREFERENCES{
-   int language = LANG_ENGLISH;
    int fillOnFocus = TRUE;
    int fillOnTabChange = TRUE;
    int showCalltip = TRUE;

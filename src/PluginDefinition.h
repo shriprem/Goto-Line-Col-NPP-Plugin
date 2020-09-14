@@ -17,18 +17,27 @@
 
 #define WIN32_LEAN_AND_MEAN      // Exclude rarely-used stuff from Windows headers
 // Windows Header Files:
-#include <windows.h>
-#include <Shlwapi.h>
-#include <shellapi.h>
-#include <CommCtrl.h>
 #include <string>
 
+#include <windows.h>
+#include <CommCtrl.h>
+#include <shellapi.h>
+#include <Shlwapi.h>
+
 #include "NPP/PluginInterface.h"
-#include "PreferencesIO.h"
 #include "Resources/resource.h"
 #include "Resources/localization.h"
+#include "PreferencesIO.h"
 
-const int nbFunc = 4;
+constexpr int _gLanguage = LANG_ENGLISH;
+
+const enum MenuIndex {
+   MI_GOTO_PANEL,
+   MI_PREFS_DIALOG,
+   MI_SEPARATOR,
+   MI_ABOUT_DIALOG,
+   MI_COUNT
+};
 
 void pluginInit(HANDLE hModule);
 void pluginCleanUp();

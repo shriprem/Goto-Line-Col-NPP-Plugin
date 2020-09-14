@@ -49,58 +49,60 @@ void PreferencesDialog::localize()
 }
 
 INT_PTR CALLBACK PreferencesDialog::run_dlgProc(UINT message, WPARAM wParam, LPARAM lParam) {
-   switch (message) {
-   case WM_COMMAND:
-      switch LOWORD(wParam) {
-      case IDOK:
-         savePreferences();
-         display(FALSE);
-         break;
+   switch (message)
+   {
+      case WM_COMMAND:
+         switch LOWORD(wParam)
+         {
+            case IDOK:
+               savePreferences();
+               display(FALSE);
+               break;
 
-      case IDCANCEL:
-         display(FALSE);
-         break;
+            case IDCANCEL:
+               display(FALSE);
+               break;
 
-      case IDC_PREFS_DEFAULTS:
-         loadPreferences(false);
-         break;
+            case IDC_PREFS_DEFAULTS:
+               loadPreferences(false);
+               break;
 
-      case IDC_PREFS_CENTER_CARET:
-      {
-         BOOL bCenterCaret{ !getCheckedState(IDC_PREFS_CENTER_CARET) };
-         enableControl(IDC_PREFS_EDGE_BUFFER_LABEL, bCenterCaret);
-         enableControl(IDC_PREFS_EDGE_BUFFER_SLIDER, bCenterCaret);
-         enableControl(IDC_PREFS_EDGE_BUFFER_VALUE, bCenterCaret);
-         break;
-      }
+            case IDC_PREFS_CENTER_CARET:
+            {
+               BOOL bCenterCaret{ !getCheckedState(IDC_PREFS_CENTER_CARET) };
+               enableControl(IDC_PREFS_EDGE_BUFFER_LABEL, bCenterCaret);
+               enableControl(IDC_PREFS_EDGE_BUFFER_SLIDER, bCenterCaret);
+               enableControl(IDC_PREFS_EDGE_BUFFER_VALUE, bCenterCaret);
+               break;
+            }
 
-      case IDC_PREFS_TOOLTIP_SHOW:
-      {
-         BOOL bShowTooltip{ getCheckedState(IDC_PREFS_TOOLTIP_SHOW) };
-         enableControl(IDC_PREFS_TOOLTIP_DUR_LABEL, bShowTooltip);
-         enableControl(IDC_PREFS_TOOLTIP_DURATION, bShowTooltip);
-         bShowTooltip ? createTooltips() : destroyTooltips();
-         break;
-      }
+            case IDC_PREFS_TOOLTIP_SHOW:
+            {
+               BOOL bShowTooltip{ getCheckedState(IDC_PREFS_TOOLTIP_SHOW) };
+               enableControl(IDC_PREFS_TOOLTIP_DUR_LABEL, bShowTooltip);
+               enableControl(IDC_PREFS_TOOLTIP_DURATION, bShowTooltip);
+               bShowTooltip ? createTooltips() : destroyTooltips();
+               break;
+            }
 
-      case IDC_PREFS_TOOLTIP_DURATION:
-         if (HIWORD(wParam) == EN_KILLFOCUS)
-            setTooltipsDuration(getEditValue(IDC_PREFS_TOOLTIP_DURATION));
-         break;
-      }
+            case IDC_PREFS_TOOLTIP_DURATION:
+               if (HIWORD(wParam) == EN_KILLFOCUS)
+                  setTooltipsDuration(getEditValue(IDC_PREFS_TOOLTIP_DURATION));
+               break;
+         }
 
-      return FALSE;
+         return FALSE;
 
-   case WM_HSCROLL:
-      if (lParam == (LPARAM)hEdgeBuffer)
-         syncTbarToText(hEdgeBuffer, IDC_PREFS_EDGE_BUFFER_VALUE);
-      else if (lParam == (LPARAM)hCaretFlash)
-         syncTbarToText(hCaretFlash, IDC_PREFS_CARET_FLASH_VALUE);
+      case WM_HSCROLL:
+         if (lParam == (LPARAM)hEdgeBuffer)
+            syncTbarToText(hEdgeBuffer, IDC_PREFS_EDGE_BUFFER_VALUE);
+         else if (lParam == (LPARAM)hCaretFlash)
+            syncTbarToText(hCaretFlash, IDC_PREFS_CARET_FLASH_VALUE);
 
-      return FALSE;
+         return FALSE;
 
-   default:
-      return 0;
+      default:
+         return 0;
    }
 }
 

@@ -17,65 +17,67 @@
 #include <wchar.h>
 
 INT_PTR CALLBACK GotoLineColPanel::run_dlgProc(UINT message, WPARAM wParam, LPARAM lParam) {
-   switch (message) {
-   case WM_COMMAND :
-      switch LOWORD(wParam) {
-      case IDC_GOLINE_EDIT:
-         updateColumnRangeText(getInputLineValidated());
-         break;
+   switch (message)
+   {
+      case WM_COMMAND :
+         switch LOWORD(wParam)
+         {
+            case IDC_GOLINE_EDIT:
+               updateColumnRangeText(getInputLineValidated());
+               break;
 
-      case IDOK :
-         navigateToColPos();
-         break;
+            case IDOK :
+               navigateToColPos();
+               break;
 
-      case IDCANCEL:
-      case IDCLOSE :
-         setFocusOnEditor();
-         ShowGotoLineColPanel(false);
-         break;
+            case IDCANCEL:
+            case IDCLOSE :
+               setFocusOnEditor();
+               ShowGotoLineColPanel(false);
+               break;
 
-      case IDC_GOLINECOL_PREFS:
-         ::SetFocus(_hSelf);
-         ShowPreferencesDialog();
-         break;
-      }
-
-      break;
-
-   case WM_LBUTTONDOWN:
-   case WM_MBUTTONDOWN:
-   case WM_RBUTTONDOWN:
-      ::SetFocus(_hSelf);
-      break;
-
-   case WM_NOTIFY:
-      switch (((LPNMHDR)lParam)->code) {
-      case UDN_DELTAPOS:
-         bool bNext{ ((LPNMUPDOWN)lParam)->iDelta > 0 };
-
-         switch (((LPNMHDR)lParam)->idFrom) {
-         case IDC_GOLINE_SPIN:
-            switchLine(bNext);
-            //::MessageBox(NULL, bNext ? L"Up" : L"Down", L"Line", MB_OK);
-            break;
-
-         case IDC_GOCOL_SPIN:
-            switchCol(bNext);
-            //::MessageBox(NULL, bNext ? L"Up" : L"Down", L"Col", MB_OK);
-            break;
+            case IDC_GOLINECOL_PREFS:
+               ::SetFocus(_hSelf);
+               ShowPreferencesDialog();
+               break;
          }
+
          break;
-      }
 
-      break;
+      case WM_LBUTTONDOWN:
+      case WM_MBUTTONDOWN:
+      case WM_RBUTTONDOWN:
+         ::SetFocus(_hSelf);
+         break;
 
-   case WM_SETFOCUS:
-      if (allPrefs.fillOnFocus)
-         updatePanelColPos();
-      break;
+      case WM_NOTIFY:
+         switch (((LPNMHDR)lParam)->code)
+         {
+            case UDN_DELTAPOS:
+               bool bNext{ ((LPNMUPDOWN)lParam)->iDelta > 0 };
 
-   default :
-      return DockingDlgInterface::run_dlgProc(message, wParam, lParam);
+               switch (((LPNMHDR)lParam)->idFrom)
+               {
+                  case IDC_GOLINE_SPIN:
+                     switchLine(bNext);
+                     break;
+
+                  case IDC_GOCOL_SPIN:
+                     switchCol(bNext);
+                     break;
+               }
+               break;
+         }
+
+         break;
+
+      case WM_SETFOCUS:
+         if (allPrefs.fillOnFocus)
+            updatePanelColPos();
+         break;
+
+      default :
+         return DockingDlgInterface::run_dlgProc(message, wParam, lParam);
    }
 
    return FALSE;

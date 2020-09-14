@@ -14,9 +14,6 @@
 
 
 #include "PluginDefinition.h"
-#include <stdlib.h>
-#include "NPP/menuCmdID.h"
-
 #include "Dialogs/GoToLineColPanel.h"
 #include "Dialogs/PreferencesDialog.h"
 #include "Dialogs/AboutDialog.h"
@@ -27,16 +24,10 @@
    #define generic_itoa itoa
 #endif
 
-#define INDEX_GOTO_PANEL 0
-#define INDEX_PREFS_DIALOG 1
-#define INDEX_ABOUT_DIALOG 3
-
-FuncItem funcItem[nbFunc];
+FuncItem funcItem[MI_COUNT];
 
 NppData nppData;
 HINSTANCE _gModule;
-int _gLanguage = LANG_ENGLISH;
-
 PreferencesIO _prefsIO;
 GotoLineColPanel _gotoPanel;
 PreferencesDialog _prefsDlg;
@@ -58,20 +49,20 @@ void commandMenuInit() {
    shKeyOpen->_isShift = false;
    shKeyOpen->_key = VK_F7;
 
-   setCommand(INDEX_GOTO_PANEL, MENU_SHOW_PANEL, ToggleGotoLineColPanel, shKeyOpen, _gotoPanel.isVisible());
-   setCommand(INDEX_PREFS_DIALOG, MENU_PREFERENCES, ShowPreferencesDialog, 0, 0);
-   setCommand(2, TEXT("-"), NULL, NULL, false);
-   setCommand(INDEX_ABOUT_DIALOG, MENU_ABOUT, ShowAboutDialog, 0, 0);
+   setCommand(MI_GOTO_PANEL, MENU_SHOW_PANEL, ToggleGotoLineColPanel, shKeyOpen, _gotoPanel.isVisible());
+   setCommand(MI_PREFS_DIALOG, MENU_PREFERENCES, ShowPreferencesDialog, 0, 0);
+   setCommand(MI_SEPARATOR, TEXT("-"), NULL, NULL, false);
+   setCommand(MI_ABOUT_DIALOG, MENU_ABOUT, ShowAboutDialog, 0, 0);
 }
 
 
 void commandMenuCleanUp() {
-   delete funcItem[INDEX_GOTO_PANEL]._pShKey;
+   delete funcItem[MI_GOTO_PANEL]._pShKey;
 }
 
 // Initialize plugin commands
 bool setCommand(size_t index, TCHAR *cmdName, PFUNCPLUGINCMD pFunc, ShortcutKey *sk, bool checkOnInit) {
-    if (index >= nbFunc)
+    if (index >= MI_COUNT)
         return false;
 
     if (!pFunc)
@@ -104,7 +95,7 @@ HWND createToolTip(HWND hDlg, int toolID, LPWSTR pTitle, LPWSTR pMessage) {
       return (HWND)NULL;
 
    // Associate the tooltip with the tool.
-   TOOLINFO toolInfo = { 0 };
+   TOOLINFO toolInfo {};
    toolInfo.cbSize = sizeof(toolInfo);
    toolInfo.hwnd = hDlg;
    toolInfo.uFlags = TTF_IDISHWND | TTF_SUBCLASS;
@@ -123,14 +114,14 @@ void ToggleGotoLineColPanel() {
 
    if (hidden) {
       _gotoPanel.setParent(nppData._nppHandle);
-      tTbData  data = { 0 };
+      tTbData  data {};
 
       if (!_gotoPanel.isCreated()) {
          _gotoPanel.create(&data);
 
          data.uMask = DWS_DF_CONT_RIGHT;
          data.pszModuleName = _gotoPanel.getPluginFileName();
-         data.dlgID = INDEX_GOTO_PANEL;
+         data.dlgID = MI_GOTO_PANEL;
          data.pszName = MENU_PANEL_NAME;
 
          ::SendMessage(nppData._nppHandle, NPPM_DMMREGASDCKDLG, 0, (LPARAM)& data);
@@ -147,7 +138,7 @@ void ShowGotoLineColPanel(bool show) {
    if (show)
       _gotoPanel.loadPreferences();
 
-   ::CheckMenuItem(::GetMenu(nppData._nppHandle), funcItem[INDEX_GOTO_PANEL]._cmdID,
+   ::CheckMenuItem(::GetMenu(nppData._nppHandle), funcItem[MI_GOTO_PANEL]._cmdID,
                MF_BYCOMMAND | (show ? MF_CHECKED : MF_UNCHECKED));
 }
 

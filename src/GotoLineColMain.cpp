@@ -15,7 +15,7 @@
 #include "PluginDefinition.h"
 #include "Dialogs/GoToLineColPanel.h"
 
-extern FuncItem funcItem[nbFunc];
+extern FuncItem funcItem[MI_COUNT];
 extern NppData nppData;
 
 extern GotoLineColPanel _gotoPanel;
@@ -56,7 +56,7 @@ extern "C" __declspec(dllexport) const TCHAR * getName()
 
 extern "C" __declspec(dllexport) FuncItem * getFuncsArray(int *nbF)
 {
-   *nbF = nbFunc;
+   *nbF = MI_COUNT;
    return funcItem;
 }
 

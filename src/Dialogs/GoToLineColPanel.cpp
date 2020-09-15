@@ -136,20 +136,14 @@ void GotoLineColPanel::loadPreferences() {
    ::SetDlgItemText(_hSelf, IDC_GOCOL_STATIC,
       allPrefs.useByteCol ? GOLINECOL_LABEL_BYTE_COL : GOLINECOL_LABEL_CHAR_COL);
 
-   wchar_t numColumns[BUFFER_20];
-   wchar_t colCountNote[BUFFER_100];
+   int tabWidth = allPrefs.useByteCol ? 1 : static_cast<int>(::SendMessage(hScintilla, SCI_GETTABWIDTH, 0, 0));
 
-   int tabWidth{ allPrefs.useByteCol ? 1 : static_cast<int>(::SendMessage(hScintilla, SCI_GETTABWIDTH, 0, 0)) };
-   if (tabWidth > 1)
-      swprintf(numColumns, BUFFER_20, GOLINECOL_NUM_COLS, tabWidth);
+   wstring tabNote = (tabWidth == 1) ? GOLINECOL_TAB_SINGLE_COL :
+      (GOLINECOL_TAB_MULTI_COL + to_wstring(tabWidth) + GOLINECOL_TAB_COLUMNS);
+   ::SetDlgItemText(_hSelf, IDC_GOCOL_TAB_CHAR_NOTE, tabNote.c_str());
 
-   swprintf(colCountNote, BUFFER_100, GOLINECOL_TAB_CHAR_NOTE,
-      (tabWidth == 1) ? GOLINECOL_SINGLE_COL : numColumns);
-   ::SetDlgItemText(_hSelf, IDC_GOCOL_TAB_CHAR_NOTE, colCountNote);
-
-   swprintf(colCountNote, BUFFER_100, GOLINECOL_UTF8_CHAR_NOTE,
-       allPrefs.useByteCol ? GOLINECOL_MULTI_COLS : GOLINECOL_SINGLE_COL);
-   ::SetDlgItemText(_hSelf, IDC_GOCOL_UTF8_CHAR_NOTE, colCountNote);
+   wstring utf8CharNote = allPrefs.useByteCol ? GOLINECOL_UTF8_MULTI_COL : GOLINECOL_UTF8_SINGLE_COL;
+   ::SetDlgItemText(_hSelf, IDC_GOCOL_UTF8_CHAR_NOTE, utf8CharNote.c_str());
 }
 
 void GotoLineColPanel::updatePanelColPos() {
@@ -194,11 +188,11 @@ int GotoLineColPanel::getLineCount() {
    return static_cast<int>(::SendMessage(hScintilla, SCI_GETLINECOUNT, 0, 0));
 };
 
-int GotoLineColPanel::setFocusOnEditor() {
+void GotoLineColPanel::setFocusOnEditor() {
    HWND hScintilla{ getCurrentScintilla() };
-   if (!hScintilla) return -1;
+   if (!hScintilla) return;
 
-   return static_cast<int>(::SendMessage(hScintilla, SCI_GRABFOCUS, 0, 0));
+   ::SendMessage(hScintilla, SCI_GRABFOCUS, 0, 0);
 };
 
 int GotoLineColPanel::getLineMaxPos(int line) {
@@ -359,9 +353,11 @@ void GotoLineColPanel::initCursorPosData(HWND hScintilla, int line, int column, 
    colPos = static_cast<int>(::SendMessage(hScintilla, SCI_GETCOLUMN, atPos, 0)) + 1;
    atChar = static_cast<UCHAR>(::SendMessage(hScintilla, SCI_GETCHARAT, atPos, 0));
 
-   snprintf(cursorPosData, BUFFER_500,
-      "       Line: %u\nChar Column: %u\nByte Column: %u\n\n  ANSI Byte: 0x%X [%u]",
-      line, colPos, column, atChar, atChar);
+   snprintf(cursorPosData, BUFFER_500, "%s%u\n%s%u\n%s%u\n\n%s0x%X [%u]",
+      CUR_POS_DATA_LINE, line,
+      CUR_POS_DATA_CHAR_COL, colPos,
+      CUR_POS_DATA_BYTE_COL, column,
+      CUR_POS_DATA_ANSI_BYTE, atChar, atChar);
 
    if ((atChar & 0x80) == 0 ||
       ::SendMessage(nppData._nppHandle, NPPM_GETBUFFERENCODING,
@@ -377,7 +373,7 @@ void GotoLineColPanel::initCursorPosData(HWND hScintilla, int line, int column, 
    }
 
    if ((utf8StartChar & 0x40) == 0) {
-      snprintf(cursorPosData, BUFFER_500, "%s\nInvalid UTF-8 Byte Sequence!", cursorPosData);
+      snprintf(cursorPosData, BUFFER_500, "%s\n%s", CUR_POS_DATA_INVALID_UTF8, cursorPosData);
       return;
    }
 
@@ -388,7 +384,7 @@ void GotoLineColPanel::initCursorPosData(HWND hScintilla, int line, int column, 
    char utf8Text[BUFFER_100];
 
    atMark = (utf8StartPos == atPos);
-   snprintf(utf8Text, BUFFER_100, "UTF-8 Bytes: %s0x%X%s",
+   snprintf(utf8Text, BUFFER_100, "%s%s0x%X%s", CUR_POS_DATA_UTF8_BYTES,
       (atMark ? "<" : ""), utf8StartChar, (atMark ? ">" : ""));
 
    if ((utf8StartChar & 0xC0) == 0xC0) {
@@ -426,15 +422,15 @@ void GotoLineColPanel::initCursorPosData(HWND hScintilla, int line, int column, 
    }
 
    if (atPos > utf8BytePos) {
-      snprintf(cursorPosData, BUFFER_100, "%s\nInvalid UTF-8 Byte Sequence!", cursorPosData);
+      snprintf(cursorPosData, BUFFER_100, "%s\n%s", CUR_POS_DATA_INVALID_UTF8, cursorPosData);
       return;
    }
 
    char unicodePoint[BUFFER_20];
 
    snprintf(unicodePoint, BUFFER_20, "%X", (unicodeHead + unicodeTail));
-   snprintf(cursorPosData, BUFFER_500, "%s\n%s\n    Unicode: U+%s%s", cursorPosData,
-      utf8Text, ((strlen(unicodePoint) % 2 == 0) ? "" : "0"), unicodePoint);
+   snprintf(cursorPosData, BUFFER_500, "%s\n%s\n%sU+%s%s", cursorPosData, utf8Text,
+      CUR_POS_DATA_UNICODE, ((strlen(unicodePoint) % 2 == 0) ? "" : "0"), unicodePoint);
 }
 
 void GotoLineColPanel::loadCursorPosData() {

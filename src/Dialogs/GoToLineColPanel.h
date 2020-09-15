@@ -18,6 +18,11 @@
 #include "../PluginDefinition.h"
 #include "../NPP/DockingDlgInterface.h"
 
+using std::string;
+using std::wstring;
+using std::to_string;
+using std::to_wstring;
+
 extern NppData nppData;
 extern PreferencesIO _prefsIO;
 
@@ -45,7 +50,7 @@ protected :
 
    static HWND getCurrentScintilla();
    static int getLineCount();
-   static int setFocusOnEditor();
+   static void setFocusOnEditor();
    int getLineMaxPos(int line);
    int getDocumentColumn(HWND hScintilla, int pos, int line);
    int setDocumentColumn(HWND hScintilla, int line, int lineStartPos, int lineMaxPos, int column);

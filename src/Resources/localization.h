@@ -18,12 +18,20 @@
 
 #define GOLINECOL_MAX_FOR_FILE      L"[Max for file: "
 #define GOLINECOL_MAX_FOR_LINE      L"[Max for line: "
-#define GOLINECOL_SINGLE_COL        L"single column"
-#define GOLINECOL_MULTI_COLS        L"multiple columns"
-#define GOLINECOL_NUM_COLS          L"%d columns"
-#define GOLINECOL_TAB_CHAR_NOTE     L"Each TAB char will count as %ws"
-#define GOLINECOL_UTF8_CHAR_NOTE    L"Each multibyte UTF-8 char will count as %ws"
+#define GOLINECOL_TAB_SINGLE_COL    L"Each TAB char will count as single column"
+#define GOLINECOL_TAB_MULTI_COL     L"Each TAB char will count as "
+#define GOLINECOL_TAB_COLUMNS       L" columns"
+#define GOLINECOL_UTF8_SINGLE_COL   L"Each multibyte UTF-8 char will count as single column"
+#define GOLINECOL_UTF8_MULTI_COL    L"Each multibyte UTF-8 char will count as multiple columns"
 #define GOLINECOL_FIELD_LABEL       L"Cursor Position Data:"
+
+#define CUR_POS_DATA_LINE           "       Line: "
+#define CUR_POS_DATA_CHAR_COL       "Char Column: "
+#define CUR_POS_DATA_BYTE_COL       "Byte Column: "
+#define CUR_POS_DATA_ANSI_BYTE      "  ANSI Byte: "
+#define CUR_POS_DATA_INVALID_UTF8   "Invalid UTF-8 Byte Sequence!"
+#define CUR_POS_DATA_UTF8_BYTES     "UTF-8 Bytes: "
+#define CUR_POS_DATA_UNICODE        "    Unicode: "
 
 
 // Preferences Dialog

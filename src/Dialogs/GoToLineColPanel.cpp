@@ -88,20 +88,26 @@ void GotoLineColPanel::initPanel() {
 
    bool recentOS = (::SendMessage(nppData._nppHandle, NPPM_GETWINDOWSVERSION, NULL, NULL) >= WV_VISTA);
 
-   const long nFontSize = recentOS ? 10 : 8;
    const TCHAR* fontName = recentOS ? L"Consolas" : L"Courier New";
-
-   HDC hdc = GetDC(_hSelf);
-
-   logFont.lfHeight = -MulDiv(nFontSize, GetDeviceCaps(hdc, LOGPIXELSY), 72);
    wcscpy(logFont.lfFaceName, fontName);
 
-   HFONT hMonospaceFont = CreateFontIndirect(&logFont);
-
+   HDC hdc = GetDC(_hSelf);
+   logFont.lfHeight = -MulDiv((recentOS ? 10 : 8), GetDeviceCaps(hdc, LOGPIXELSY), 72);
    ReleaseDC(_hSelf, hdc);
 
+   logFont.lfWeight = 800;
+   logFont.lfUnderline = TRUE;
+   HFONT hMonospaceUnderlined = CreateFontIndirect(&logFont);
+
+   ::SendDlgItemMessage(_hSelf, IDC_GOLINECOL_FIELD_LABEL, WM_SETFONT,
+      (WPARAM)hMonospaceUnderlined, MAKELPARAM(true, 0));
+
+   logFont.lfWeight = 400;
+   logFont.lfUnderline = FALSE;
+   HFONT hMonospaceRegular = CreateFontIndirect(&logFont);
+
    ::SendDlgItemMessage(_hSelf, IDC_GOLINECOL_FIELD_INFO, WM_SETFONT,
-      (WPARAM)hMonospaceFont, MAKELPARAM(true, 0));
+      (WPARAM)hMonospaceRegular, MAKELPARAM(true, 0));
 
    if (_gLanguage != LANG_ENGLISH) localize();
 }
@@ -373,7 +379,7 @@ void GotoLineColPanel::initCursorPosData(HWND hScintilla, int line, int column, 
    }
 
    if ((utf8StartChar & 0x40) == 0) {
-      snprintf(cursorPosData, BUFFER_500, "%s\n%s", CUR_POS_DATA_INVALID_UTF8, cursorPosData);
+      snprintf(cursorPosData, BUFFER_500, "%s\n%s", cursorPosData, CUR_POS_DATA_INVALID_UTF8);
       return;
    }
 
@@ -422,7 +428,7 @@ void GotoLineColPanel::initCursorPosData(HWND hScintilla, int line, int column, 
    }
 
    if (atPos > utf8BytePos) {
-      snprintf(cursorPosData, BUFFER_100, "%s\n%s", CUR_POS_DATA_INVALID_UTF8, cursorPosData);
+      snprintf(cursorPosData, BUFFER_100, "%s\n%s", cursorPosData, CUR_POS_DATA_INVALID_UTF8);
       return;
    }
 

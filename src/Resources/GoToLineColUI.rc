@@ -42,7 +42,7 @@ BEGIN
     PUSHBUTTON      "&Preferences",IDC_GOLINECOL_PREFS,141,52,50,14
     LTEXT           "ᴬ",IDC_GOCOL_FOOTNOTE_A,4,79,8,8
     LTEXT           "ᴮ",IDC_GOCOL_FOOTNOTE_B,4,91,8,8
-    LTEXT           "Cursor Position Data:",IDC_GOLINECOL_FIELD_LABEL,10,124,83,8
+    LTEXT           "Cursor Position Data",IDC_GOLINECOL_FIELD_LABEL,10,124,185,10
     LTEXT           "",IDC_GOLINECOL_FIELD_INFO,10,138,179,75
     RTEXT           "Byte column:",IDC_GOCOL_STATIC,6,33,44,8
     LTEXT           "Each TAB char will count as 4 columns",IDC_GOCOL_TAB_CHAR_NOTE,10,82,185,8

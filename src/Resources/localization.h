@@ -23,7 +23,7 @@
 #define GOLINECOL_TAB_COLUMNS       L" columns"
 #define GOLINECOL_UTF8_SINGLE_COL   L"Each multibyte UTF-8 char will count as single column"
 #define GOLINECOL_UTF8_MULTI_COL    L"Each multibyte UTF-8 char will count as multiple columns"
-#define GOLINECOL_FIELD_LABEL       L"Cursor Position Data:"
+#define GOLINECOL_FIELD_LABEL       L"Cursor Position Data"
 
 #define CUR_POS_DATA_LINE           "       Line: "
 #define CUR_POS_DATA_CHAR_COL       "Char Column: "

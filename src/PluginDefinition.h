@@ -12,8 +12,7 @@
 //along with this program; if not, write to the Free Software
 //Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 
-#ifndef PLUGINDEFINITION_H
-#define PLUGINDEFINITION_H
+#pragma once
 
 #define WIN32_LEAN_AND_MEAN      // Exclude rarely-used stuff from Windows headers
 // Windows Header Files:
@@ -27,7 +26,12 @@
 #include "NPP/PluginInterface.h"
 #include "Resources/resource.h"
 #include "Resources/localization.h"
-#include "PreferencesIO.h"
+
+using std::string;
+using std::string_view;
+using std::wstring;
+using std::to_string;
+using std::to_wstring;
 
 static int _gLanguage = LANG_ENGLISH;
 
@@ -54,5 +58,3 @@ void GotoLineColDlgLoadPreferences();
 
 void ShowPreferencesDialog();
 void ShowAboutDialog();
-
-#endif //PLUGINDEFINITION_H

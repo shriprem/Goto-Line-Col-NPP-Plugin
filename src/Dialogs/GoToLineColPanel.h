@@ -16,6 +16,7 @@
 #define GOTOLINECOL_DLG_H
 
 #include "../Utils.h"
+#include "../PreferencesIO.h"
 #include "../NPP/DockingDlgInterface.h"
 
 extern NppData nppData;

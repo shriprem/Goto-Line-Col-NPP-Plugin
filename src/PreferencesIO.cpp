@@ -1,4 +1,4 @@
-#include "PluginDefinition.h"
+#include "PreferencesIO.h"
 
 void PreferencesIO::init() {
    nppMessage(NPPM_GETPLUGINSCONFIGDIR, MAX_PATH, (LPARAM)iniFilePath);

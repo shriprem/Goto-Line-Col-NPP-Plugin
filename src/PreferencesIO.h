@@ -3,7 +3,7 @@
 #ifndef _PREFERENCES_INI_H
 #define _PREFERENCES_INI_H
 
-#include "Utils.h"
+#include "PluginDefinition.h"
 
 struct ALL_PREFERENCES{
    int fillOnFocus = TRUE;

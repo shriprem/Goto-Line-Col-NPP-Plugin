@@ -14,6 +14,7 @@
 
 
 #include "PluginDefinition.h"
+#include "PreferencesIO.h"
 #include "Dialogs/GoToLineColPanel.h"
 #include "Dialogs/PreferencesDialog.h"
 #include "Dialogs/AboutDialog.h"

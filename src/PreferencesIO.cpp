@@ -23,7 +23,7 @@ int PreferencesIO::getPref(LPCWSTR key, int default) {
 }
 
 void PreferencesIO::setPref(LPCWSTR key, int val) {
-   ::WritePrivateProfileString(sectionName, key, TO_LPCWSTR(val), iniFilePath);
+   ::WritePrivateProfileString(sectionName, key, to_wstring(val).c_str(), iniFilePath);
 }
 
 ALL_PREFERENCES PreferencesIO::loadPreferences() {

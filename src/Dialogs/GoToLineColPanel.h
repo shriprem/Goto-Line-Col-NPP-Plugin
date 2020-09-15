@@ -18,9 +18,7 @@
 #include "../PluginDefinition.h"
 #include "../NPP/DockingDlgInterface.h"
 
-using std::string;
 using std::wstring;
-using std::to_string;
 using std::to_wstring;
 
 extern NppData nppData;

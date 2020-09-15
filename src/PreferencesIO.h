@@ -7,10 +7,8 @@
 
 extern NppData nppData;
 
-#define TO_STR(str) std::to_string(str)
-#define TO_WSTR(str) std::to_wstring(str)
-#define TO_LPCSTR(str) std::to_string(str).c_str()
-#define TO_LPCWSTR(str) std::to_wstring(str).c_str()
+using std::wstring;
+using std::to_wstring;
 
 struct ALL_PREFERENCES{
    int fillOnFocus = TRUE;

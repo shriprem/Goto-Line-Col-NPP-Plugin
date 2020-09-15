@@ -154,10 +154,10 @@ void GotoLineColPanel::updatePanelColPos() {
    int line = static_cast<int>(::SendMessage(hScintilla, SCI_LINEFROMPOSITION, pos, 0)) + 1;
    int col = getDocumentColumn(hScintilla, pos, line);
 
-   ::SetDlgItemText(_hSelf, IDC_GOLINE_EDIT, TO_LPCWSTR(line));
+   ::SetDlgItemText(_hSelf, IDC_GOLINE_EDIT, to_wstring(line).c_str());
    updateLineRangeText();
 
-   ::SetDlgItemText(_hSelf, IDC_GOCOL_EDIT, TO_LPCWSTR(col));
+   ::SetDlgItemText(_hSelf, IDC_GOCOL_EDIT, to_wstring(col).c_str());
    updateColumnRangeText(line);
 
    // Clear Idem Potent key if it's still set from a premature program termination
@@ -247,11 +247,11 @@ int GotoLineColPanel::getInputColumn() const {
 };
 
 void GotoLineColPanel::updateLineRangeText() {
-   ::SetDlgItemText(_hSelf, IDC_GOLINE_RANGE, (GOLINECOL_MAX_FOR_FILE + TO_WSTR(getLineCount()) + L"]").c_str());
+   ::SetDlgItemText(_hSelf, IDC_GOLINE_RANGE, (GOLINECOL_MAX_FOR_FILE + to_wstring(getLineCount()) + L"]").c_str());
 }
 
 void GotoLineColPanel::updateColumnRangeText(int line) {
-   ::SetDlgItemText(_hSelf, IDC_GOCOL_RANGE, (GOLINECOL_MAX_FOR_LINE + TO_WSTR(getLineMaxPos(line)) + L"]").c_str());
+   ::SetDlgItemText(_hSelf, IDC_GOCOL_RANGE, (GOLINECOL_MAX_FOR_LINE + to_wstring(getLineMaxPos(line)) + L"]").c_str());
 }
 
 void GotoLineColPanel::switchLine(bool bNext)
@@ -273,7 +273,7 @@ void GotoLineColPanel::switchLine(bool bNext)
       inputLine--;
    }
 
-   ::SetDlgItemText(_hSelf, IDC_GOLINE_EDIT, TO_LPCWSTR(inputLine));
+   ::SetDlgItemText(_hSelf, IDC_GOLINE_EDIT, to_wstring(inputLine).c_str());
    updateColumnRangeText(inputLine);
    navigateToColPos();
 }
@@ -297,7 +297,7 @@ void GotoLineColPanel::switchCol(bool bNext)
       inputCol--;
    }
 
-   ::SetDlgItemText(_hSelf, IDC_GOCOL_EDIT, TO_LPCWSTR(inputCol));
+   ::SetDlgItemText(_hSelf, IDC_GOCOL_EDIT, to_wstring(inputCol).c_str());
    navigateToColPos();
 }
 

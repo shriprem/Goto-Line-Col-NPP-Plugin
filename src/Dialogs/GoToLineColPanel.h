@@ -15,11 +15,8 @@
 #ifndef GOTOLINECOL_DLG_H
 #define GOTOLINECOL_DLG_H
 
-#include "../PluginDefinition.h"
+#include "../Utils.h"
 #include "../NPP/DockingDlgInterface.h"
-
-using std::wstring;
-using std::to_wstring;
 
 extern NppData nppData;
 extern PreferencesIO _prefsIO;

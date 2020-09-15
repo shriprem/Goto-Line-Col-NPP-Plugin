@@ -1,12 +1,12 @@
 #include "PluginDefinition.h"
 
 void PreferencesIO::init() {
-   ::SendMessage(nppData._nppHandle, NPPM_GETPLUGINSCONFIGDIR, MAX_PATH, (LPARAM)iniFilePath);
+   nppMessage(NPPM_GETPLUGINSCONFIGDIR, MAX_PATH, (LPARAM)iniFilePath);
 
    // if no existing config path, create it
    if (!PathFileExists(iniFilePath))
    {
-      ::CreateDirectory(iniFilePath, NULL);
+      CreateDirectory(iniFilePath, NULL);
    }
 
    PathAppend(iniFilePath, configFileName);
@@ -19,11 +19,11 @@ void PreferencesIO::init() {
 }
 
 int PreferencesIO::getPref(LPCWSTR key, int default) {
-   return ::GetPrivateProfileInt(sectionName, key, default, iniFilePath);
+   return GetPrivateProfileInt(sectionName, key, default, iniFilePath);
 }
 
 void PreferencesIO::setPref(LPCWSTR key, int val) {
-   ::WritePrivateProfileString(sectionName, key, to_wstring(val).c_str(), iniFilePath);
+   WritePrivateProfileString(sectionName, key, to_wstring(val).c_str(), iniFilePath);
 }
 
 ALL_PREFERENCES PreferencesIO::loadPreferences() {

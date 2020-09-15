@@ -1,7 +1,7 @@
 #ifndef _PREFERENCESDIALOG_H
 #define _PREFERENCESDIALOG_H
 
-#include "../PluginDefinition.h"
+#include "../Utils.h"
 #include "../NPP/StaticDialog.h"
 
 #define TOOLTIPS_COUNT 12

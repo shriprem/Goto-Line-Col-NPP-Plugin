@@ -22,6 +22,9 @@
     <ClCompile Include="..\src\PreferencesIO.cpp">
       <Filter>Base</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\Utils.cpp">
+      <Filter>Base</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\NPP\Docking.h">
@@ -71,6 +74,9 @@
     </ClInclude>
     <ClInclude Include="..\src\Resources\localization.h">
       <Filter>Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Utils.h">
+      <Filter>Base</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

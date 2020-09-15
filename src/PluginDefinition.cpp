@@ -76,36 +76,9 @@ bool setCommand(size_t index, TCHAR *cmdName, PFUNCPLUGINCMD pFunc, ShortcutKey 
     return true;
 }
 
-HWND createToolTip(HWND hDlg, int toolID, LPWSTR pTitle, LPWSTR pMessage) {
-   if (!toolID || !hDlg || !pMessage)
-      return FALSE;
-
-   // Get the window of the tool.
-   HWND hwndTool = GetDlgItem(hDlg, toolID);
-
-   // Create the tooltip.
-   HWND hwndTip = CreateWindowEx(NULL, TOOLTIPS_CLASS, NULL,
-      WS_POPUP | TTS_ALWAYSTIP | TTS_BALLOON,
-      CW_USEDEFAULT, CW_USEDEFAULT,
-      CW_USEDEFAULT, CW_USEDEFAULT,
-      hDlg, NULL,
-      _gModule, NULL);
-
-   if (!hwndTool || !hwndTip)
-      return (HWND)NULL;
-
-   // Associate the tooltip with the tool.
-   TOOLINFO toolInfo {};
-   toolInfo.cbSize = sizeof(toolInfo);
-   toolInfo.hwnd = hDlg;
-   toolInfo.uFlags = TTF_IDISHWND | TTF_SUBCLASS;
-   toolInfo.uId = (UINT_PTR)hwndTool;
-   toolInfo.lpszText = pMessage;
-   ::SendMessage(hwndTip, TTM_ADDTOOL, 0, (LPARAM)& toolInfo);
-   ::SendMessage(hwndTip, TTM_SETTITLE, TTI_INFO, (LPARAM)pTitle);
-   ::SendMessage(hwndTip, TTM_SETMAXTIPWIDTH, 0, (LPARAM)PREFS_TIP_MAX_WIDTH);
-
-   return hwndTip;
+LRESULT nppMessage(UINT messageID, WPARAM wparam, LPARAM lparam)
+{
+   return SendMessage(nppData._nppHandle, messageID, wparam, lparam);
 }
 
 // Dockable GotoLineCol Dialog
@@ -124,7 +97,7 @@ void ToggleGotoLineColPanel() {
          data.dlgID = MI_GOTO_PANEL;
          data.pszName = MENU_PANEL_NAME;
 
-         ::SendMessage(nppData._nppHandle, NPPM_DMMREGASDCKDLG, 0, (LPARAM)& data);
+         nppMessage(NPPM_DMMREGASDCKDLG, 0, (LPARAM)& data);
 
          _gotoPanel.initPanel();
       }
@@ -137,7 +110,7 @@ void ShowGotoLineColPanel(bool show) {
    if (show)
       _gotoPanel.loadPreferences();
 
-   ::CheckMenuItem(::GetMenu(nppData._nppHandle), funcItem[MI_GOTO_PANEL]._cmdID,
+   CheckMenuItem(GetMenu(nppData._nppHandle), funcItem[MI_GOTO_PANEL]._cmdID,
                MF_BYCOMMAND | (show ? MF_CHECKED : MF_UNCHECKED));
 }
 

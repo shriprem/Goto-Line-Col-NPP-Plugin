@@ -35,6 +35,7 @@
     <ClInclude Include="..\src\PluginDefinition.h" />
     <ClInclude Include="..\src\Resources\localization.h" />
     <ClInclude Include="..\src\Resources\resource.h" />
+    <ClInclude Include="..\src\Utils.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\Dialogs\AboutDialog.cpp" />
@@ -44,6 +45,7 @@
     <ClCompile Include="..\src\GotoLineColMain.cpp" />
     <ClCompile Include="..\src\PluginDefinition.cpp" />
     <ClCompile Include="..\src\PreferencesIO.cpp" />
+    <ClCompile Include="..\src\Utils.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="..\src\Resources\GotoLineColPlugin.rc" />
@@ -167,6 +169,7 @@
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <PrecompiledHeaderFile>stdafx.h</PrecompiledHeaderFile>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -194,6 +197,7 @@
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <OmitFramePointers>false</OmitFramePointers>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>

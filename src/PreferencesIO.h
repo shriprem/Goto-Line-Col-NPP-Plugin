@@ -3,12 +3,7 @@
 #ifndef _PREFERENCES_INI_H
 #define _PREFERENCES_INI_H
 
-#include "NPP/PluginInterface.h"
-
-extern NppData nppData;
-
-using std::wstring;
-using std::to_wstring;
+#include "Utils.h"
 
 struct ALL_PREFERENCES{
    int fillOnFocus = TRUE;

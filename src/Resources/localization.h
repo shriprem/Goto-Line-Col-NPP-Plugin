@@ -23,6 +23,7 @@
 #define GOLINECOL_NUM_COLS          L"%d columns"
 #define GOLINECOL_TAB_CHAR_NOTE     L"Each TAB char will count as %ws"
 #define GOLINECOL_UTF8_CHAR_NOTE    L"Each multibyte UTF-8 char will count as %ws"
+#define GOLINECOL_FIELD_LABEL       L"Cursor Position Data:"
 
 
 // Preferences Dialog

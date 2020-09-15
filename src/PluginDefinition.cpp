@@ -126,8 +126,7 @@ void ToggleGotoLineColPanel() {
 
          ::SendMessage(nppData._nppHandle, NPPM_DMMREGASDCKDLG, 0, (LPARAM)& data);
 
-         if (_gLanguage != LANG_ENGLISH)
-            _gotoPanel.localize();
+         _gotoPanel.initPanel();
       }
    }
    ShowGotoLineColPanel(hidden);

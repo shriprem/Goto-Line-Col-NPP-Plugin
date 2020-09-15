@@ -66,24 +66,19 @@ extern "C" __declspec(dllexport) void beNotified(SCNotification *notifyCode)
    switch (notifyCode->nmhdr.code)
    {
       case NPPN_BUFFERACTIVATED:
-      {
-         if (_prefsIO.allPrefs.fillOnTabChange && _gotoPanel.isVisible())
+         if (_prefsIO.allPrefs.fillOnTabChange && _gotoPanel.isVisible()) {
             _gotoPanel.updatePanelColPos();
-      }
-      break;
-
-      case NPPN_SHUTDOWN:
-      {
-         commandMenuCleanUp();
-      }
-      break;
+         }
+         break;
 
       case SCN_UPDATEUI:
-      {
          _gotoPanel.clearCalltip();
-      }
+         _gotoPanel.loadCursorPosData();
+         break;
 
-      break;
+      case NPPN_SHUTDOWN:
+         commandMenuCleanUp();
+         break;
 
       default:
          return;

@@ -123,7 +123,7 @@ int PreferencesDialog::getEditValue(int controlID) {
 }
 
 int PreferencesDialog::getTbarPosition(HWND hTBar) {
-   return (int)::SendMessage(hTBar, TBM_GETPOS, 0, 0);
+   return static_cast<int>(::SendMessage(hTBar, TBM_GETPOS, 0, 0));
 }
 
 void PreferencesDialog::setTbarPosition(HWND hTBar, int controlID, int val) {

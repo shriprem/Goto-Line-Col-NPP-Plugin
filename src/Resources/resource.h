@@ -1241,9 +1241,6 @@
 #define WM_PENWINFIRST                  0x0380
 #define WM_PENWINLAST                   0x038F
 #define WM_DDE_FIRST                    0x03E0
-#define IDC_SPIN_GOLINE                 1016
-#define IDC_SPIN2                       1017
-#define IDC_SPIN_GOCOL                  1017
 #define CF_GDIOBJLAST                   0x03FF
 #define _WIN32_WINNT_NT4                0x0400
 #define _WIN32_IE_IE40                  0x0400
@@ -1496,6 +1493,8 @@
 #define IDC_GOLINECOL_PREFS             9021
 #define IDC_GOCOL_TAB_CHAR_NOTE         9022
 #define IDC_GOCOL_UTF8_CHAR_NOTE        9023
+#define IDC_GOLINECOL_FIELD_LABEL       9024
+#define IDC_GOLINECOL_FIELD_INFO        9025
 #define IDC_GOCOL_FOOTNOTE_AB           9031
 #define IDC_GOCOL_FOOTNOTE_A            9032
 #define IDC_GOCOL_FOOTNOTE_B            9033
@@ -1627,13 +1626,13 @@
 #define UNICODE_NOCHAR                  0xFFFF
 
 // Next default values for new objects
-//
+// 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NO_MFC                     1
 #define _APS_NEXT_RESOURCE_VALUE        102
 #define _APS_NEXT_COMMAND_VALUE         40001
-#define _APS_NEXT_CONTROL_VALUE         1018
+#define _APS_NEXT_CONTROL_VALUE         1019
 #define _APS_NEXT_SYMED_VALUE           101
 #endif
 #endif

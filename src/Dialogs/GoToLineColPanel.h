@@ -30,12 +30,14 @@ class GotoLineColPanel : public DockingDlgInterface {
 public :
    GotoLineColPanel() :DockingDlgInterface(IDD_GOTOLINECOL_DOCKPANEL) {};
 
+   void initPanel();
    void localize();
    virtual void display(bool toShow=true);
    void setParent(HWND parent2set);
    void loadPreferences();
    void updatePanelColPos();
    void clearCalltip();
+   void loadCursorPosData();
 
 protected :
    virtual INT_PTR CALLBACK run_dlgProc(UINT message, WPARAM wParam, LPARAM lParam);
@@ -54,10 +56,10 @@ protected :
    void switchLine(bool bNext);
    void switchCol(bool bNext);
    int navigateToColPos();
-   void buildCalltip(HWND hScintilla, int line, int column, int atPos);
+   void initCursorPosData(HWND hScintilla, int line, int column, int atPos);
 
    ALL_PREFERENCES allPrefs;
-   char callTip[BUFFER_500];
+   char cursorPosData[BUFFER_500];
 };
 
 #endif //GOTOLINECOL_DLG_H

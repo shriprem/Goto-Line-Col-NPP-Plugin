@@ -83,12 +83,36 @@ INT_PTR CALLBACK GotoLineColPanel::run_dlgProc(UINT message, WPARAM wParam, LPAR
    return FALSE;
 }
 
+void GotoLineColPanel::initPanel() {
+   LOGFONT logFont { 0 };
+
+   bool recentOS = (::SendMessage(nppData._nppHandle, NPPM_GETWINDOWSVERSION, NULL, NULL) >= WV_VISTA);
+
+   const long nFontSize = recentOS ? 10 : 8;
+   const TCHAR* fontName = recentOS ? L"Consolas" : L"Courier New";
+
+   HDC hdc = GetDC(_hSelf);
+
+   logFont.lfHeight = -MulDiv(nFontSize, GetDeviceCaps(hdc, LOGPIXELSY), 72);
+   wcscpy(logFont.lfFaceName, fontName);
+
+   HFONT hMonospaceFont = CreateFontIndirect(&logFont);
+
+   ReleaseDC(_hSelf, hdc);
+
+   ::SendDlgItemMessage(_hSelf, IDC_GOLINECOL_FIELD_INFO, WM_SETFONT,
+      (WPARAM)hMonospaceFont, MAKELPARAM(true, 0));
+
+   if (_gLanguage != LANG_ENGLISH) localize();
+}
+
 void GotoLineColPanel::localize() {
    ::SetDlgItemText(_hSelf, IDC_GOLINE_STATIC, GOLINECOL_LABEL_GOLINE);
    ::SetDlgItemText(_hSelf, IDC_GOCOL_STATIC, GOLINECOL_LABEL_BYTE_COL);
    ::SetDlgItemText(_hSelf, IDOK, GOLINECOL_LABEL_BTN_GO);
    ::SetDlgItemText(_hSelf, IDCLOSE, GOLINECOL_LABEL_BTN_CLOSE);
    ::SetDlgItemText(_hSelf, IDC_GOLINECOL_PREFS, MENU_PREFERENCES);
+   ::SetDlgItemText(_hSelf, IDC_GOLINECOL_FIELD_LABEL, GOLINECOL_FIELD_LABEL);
 }
 
 void GotoLineColPanel::display(bool toShow) {
@@ -115,7 +139,7 @@ void GotoLineColPanel::loadPreferences() {
    wchar_t numColumns[BUFFER_20];
    wchar_t colCountNote[BUFFER_100];
 
-   int tabWidth{ allPrefs.useByteCol ? 1 : (int)::SendMessage(hScintilla, SCI_GETTABWIDTH, 0, 0) };
+   int tabWidth{ allPrefs.useByteCol ? 1 : static_cast<int>(::SendMessage(hScintilla, SCI_GETTABWIDTH, 0, 0)) };
    if (tabWidth > 1)
       swprintf(numColumns, BUFFER_20, GOLINECOL_NUM_COLS, tabWidth);
 
@@ -132,8 +156,8 @@ void GotoLineColPanel::updatePanelColPos() {
    HWND hScintilla{ getCurrentScintilla() };
    if (!hScintilla) return;
 
-   int pos = (int)::SendMessage(hScintilla, SCI_GETCURRENTPOS, 0, 0);
-   int line = (int)::SendMessage(hScintilla, SCI_LINEFROMPOSITION, pos, 0) + 1;
+   int pos = static_cast<int>(::SendMessage(hScintilla, SCI_GETCURRENTPOS, 0, 0));
+   int line = static_cast<int>(::SendMessage(hScintilla, SCI_LINEFROMPOSITION, pos, 0)) + 1;
    int col = getDocumentColumn(hScintilla, pos, line);
 
    ::SetDlgItemText(_hSelf, IDC_GOLINE_EDIT, TO_LPCWSTR(line));
@@ -167,33 +191,33 @@ int GotoLineColPanel::getLineCount() {
    HWND hScintilla{ getCurrentScintilla() };
    if (!hScintilla) return -1;
 
-   return (int)::SendMessage(hScintilla, SCI_GETLINECOUNT, 0, 0);
+   return static_cast<int>(::SendMessage(hScintilla, SCI_GETLINECOUNT, 0, 0));
 };
 
 int GotoLineColPanel::setFocusOnEditor() {
    HWND hScintilla{ getCurrentScintilla() };
    if (!hScintilla) return -1;
 
-   return (int)::SendMessage(hScintilla, SCI_GRABFOCUS, 0, 0);
+   return static_cast<int>(::SendMessage(hScintilla, SCI_GRABFOCUS, 0, 0));
 };
 
 int GotoLineColPanel::getLineMaxPos(int line) {
    HWND hScintilla{ getCurrentScintilla() };
    if (!hScintilla) return -1;
 
-   int endPos = (int)::SendMessage(hScintilla, SCI_GETLINEENDPOSITION, line - 1, 0);
+   int endPos = static_cast<int>(::SendMessage(hScintilla, SCI_GETLINEENDPOSITION, line - 1, 0));
 
    int col = (allPrefs.useByteCol) ?
-      endPos - (int)::SendMessage(hScintilla, SCI_POSITIONFROMLINE, line - 1, 0) :
-      (int)::SendMessage(hScintilla, SCI_GETCOLUMN, endPos, 0);
+      endPos - static_cast<int>(::SendMessage(hScintilla, SCI_POSITIONFROMLINE, line - 1, 0)) :
+      static_cast<int>(::SendMessage(hScintilla, SCI_GETCOLUMN, endPos, 0));
 
    return col + 1;
 };
 
 int GotoLineColPanel::getDocumentColumn(HWND hScintilla, int pos, int line) {
    int col = (allPrefs.useByteCol) ?
-      pos - (int)::SendMessage(hScintilla, SCI_POSITIONFROMLINE, line - 1, 0) :
-      (int)::SendMessage(hScintilla, SCI_GETCOLUMN, pos, 0);
+      pos - static_cast<int>(::SendMessage(hScintilla, SCI_POSITIONFROMLINE, line - 1, 0)) :
+      static_cast<int>(::SendMessage(hScintilla, SCI_GETCOLUMN, pos, 0));
 
    return col + 1;
 }
@@ -204,7 +228,7 @@ int GotoLineColPanel::setDocumentColumn(HWND hScintilla, int line, int lineStart
 
    int gotoPos = (allPrefs.useByteCol) ?
       lineStartPos + column - 1 :
-      (int)::SendMessage(hScintilla, SCI_FINDCOLUMN, line - 1, column - 1);
+      static_cast<int>(::SendMessage(hScintilla, SCI_FINDCOLUMN, line - 1, column - 1));
 
    ::SendMessage(hScintilla, SCI_GOTOPOS, gotoPos, 0);
    return gotoPos;
@@ -292,7 +316,7 @@ int GotoLineColPanel::navigateToColPos() {
    ::SendMessage(hScintilla, SCI_ENSUREVISIBLE, line - 1, 0);
 
    int lineMaxPos = getLineMaxPos(line);
-   int lineStartPos = (int)::SendMessage(hScintilla, SCI_POSITIONFROMLINE, line - 1, 0);
+   int lineStartPos = static_cast<int>(::SendMessage(hScintilla, SCI_POSITIONFROMLINE, line - 1, 0));
 
    int column = getInputColumn();
 
@@ -314,8 +338,10 @@ int GotoLineColPanel::navigateToColPos() {
 
    // Display call tip
    if (allPrefs.showCalltip) {
-      buildCalltip(hScintilla, line, column, atPos);
-      ::PostMessage(hScintilla, SCI_CALLTIPSHOW, atPos, (LPARAM)callTip);
+      // No need to call initCursorPosData() here.
+      // cursorPosData will be populated in loadCursorPosData via SCN_UPDATEUI
+      //initCursorPosData(hScintilla, line, (atPos - lineStartPos + 1), atPos);
+      ::PostMessage(hScintilla, SCI_CALLTIPSHOW, atPos, (LPARAM)cursorPosData);
    }
 
    // Flash caret
@@ -326,15 +352,14 @@ int GotoLineColPanel::navigateToColPos() {
    return TRUE;
 }
 
-void GotoLineColPanel::buildCalltip(HWND hScintilla, int line, int column, int atPos)
-{
-   unsigned char atChar;
+void GotoLineColPanel::initCursorPosData(HWND hScintilla, int line, int column, int atPos) {
+   UCHAR atChar;
    int colPos;
 
-   colPos = (int)::SendMessage(hScintilla, SCI_GETCOLUMN, atPos, 0) + 1;
-   atChar = (unsigned char)::SendMessage(hScintilla, SCI_GETCHARAT, atPos, 0);
+   colPos = static_cast<int>(::SendMessage(hScintilla, SCI_GETCOLUMN, atPos, 0)) + 1;
+   atChar = static_cast<UCHAR>(::SendMessage(hScintilla, SCI_GETCHARAT, atPos, 0));
 
-   snprintf(callTip, BUFFER_500,
+   snprintf(cursorPosData, BUFFER_500,
       "       Line: %u\nChar Column: %u\nByte Column: %u\n\n  ANSI Byte: 0x%X [%u]",
       line, colPos, column, atChar, atChar);
 
@@ -344,19 +369,19 @@ void GotoLineColPanel::buildCalltip(HWND hScintilla, int line, int column, int a
       return;
 
    int utf8StartPos{ atPos };
-   unsigned char utf8StartChar{ atChar };
+   UCHAR utf8StartChar{ atChar };
 
    while ((utf8StartChar & 0xC0) == 0x80 && atPos - utf8StartPos < 3) {
       utf8StartPos--;
-      utf8StartChar = (unsigned char)::SendMessage(hScintilla, SCI_GETCHARAT, utf8StartPos, 0);
+      utf8StartChar = static_cast<UCHAR>(::SendMessage(hScintilla, SCI_GETCHARAT, utf8StartPos, 0));
    }
 
    if ((utf8StartChar & 0x40) == 0) {
-      snprintf(callTip, BUFFER_500, "%s\nInvalid UTF-8 Byte Sequence!", callTip);
+      snprintf(cursorPosData, BUFFER_500, "%s\nInvalid UTF-8 Byte Sequence!", cursorPosData);
       return;
    }
 
-   unsigned char utf8ByteChar;
+   UCHAR utf8ByteChar;
    int utf8BytePos{ utf8StartPos };
    int unicodeHead{ 0 }, unicodeTail{ 0 };
    bool atMark;
@@ -368,7 +393,7 @@ void GotoLineColPanel::buildCalltip(HWND hScintilla, int line, int column, int a
 
    if ((utf8StartChar & 0xC0) == 0xC0) {
       atMark = (++utf8BytePos == atPos);
-      utf8ByteChar = (unsigned char)::SendMessage(hScintilla, SCI_GETCHARAT, utf8BytePos, 0);
+      utf8ByteChar = static_cast<UCHAR>(::SendMessage(hScintilla, SCI_GETCHARAT, utf8BytePos, 0));
 
       snprintf(utf8Text, BUFFER_100, "%s %s0x%X%s", utf8Text,
          (atMark ? "<" : ""), utf8ByteChar, (atMark ? ">" : ""));
@@ -379,7 +404,7 @@ void GotoLineColPanel::buildCalltip(HWND hScintilla, int line, int column, int a
 
    if ((utf8StartChar & 0xE0) == 0xE0) {
       atMark = (++utf8BytePos == atPos);
-      utf8ByteChar = (unsigned char)::SendMessage(hScintilla, SCI_GETCHARAT, utf8BytePos, 0);
+      utf8ByteChar = static_cast<UCHAR>(::SendMessage(hScintilla, SCI_GETCHARAT, utf8BytePos, 0));
 
       snprintf(utf8Text, BUFFER_100, "%s %s0x%X%s", utf8Text,
          (atMark ? "<" : ""), utf8ByteChar, (atMark ? ">" : ""));
@@ -390,7 +415,7 @@ void GotoLineColPanel::buildCalltip(HWND hScintilla, int line, int column, int a
 
    if ((utf8StartChar & 0xF0) == 0xF0) {
       atMark = (++utf8BytePos == atPos);
-      utf8ByteChar = (unsigned char)::SendMessage(hScintilla, SCI_GETCHARAT, utf8BytePos, 0);
+      utf8ByteChar = static_cast<UCHAR>(::SendMessage(hScintilla, SCI_GETCHARAT, utf8BytePos, 0));
 
       atMark = (utf8BytePos == atPos);
       snprintf(utf8Text, BUFFER_100, "%s %s0x%X%s", utf8Text,
@@ -401,15 +426,28 @@ void GotoLineColPanel::buildCalltip(HWND hScintilla, int line, int column, int a
    }
 
    if (atPos > utf8BytePos) {
-      snprintf(callTip, BUFFER_100, "%s\nInvalid UTF-8 Byte Sequence!", callTip);
+      snprintf(cursorPosData, BUFFER_100, "%s\nInvalid UTF-8 Byte Sequence!", cursorPosData);
       return;
    }
 
    char unicodePoint[BUFFER_20];
 
    snprintf(unicodePoint, BUFFER_20, "%X", (unicodeHead + unicodeTail));
-   snprintf(callTip, BUFFER_500, "%s\n%s\n    Unicode: U+%s%s", callTip,
+   snprintf(cursorPosData, BUFFER_500, "%s\n%s\n    Unicode: U+%s%s", cursorPosData,
       utf8Text, ((strlen(unicodePoint) % 2 == 0) ? "" : "0"), unicodePoint);
+}
+
+void GotoLineColPanel::loadCursorPosData() {
+   HWND hScintilla{ getCurrentScintilla() };
+   if (!hScintilla) return;
+
+   int curPos = static_cast<int>(::SendMessage(hScintilla, SCI_GETCURRENTPOS, NULL, NULL));
+   int curLine = static_cast<int>(::SendMessage(hScintilla, SCI_LINEFROMPOSITION, curPos, NULL));
+   int lineStart = static_cast<int>(::SendMessage(hScintilla, SCI_POSITIONFROMLINE, curLine, NULL));
+
+   initCursorPosData(hScintilla, (curLine + 1), (curPos - lineStart + 1), curPos);
+
+   ::SetDlgItemTextA(_hSelf, IDC_GOLINECOL_FIELD_INFO, cursorPosData);
 }
 
 DWORD WINAPI GotoLineColPanel::threadPositionHighlighter(void*) {
@@ -432,13 +470,13 @@ DWORD WINAPI GotoLineColPanel::threadPositionHighlighter(void*) {
       idemPotentKey = TRUE;
 
    // Modify caret style briefly to highlight the new position
-   int currCaret = (int)::SendMessage(hScintilla, SCI_GETCARETSTYLE, 0, 0);
+   int currCaret = static_cast<int>(::SendMessage(hScintilla, SCI_GETCARETSTYLE, 0, 0));
    ::SendMessage(hScintilla, SCI_SETCARETSTYLE, CARETSTYLE_BLOCK, 0);
    Sleep(allPrefs.caretFlashSeconds * 1000);
    ::SendMessage(hScintilla, SCI_SETCARETSTYLE, currCaret, 0);
 
    if (allPrefs.braceHilite) {
-      int pos = (int)::SendMessage(hScintilla, SCI_GETCURRENTPOS, 0, 0);
+      int pos = static_cast<int>(::SendMessage(hScintilla, SCI_GETCURRENTPOS, 0, 0));
       ::SendMessage(hScintilla, SCI_BRACEHIGHLIGHT, pos, -1);
    }
 

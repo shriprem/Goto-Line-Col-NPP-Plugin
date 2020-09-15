@@ -19,7 +19,6 @@
 #include "../PreferencesIO.h"
 #include "../NPP/DockingDlgInterface.h"
 
-extern NppData nppData;
 extern PreferencesIO _prefsIO;
 
 static bool idemPotentKey {FALSE};
@@ -44,7 +43,6 @@ protected :
    virtual INT_PTR CALLBACK run_dlgProc(UINT message, WPARAM wParam, LPARAM lParam);
    static DWORD WINAPI threadPositionHighlighter(void*);
 
-   static HWND getCurrentScintilla();
    static int getLineCount();
    static void setFocusOnEditor();
    int getLineMaxPos(int line);

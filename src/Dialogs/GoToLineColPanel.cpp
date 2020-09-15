@@ -162,14 +162,6 @@ void GotoLineColPanel::clearCalltip() {
 
 /// *** Private Functions: *** ///
 
-HWND GotoLineColPanel::getCurrentScintilla() {
-   int which = -1;
-   nppMessage(NPPM_GETCURRENTSCINTILLA, 0, (LPARAM)& which);
-   if (which < 0)
-      return (HWND)FALSE;
-   return (HWND)(which == 0) ? nppData._scintillaMainHandle : nppData._scintillaSecondHandle;
-}
-
 int GotoLineColPanel::getLineCount() {
    HWND hScintilla{ getCurrentScintilla() };
    if (!hScintilla) return -1;
@@ -435,15 +427,10 @@ void GotoLineColPanel::loadCursorPosData() {
 }
 
 DWORD WINAPI GotoLineColPanel::threadPositionHighlighter(void*) {
+   HWND hScintilla{ getCurrentScintilla() };
+   if (!hScintilla) return FALSE;
+
    ALL_PREFERENCES allPrefs = _prefsIO.loadPreferences();
-
-   // Get the current scintilla
-   int which = -1;
-   nppMessage(NPPM_GETCURRENTSCINTILLA, 0, (LPARAM)& which);
-   if (which == -1)
-      return FALSE;
-
-   HWND hScintilla = (which == 0) ? nppData._scintillaMainHandle : nppData._scintillaSecondHandle;
 
    // Look for Idem Potency Hold
    if (idemPotentKey)

@@ -2,6 +2,8 @@
 
 #include "PluginDefinition.h"
 
+#define PREFS_TIP_MAX_WIDTH         400
+
 namespace Utils {
    HWND addTooltip(HWND hDlg, int controlID, LPWSTR pTitle, LPWSTR pMessage);
    bool checkBaseOS(winVer os);

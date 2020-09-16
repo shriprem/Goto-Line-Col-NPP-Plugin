@@ -82,13 +82,12 @@ bool Utils::checkBaseOS(winVer os) {
 }
 
 wstring Utils::getVersionInfo(LPCWSTR key) {
-   wstring sVersionInfo;
    wchar_t sModuleFilePath[MAX_PATH];
    DWORD  verHandle{};
    DWORD  verSize{};
    UINT   querySize{};
-   LPBYTE lpBuffer{};
-   wchar_t qVal[2000]{};
+   LPCWSTR lpVal{};
+   wstring sVal;
 
    struct LANGANDCODEPAGE {
       WORD wLanguage;
@@ -105,19 +104,20 @@ wstring Utils::getVersionInfo(LPCWSTR key) {
 
          VerQueryValue(verData, L"\\VarFileInfo\\Translation", (VOID FAR * FAR*)& lpTranslate, & querySize);
 
-         swprintf(qVal, 2000, L"\\StringFileInfo\\%04X%04X\\%s",
+         wchar_t qVal[100]{};
+         swprintf(qVal, 100, L"\\StringFileInfo\\%04X%04X\\%s",
             lpTranslate[0].wLanguage, lpTranslate[0].wCodePage, key);
 
-         if (VerQueryValue(verData, wstring(qVal).c_str(), (VOID FAR * FAR*) & lpBuffer, &querySize)) {
+         if (VerQueryValue(verData, qVal, (VOID FAR * FAR*) & lpVal, &querySize)) {
             if (querySize) {
-               sVersionInfo = wstring((LPCTSTR)lpBuffer);
+               sVal = wstring(lpVal);
             }
          }
       }
       delete[] verData;
    }
 
-   return sVersionInfo;
+   return sVal;
 }
 
 void Utils::loadBitmap(HWND hDlg, int controlID, int resource) {

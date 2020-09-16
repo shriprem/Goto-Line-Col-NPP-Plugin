@@ -17,8 +17,8 @@
 
 #include <windows.h>
 
-#define VERSION_VALUE "1.1.0.0\0"
-#define VERSION_DIGITALVALUE 1, 1, 0, 0
+#define VERSION_VALUE "1.2.0.0\0"
+#define VERSION_DIGITALVALUE 1, 2, 0, 0
 
 VS_VERSION_INFO VERSIONINFO
 FILEVERSION VERSION_DIGITALVALUE
@@ -37,11 +37,11 @@ BEGIN
    BEGIN
       BLOCK "040904b0"
       BEGIN
-         VALUE "CompanyName", "Shridhar Kumar <shriprem@gmail.com>\0"
+         VALUE "CompanyName", "https://github.com/shriprem/Goto-Line-Col-NPP-Plugin\0"
          VALUE "FileDescription",   "Goto Line, Column plugin for Notepad++\0"
          VALUE "FileVersion", VERSION_VALUE
          VALUE "InternalName",   "GotoLineCol.dll\0"
-         VALUE "LegalCopyright", "Copyright 2020 by Shridhar Kumar\0"
+         VALUE "LegalCopyright", "(c) 2020 by Shridhar Kumar\0"
          VALUE "OriginalFilename",  "GotoLineCol.dll\0"
          VALUE "ProductName", "GotoLineCol\0"
          VALUE "ProductVersion", VERSION_VALUE

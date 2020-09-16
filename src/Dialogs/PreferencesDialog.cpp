@@ -21,9 +21,9 @@ void PreferencesDialog::doDialog(HINSTANCE hInst) {
 
    loadPreferences(true);
 
-   Utils::addToolTip(_hSelf, IDC_PREFS_TOOLTIP_SHOW, L"", PREFS_TIP_SHOW_TOOLTIPS);
-   Utils::addToolTip(_hSelf, IDC_PREFS_TOOLTIP_DUR_LABEL, L"", PREFS_TIP_TOOLTIP_DURATION);
-   Utils::addToolTip(_hSelf, IDC_PREFS_TOOLTIP_DURATION, L"", PREFS_TIP_TOOLTIP_DURATION);
+   addTooltip(_hSelf, IDC_PREFS_TOOLTIP_SHOW, L"", PREFS_TIP_SHOW_TOOLTIPS);
+   addTooltip(_hSelf, IDC_PREFS_TOOLTIP_DUR_LABEL, L"", PREFS_TIP_TOOLTIP_DURATION);
+   addTooltip(_hSelf, IDC_PREFS_TOOLTIP_DURATION, L"", PREFS_TIP_TOOLTIP_DURATION);
 }
 
 void PreferencesDialog::localize()
@@ -48,11 +48,9 @@ void PreferencesDialog::localize()
 }
 
 INT_PTR CALLBACK PreferencesDialog::run_dlgProc(UINT message, WPARAM wParam, LPARAM lParam) {
-   switch (message)
-   {
+   switch (message) {
       case WM_COMMAND:
-         switch LOWORD(wParam)
-         {
+         switch LOWORD(wParam) {
             case IDOK:
                savePreferences();
                display(FALSE);
@@ -185,31 +183,31 @@ void PreferencesDialog::savePreferences() {
 
 void PreferencesDialog::createTooltips() {
    if (!hTooltips[0])
-      hTooltips[0] = Utils::addToolTip(_hSelf, IDC_PREFS_AF_ONFOCUS, PREFS_LABEL_AF_ONFOCUS, PREFS_TIP_AF_ONFOCUS);
+      hTooltips[0] = addTooltip(_hSelf, IDC_PREFS_AF_ONFOCUS, PREFS_LABEL_AF_ONFOCUS, PREFS_TIP_AF_ONFOCUS);
    if (!hTooltips[1])
-      hTooltips[1] = Utils::addToolTip(_hSelf, IDC_PREFS_AF_ONTABCHANGE, PREFS_LABEL_AF_ONTABCHANGE, PREFS_TIP_AF_ONTABCHANGE);
+      hTooltips[1] = addTooltip(_hSelf, IDC_PREFS_AF_ONTABCHANGE, PREFS_LABEL_AF_ONTABCHANGE, PREFS_TIP_AF_ONTABCHANGE);
    if (!hTooltips[2])
-      hTooltips[2] = Utils::addToolTip(_hSelf, IDC_PREFS_SHOW_CALLTIP, PREFS_LABEL_SHOW_CALLTIP, PREFS_TIP_SHOW_CALLTIP);
+      hTooltips[2] = addTooltip(_hSelf, IDC_PREFS_SHOW_CALLTIP, PREFS_LABEL_SHOW_CALLTIP, PREFS_TIP_SHOW_CALLTIP);
    if (!hTooltips[3])
-      hTooltips[3] = Utils::addToolTip(_hSelf, IDC_PREFS_BRACE_HILITE, PREFS_LABEL_BRACE_HILITE, PREFS_TIP_BRACE_HILITE);
+      hTooltips[3] = addTooltip(_hSelf, IDC_PREFS_BRACE_HILITE, PREFS_LABEL_BRACE_HILITE, PREFS_TIP_BRACE_HILITE);
    if (!hTooltips[4])
-      hTooltips[4] = Utils::addToolTip(_hSelf, IDC_PREFS_USE_BYTE_COL, PREFS_LABEL_USE_BYTE_COL, PREFS_TIP_USE_BYTE_COL);
+      hTooltips[4] = addTooltip(_hSelf, IDC_PREFS_USE_BYTE_COL, PREFS_LABEL_USE_BYTE_COL, PREFS_TIP_USE_BYTE_COL);
    if (!hTooltips[5])
-      hTooltips[5] = Utils::addToolTip(_hSelf, IDC_PREFS_CENTER_CARET, PREFS_LABEL_CENTER_CARET, PREFS_TIP_CENTER_CURSOR);
+      hTooltips[5] = addTooltip(_hSelf, IDC_PREFS_CENTER_CARET, PREFS_LABEL_CENTER_CARET, PREFS_TIP_CENTER_CURSOR);
 
    if (!hTooltips[6])
-      hTooltips[6] = Utils::addToolTip(_hSelf, IDC_PREFS_EDGE_BUFFER_LABEL, PREFS_LABEL_EDGE_BUFFER, PREFS_TIP_EDGE_BUFFER);
+      hTooltips[6] = addTooltip(_hSelf, IDC_PREFS_EDGE_BUFFER_LABEL, PREFS_LABEL_EDGE_BUFFER, PREFS_TIP_EDGE_BUFFER);
    if (!hTooltips[7])
-      hTooltips[7] = Utils::addToolTip(_hSelf, IDC_PREFS_EDGE_BUFFER_SLIDER, PREFS_LABEL_EDGE_BUFFER, PREFS_TIP_EDGE_BUFFER);
+      hTooltips[7] = addTooltip(_hSelf, IDC_PREFS_EDGE_BUFFER_SLIDER, PREFS_LABEL_EDGE_BUFFER, PREFS_TIP_EDGE_BUFFER);
    if (!hTooltips[8])
-      hTooltips[8] = Utils::addToolTip(_hSelf, IDC_PREFS_EDGE_BUFFER_VALUE, PREFS_LABEL_EDGE_BUFFER, PREFS_TIP_EDGE_BUFFER);
+      hTooltips[8] = addTooltip(_hSelf, IDC_PREFS_EDGE_BUFFER_VALUE, PREFS_LABEL_EDGE_BUFFER, PREFS_TIP_EDGE_BUFFER);
 
    if (!hTooltips[9])
-      hTooltips[9] = Utils::addToolTip(_hSelf, IDC_PREFS_CARET_FLASH_LABEL, PREFS_LABEL_CARET_FLASH, PREFS_TIP_CARET_FLASH);
+      hTooltips[9] = addTooltip(_hSelf, IDC_PREFS_CARET_FLASH_LABEL, PREFS_LABEL_CARET_FLASH, PREFS_TIP_CARET_FLASH);
    if (!hTooltips[10])
-      hTooltips[10] = Utils::addToolTip(_hSelf, IDC_PREFS_CARET_FLASH_SLIDER, PREFS_LABEL_CARET_FLASH, PREFS_TIP_CARET_FLASH);
+      hTooltips[10] = addTooltip(_hSelf, IDC_PREFS_CARET_FLASH_SLIDER, PREFS_LABEL_CARET_FLASH, PREFS_TIP_CARET_FLASH);
    if (!hTooltips[11])
-      hTooltips[11] = Utils::addToolTip(_hSelf, IDC_PREFS_CARET_FLASH_VALUE, PREFS_LABEL_CARET_FLASH, PREFS_TIP_CARET_FLASH);
+      hTooltips[11] = addTooltip(_hSelf, IDC_PREFS_CARET_FLASH_VALUE, PREFS_LABEL_CARET_FLASH, PREFS_TIP_CARET_FLASH);
 }
 
 void PreferencesDialog::setTooltipsDuration(int duration) {

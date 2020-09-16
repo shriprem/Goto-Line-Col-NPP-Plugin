@@ -20,10 +20,8 @@ extern NppData nppData;
 
 extern GotoLineColPanel _gotoPanel;
 
-BOOL APIENTRY DllMain(HANDLE hModule, DWORD  reasonForCall, LPVOID /*lpReserved*/)
-{
-    switch (reasonForCall)
-    {
+BOOL APIENTRY DllMain(HANDLE hModule, DWORD  reasonForCall, LPVOID /*lpReserved*/) {
+    switch (reasonForCall) {
       case DLL_PROCESS_ATTACH:
         pluginInit(hModule);
         break;
@@ -61,10 +59,8 @@ extern "C" __declspec(dllexport) FuncItem * getFuncsArray(int *nbF)
 }
 
 
-extern "C" __declspec(dllexport) void beNotified(SCNotification *notifyCode)
-{
-   switch (notifyCode->nmhdr.code)
-   {
+extern "C" __declspec(dllexport) void beNotified(SCNotification *notifyCode) {
+   switch (notifyCode->nmhdr.code) {
       case NPPN_BUFFERACTIVATED:
          if (_prefsIO.allPrefs.fillOnTabChange && _gotoPanel.isVisible()) {
             _gotoPanel.updatePanelColPos();

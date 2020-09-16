@@ -1,6 +1,4 @@
-#ifndef DIALOG_DEFS_H
-#define DIALOG_DEFS_H
-
+#pragma once
 
 // Common
 #define MENU_PANEL_NAME             L"Goto Line, Column"
@@ -72,4 +70,3 @@
 #define ABOUT_DIALOG_TITLE          L"About"
 #define ABOUT_PLUGIN_NAME           L"Goto Line, Column Plugin for Notepad++"
 
-#endif

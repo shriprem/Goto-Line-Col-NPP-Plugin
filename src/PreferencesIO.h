@@ -1,11 +1,8 @@
 #pragma once
 
-#ifndef _PREFERENCES_INI_H
-#define _PREFERENCES_INI_H
-
 #include "PluginDefinition.h"
 
-struct ALL_PREFERENCES{
+struct ALL_PREFERENCES {
    int fillOnFocus = TRUE;
    int fillOnTabChange = TRUE;
    int showCalltip = TRUE;
@@ -49,5 +46,3 @@ protected:
    const TCHAR showTooltipKey[PREFS_STR_MAX_LEN]         = L"ShowTooltip";
    const TCHAR tooltipSecondsKey[PREFS_STR_MAX_LEN]      = L"TooltipSeconds";
 };
-
-#endif //_PREFERENCES_INI_H

@@ -1,5 +1,4 @@
-#ifndef _PREFERENCESDIALOG_H
-#define _PREFERENCESDIALOG_H
+#pragma once
 
 #include "../Utils.h"
 #include "../PreferencesIO.h"
@@ -10,8 +9,9 @@
 extern NppData nppData;
 extern PreferencesIO _prefsIO;
 
-class PreferencesDialog : public StaticDialog
-{
+using Utils::addTooltip;
+
+class PreferencesDialog : public StaticDialog {
 public:
    PreferencesDialog() : StaticDialog() {};
    void doDialog(HINSTANCE hInst);
@@ -37,5 +37,3 @@ protected:
    void setTooltipsDuration(int duration);
    void destroyTooltips();
 };
-
-#endif // _PREFERENCESDIALOG_H

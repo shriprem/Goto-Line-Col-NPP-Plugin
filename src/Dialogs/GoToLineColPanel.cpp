@@ -17,21 +17,19 @@
 #include <wchar.h>
 
 INT_PTR CALLBACK GotoLineColPanel::run_dlgProc(UINT message, WPARAM wParam, LPARAM lParam) {
-   switch (message)
-   {
+   switch (message) {
       case WM_COMMAND :
-         switch LOWORD(wParam)
-         {
+         switch LOWORD(wParam) {
             case IDC_GOLINE_EDIT:
                updateColumnRangeText(getInputLineValidated());
                break;
 
-            case IDOK :
+            case IDOK:
                navigateToColPos();
                break;
 
             case IDCANCEL:
-            case IDCLOSE :
+            case IDCLOSE:
                setFocusOnEditor();
                ShowGotoLineColPanel(false);
                break;
@@ -51,13 +49,11 @@ INT_PTR CALLBACK GotoLineColPanel::run_dlgProc(UINT message, WPARAM wParam, LPAR
          break;
 
       case WM_NOTIFY:
-         switch (((LPNMHDR)lParam)->code)
-         {
+         switch (((LPNMHDR)lParam)->code) {
             case UDN_DELTAPOS:
                bool bNext{ ((LPNMUPDOWN)lParam)->iDelta > 0 };
 
-               switch (((LPNMHDR)lParam)->idFrom)
-               {
+               switch (((LPNMHDR)lParam)->idFrom) {
                   case IDC_GOLINE_SPIN:
                      switchLine(bNext);
                      break;
@@ -235,8 +231,7 @@ void GotoLineColPanel::updateColumnRangeText(int line) {
    SetDlgItemText(_hSelf, IDC_GOCOL_RANGE, (GOLINECOL_MAX_FOR_LINE + to_wstring(getLineMaxPos(line)) + L"]").c_str());
 }
 
-void GotoLineColPanel::switchLine(bool bNext)
-{
+void GotoLineColPanel::switchLine(bool bNext) {
    int inputLine{ getInputLineValidated() };
 
    if (bNext) {
@@ -259,8 +254,7 @@ void GotoLineColPanel::switchLine(bool bNext)
    navigateToColPos();
 }
 
-void GotoLineColPanel::switchCol(bool bNext)
-{
+void GotoLineColPanel::switchCol(bool bNext) {
    int inputCol{ getInputColumn() };
 
    if (bNext) {

@@ -12,8 +12,7 @@
 //along with this program; if not, write to the Free Software
 //Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 
-#ifndef GOTOLINECOL_DLG_H
-#define GOTOLINECOL_DLG_H
+#pragma once
 
 #include "../Utils.h"
 #include "../PreferencesIO.h"
@@ -60,5 +59,3 @@ protected :
    ALL_PREFERENCES allPrefs;
    char cursorPosData[BUFFER_500];
 };
-
-#endif //GOTOLINECOL_DLG_H

@@ -18,7 +18,7 @@ void AboutDialog::localize() {
    SetDlgItemText(_hSelf, IDC_ABOUT_NAME, getVersionInfo(L"FileDescription").c_str());
    SetDlgItemText(_hSelf, IDC_ABOUT_VERSION, getVersionInfo(L"FileVersion").c_str());
    SetDlgItemText(_hSelf, IDC_ABOUT_ATTRIBUTION, getVersionInfo(L"LegalCopyright").c_str());
-   SetDlgItemText(_hSelf, IDOK, PREFS_BTN_LABEL_OK);
+   SetDlgItemText(_hSelf, IDOK, ABOUT_BTN_LABEL_OK);
 }
 
 INT_PTR CALLBACK AboutDialog::run_dlgProc(UINT message, WPARAM wParam, LPARAM lParam) {

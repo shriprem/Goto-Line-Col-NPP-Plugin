@@ -69,4 +69,4 @@
 // About Dialog
 #define ABOUT_DIALOG_TITLE          L"About"
 #define ABOUT_PLUGIN_NAME           L"Goto Line, Column Plugin for Notepad++"
-
+#define ABOUT_BTN_LABEL_OK          L"&OK"

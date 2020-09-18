@@ -1516,11 +1516,12 @@
 #define IDC_PREFS_TOOLTIP_SHOW          9115
 #define IDC_PREFS_TOOLTIP_DUR_LABEL     9116
 #define IDC_PREFS_TOOLTIP_DURATION      9117
-#define IDD_ABOUT_DIALOG                9200
-#define IDC_ABOUT_NAME                  9201
-#define IDC_ABOUT_VERSION               9202
-#define IDC_ABOUT_ATTRIBUTION           9203
-#define IDC_ABOUT_PROD_URL              9204
+#define IDD_ABOUT_DIALOG                9900
+#define IDC_ABOUT_NAME                  9901
+#define IDC_ABOUT_VERSION               9902
+#define IDC_ABOUT_ATTRIBUTION           9903
+#define IDC_ABOUT_PROD_URL              9904
+#define IDC_ABOUT_BUILD_TIME            9905
 #define CS_GLOBALCLASS                  0x4000
 #define TBSTYLE_REGISTERDROP            0x4000
 #define RBS_VERTICALGRIPPER             0x00004000

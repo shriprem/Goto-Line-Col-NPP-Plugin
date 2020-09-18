@@ -48,6 +48,7 @@
     <ClCompile Include="..\src\Utils.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ResourceCompile Include="..\src\Resources\AboutUI.rc" />
     <ResourceCompile Include="..\src\Resources\GotoLineColPlugin.rc" />
     <ResourceCompile Include="..\src\Resources\GoToLineColUI.rc" />
   </ItemGroup>

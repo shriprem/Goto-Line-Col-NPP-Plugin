@@ -92,9 +92,11 @@ LRESULT nppMessage(UINT messageID, WPARAM wparam, LPARAM lparam) {
 
 // Dockable GotoLineCol Dialog
 void ToggleGotoLineColPanel() {
-   bool hidden = !_gotoPanel.isVisible();
+   ShowGotoLineColPanel(!_gotoPanel.isVisible());
+}
 
-   if (hidden) {
+void ShowGotoLineColPanel(bool show) {
+   if (show && !_gotoPanel.isVisible()) {
       _gotoPanel.setParent(nppData._nppHandle);
       tTbData  data {};
 
@@ -111,13 +113,9 @@ void ToggleGotoLineColPanel() {
          _gotoPanel.initPanel();
       }
    }
-   ShowGotoLineColPanel(hidden);
-}
 
-void ShowGotoLineColPanel(bool show) {
    _gotoPanel.display(show);
-   if (show)
-      _gotoPanel.loadPreferences();
+   if (show) _gotoPanel.loadPreferences();
 
    CheckMenuItem(GetMenu(nppData._nppHandle), funcItem[MI_GOTO_PANEL]._cmdID,
                MF_BYCOMMAND | (show ? MF_CHECKED : MF_UNCHECKED));

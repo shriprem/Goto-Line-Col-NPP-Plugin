@@ -15,7 +15,7 @@
 #include "PluginDefinition.h"
 #include "Dialogs/GoToLineColPanel.h"
 
-extern FuncItem funcItem[MI_COUNT];
+extern FuncItem pluginMenuItems[MI_COUNT];
 extern NppData nppData;
 
 extern GotoLineColPanel _gotoPanel;
@@ -55,7 +55,7 @@ extern "C" __declspec(dllexport) const TCHAR * getName()
 extern "C" __declspec(dllexport) FuncItem * getFuncsArray(int *nbF)
 {
    *nbF = MI_COUNT;
-   return funcItem;
+   return pluginMenuItems;
 }
 
 
@@ -65,6 +65,10 @@ extern "C" __declspec(dllexport) void beNotified(SCNotification *notifyCode) {
          if (_prefsIO.allPrefs.fillOnTabChange && _gotoPanel.isVisible()) {
             _gotoPanel.updatePanelColPos();
          }
+         break;
+
+      case NPPN_TBMODIFICATION:
+         Utils::addToolbarIcon(MI_GOTO_PANEL, IDC_GOTO_TOOLBAR_ICON);
          break;
 
       case SCN_UPDATEUI:

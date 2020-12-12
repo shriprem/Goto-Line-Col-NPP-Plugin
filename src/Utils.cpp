@@ -1,10 +1,12 @@
 #include "Utils.h"
 
 extern HINSTANCE _gModule;
+extern FuncItem pluginMenuItems[MI_COUNT];
 
 // ***************** PRIVATE *****************
 
 enum fontStyle {
+   FS_REGULAR,
    FS_BOLD,
    FS_ITALIC,
    FS_UNDERLINE
@@ -20,20 +22,23 @@ bool changeFontStyle(HWND hDlg, int controlID, fontStyle style) {
       return FALSE;
 
    switch (style) {
-   case FS_BOLD:
-      lf.lfWeight = FW_BOLD;
-      break;
+      case FS_REGULAR:
+         lf.lfWeight = FW_REGULAR;
+         lf.lfItalic = FALSE;
+         lf.lfUnderline = FALSE;
+         break;
 
-   case FS_ITALIC:
-      lf.lfItalic = TRUE;
-      break;
+      case FS_BOLD:
+         lf.lfWeight = FW_BOLD;
+         break;
 
-   case FS_UNDERLINE:
-      lf.lfUnderline = TRUE;
-      break;
+      case FS_ITALIC:
+         lf.lfItalic = TRUE;
+         break;
 
-   default:
-      break;
+      case FS_UNDERLINE:
+         lf.lfUnderline = TRUE;
+         break;
    }
 
    hFont = CreateFontIndirect(&lf);
@@ -45,16 +50,18 @@ bool changeFontStyle(HWND hDlg, int controlID, fontStyle style) {
 
 // ***************** PUBLIC *****************
 
-HWND Utils::addTooltip(HWND hDlg, int controlID, LPWSTR pTitle, LPWSTR pMessage) {
+HWND Utils::addTooltip(HWND hDlg, int controlID, LPWSTR pTitle, LPWSTR pMessage, BOOL bBalloon) {
    if (!controlID || !hDlg || !pMessage)
       return FALSE;
 
    // Get the window of the tool.
    HWND hwndCtrl = GetDlgItem(hDlg, controlID);
 
+   UINT ttsBalloon = bBalloon ? TTS_BALLOON : NULL;
+
    // Create the tooltip.
    HWND hwndTip = CreateWindowEx(NULL, TOOLTIPS_CLASS, NULL,
-      WS_POPUP | TTS_ALWAYSTIP | TTS_BALLOON,
+      WS_POPUP | TTS_ALWAYSTIP | ttsBalloon,
       CW_USEDEFAULT, CW_USEDEFAULT,
       CW_USEDEFAULT, CW_USEDEFAULT,
       hDlg, NULL,
@@ -77,17 +84,67 @@ HWND Utils::addTooltip(HWND hDlg, int controlID, LPWSTR pTitle, LPWSTR pMessage)
    return hwndTip;
 }
 
+void Utils::addToolbarIcon(int menuIndex, int resource) {
+   toolbarIcons tbIcon{};
+
+   tbIcon.hToolbarBmp = LoadBitmap(_gModule, MAKEINTRESOURCE(resource));
+   tbIcon.hToolbarIcon = NULL;
+
+   nppMessage(NPPM_ADDTOOLBARICON, pluginMenuItems[menuIndex]._cmdID, (LPARAM)&tbIcon);
+}
+
+void Utils::checkMenuItem(int menuIndex, bool check) {
+   nppMessage(NPPM_SETMENUITEMCHECK, pluginMenuItems[menuIndex]._cmdID, check);
+}
+
+void Utils::showEditBalloonTip(HWND hEdit, LPCWSTR title, LPCWSTR text) {
+   EDITBALLOONTIP tip;
+
+   tip.cbStruct = sizeof(tip);
+   tip.pszTitle = title;
+   tip.pszText = text;
+   tip.ttiIcon = TTI_ERROR;
+
+   SendMessage(hEdit, EM_SHOWBALLOONTIP, NULL, (LPARAM)&tip);
+   MessageBeep(MB_OK);
+}
+
 bool Utils::checkBaseOS(winVer os) {
    return (nppMessage(NPPM_GETWINDOWSVERSION, NULL, NULL) >= os);
 }
 
+bool Utils::getClipboardText(HWND hwnd, wstring& clipText) {
+   bool bRet{ FALSE };
+
+   if (!IsClipboardFormatAvailable(CF_UNICODETEXT))
+      return bRet;
+
+   if (!OpenClipboard(hwnd))
+      return bRet;
+
+   HGLOBAL hglb = GetClipboardData(CF_UNICODETEXT);
+   if (hglb != NULL) {
+
+      LPTSTR lpClipData = (LPTSTR)GlobalLock(hglb);
+      if (lpClipData != NULL) {
+         bRet = TRUE;
+         clipText = wstring{ lpClipData };
+         GlobalUnlock(hglb);
+      }
+
+      CloseClipboard();
+   }
+
+   return bRet;
+}
+
 wstring Utils::getVersionInfo(LPCWSTR key) {
+   wstring sVersionInfo;
    wchar_t sModuleFilePath[MAX_PATH];
    DWORD  verHandle{};
    DWORD  verSize{};
    UINT   querySize{};
-   LPCWSTR lpVal{};
-   wstring sVal;
+   LPBYTE lpBuffer{};
 
    struct LANGANDCODEPAGE {
       WORD wLanguage;
@@ -108,16 +165,16 @@ wstring Utils::getVersionInfo(LPCWSTR key) {
          swprintf(qVal, 100, L"\\StringFileInfo\\%04X%04X\\%s",
             lpTranslate[0].wLanguage, lpTranslate[0].wCodePage, key);
 
-         if (VerQueryValue(verData, qVal, (VOID FAR * FAR*) & lpVal, &querySize)) {
+         if (VerQueryValue(verData, wstring(qVal).c_str(), (VOID FAR * FAR*) & lpBuffer, &querySize)) {
             if (querySize) {
-               sVal = wstring(lpVal);
+               sVersionInfo = wstring((LPCTSTR)lpBuffer);
             }
          }
       }
       delete[] verData;
    }
 
-   return sVal;
+   return sVersionInfo;
 }
 
 void Utils::loadBitmap(HWND hDlg, int controlID, int resource) {
@@ -149,6 +206,10 @@ void Utils::setFont(HWND hDlg, int controlID, wstring &name, int height, int wei
    SendMessage(hwndCtrl, WM_SETFONT, (WPARAM)hFont, MAKELPARAM(true, 0));
 }
 
+bool Utils::setFontRegular(HWND hDlg, int controlID) {
+   return changeFontStyle(hDlg, controlID, FS_REGULAR);
+}
+
 bool Utils::setFontBold(HWND hDlg, int controlID) {
    return changeFontStyle(hDlg, controlID, FS_BOLD);
 }
@@ -159,4 +220,8 @@ bool Utils::setFontItalic(HWND hDlg, int controlID) {
 
 bool Utils::setFontUnderline(HWND hDlg, int controlID) {
    return changeFontStyle(hDlg, controlID, FS_UNDERLINE);
+}
+
+COLORREF Utils::intToRGB(int color) {
+    return RGB(GetRValue(color), GetGValue(color), GetBValue(color));
 }

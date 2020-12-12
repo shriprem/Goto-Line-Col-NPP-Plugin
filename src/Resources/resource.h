@@ -1498,6 +1498,7 @@
 #define IDC_GOCOL_FOOTNOTE_AB           9031
 #define IDC_GOCOL_FOOTNOTE_A            9032
 #define IDC_GOCOL_FOOTNOTE_B            9033
+#define IDC_GOTO_TOOLBAR_ICON           9051
 #define IDD_PREFERENCES_DIALOG          9100
 #define IDC_PREFS_AF_ONFOCUS            9101
 #define IDC_PREFS_AF_ONTABCHANGE        9102
@@ -1627,7 +1628,7 @@
 #define UNICODE_NOCHAR                  0xFFFF
 
 // Next default values for new objects
-// 
+//
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NO_MFC                     1

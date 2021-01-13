@@ -1,5 +1,9 @@
 ## Version History
 
+### Version 1.2.0.0
+#### Enhancements:
+1. Realtime display of ANSI and UTF-8 byte info, at a fixed UI spot, on the plugin panel. That means, no need for repetitive clicking of the Goto button, and viewing this info within a calltip that jumps around the screen.
+
 ### Version 1.1.0.0
 #### Enhancements:
 1. Added UTF-8 byte sequence and Unicode code point display in the calltip.

@@ -2,7 +2,11 @@
 
 ### Version 1.2.0.0
 #### Enhancements:
-1. Realtime display of ANSI and UTF-8 byte info, at a fixed UI spot, on the plugin panel. That means, no need for repetitive clicking of the Goto button, and viewing this info within a calltip that jumps around the screen.
+1. Added real-time display of Cursor Position data, at a fixed spot, on the plugin panel. That means:
+    * No more need for repetitive clicking of the Goto button
+    * No more need to view this info within a calltip that jumps around the screen
+2. Added toolbar icon to show & hide the plugin panel:
+![Show_Panel_icon](https://raw.githubusercontent.com/shriprem/Goto-Line-Col-NPP-Plugin/master/images/show_panel_toolbutton.png)
 
 ### Version 1.1.0.0
 #### Enhancements:

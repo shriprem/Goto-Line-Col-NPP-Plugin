@@ -2,7 +2,7 @@
 
 // Common
 #define MENU_PANEL_NAME             L"Goto Line, Column"
-#define MENU_SHOW_PANEL             L"&Show Panel"
+#define MENU_SHOW_PANEL             L"&Show GotoLineCol Panel"
 #define MENU_PREFERENCES            L"&Preferences"
 #define MENU_ABOUT                  L"&About"
 

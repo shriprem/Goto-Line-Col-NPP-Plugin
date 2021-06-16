@@ -168,7 +168,7 @@ wstring Utils::getVersionInfo(LPCWSTR key) {
 
          if (VerQueryValue(verData, wstring(qVal).c_str(), (VOID FAR * FAR*) & lpBuffer, &querySize)) {
             if (querySize) {
-               sVersionInfo = wstring((LPCTSTR)lpBuffer);
+               sVersionInfo = wstring{ (LPCTSTR)lpBuffer };
             }
          }
       }

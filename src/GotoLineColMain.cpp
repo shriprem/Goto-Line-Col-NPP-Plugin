@@ -68,7 +68,8 @@ extern "C" __declspec(dllexport) void beNotified(SCNotification *notifyCode) {
          break;
 
       case NPPN_TBMODIFICATION:
-         Utils::addToolbarIcon(MI_GOTO_PANEL, IDC_GOTO_TOOLBAR_ICON);
+         Utils::addToolbarIcon(MI_GOTO_PANEL, IDB_GOTO_TOOL_BTN_STD,
+            IDI_GOTO_TOOL_BTN_FLUENT, IDI_GOTO_TOOL_BTN_DARK);
          break;
 
       case SCN_UPDATEUI:

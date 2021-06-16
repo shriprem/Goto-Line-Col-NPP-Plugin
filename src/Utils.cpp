@@ -84,13 +84,14 @@ HWND Utils::addTooltip(HWND hDlg, int controlID, LPWSTR pTitle, LPWSTR pMessage,
    return hwndTip;
 }
 
-void Utils::addToolbarIcon(int menuIndex, int resource) {
-   toolbarIcons tbIcon{};
+void Utils::addToolbarIcon(int menuIndex, int std, int fluent, int dark) {
+   toolbarIconsWithDarkMode tbIcon{};
 
-   tbIcon.hToolbarBmp = LoadBitmap(_gModule, MAKEINTRESOURCE(resource));
-   tbIcon.hToolbarIcon = NULL;
+   tbIcon.hToolbarBmp = LoadBitmap(_gModule, MAKEINTRESOURCE(std));
+   tbIcon.hToolbarIcon = LoadIcon(_gModule, MAKEINTRESOURCE(fluent));
+   tbIcon.hToolbarIconDarkMode = LoadIcon(_gModule, MAKEINTRESOURCE(dark));
 
-   nppMessage(NPPM_ADDTOOLBARICON, pluginMenuItems[menuIndex]._cmdID, (LPARAM)&tbIcon);
+   nppMessage(NPPM_ADDTOOLBARICON_FORDARKMODE, pluginMenuItems[menuIndex]._cmdID, (LPARAM)&tbIcon);
 }
 
 void Utils::checkMenuItem(int menuIndex, bool check) {
@@ -98,7 +99,7 @@ void Utils::checkMenuItem(int menuIndex, bool check) {
 }
 
 void Utils::showEditBalloonTip(HWND hEdit, LPCWSTR title, LPCWSTR text) {
-   EDITBALLOONTIP tip;
+   EDITBALLOONTIP tip{};
 
    tip.cbStruct = sizeof(tip);
    tip.pszTitle = title;
@@ -149,7 +150,7 @@ wstring Utils::getVersionInfo(LPCWSTR key) {
    struct LANGANDCODEPAGE {
       WORD wLanguage;
       WORD wCodePage;
-   } *lpTranslate;
+   } *lpTranslate{};
 
    GetModuleFileName(_gModule, sModuleFilePath, MAX_PATH);
    verSize = GetFileVersionInfoSize(sModuleFilePath, &verHandle);

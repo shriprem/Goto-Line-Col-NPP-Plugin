@@ -132,7 +132,20 @@ END
 // Bitmap
 //
 
-IDC_GOTO_TOOLBAR_ICON BITMAP                  "goto.bmp"
+IDB_GOTO_TOOL_BTN_STD BITMAP                  "goto.bmp"
+
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Icon
+//
+
+// Icon with lowest ID value placed first to ensure application icon
+// remains consistent on all systems.
+IDI_GOTO_TOOL_BTN_FLUENT ICON                    "goto.ico"
+
+IDI_GOTO_TOOL_BTN_DARK ICON                    "goto_dark.ico"
 
 #endif    // English (United States) resources
 /////////////////////////////////////////////////////////////////////////////

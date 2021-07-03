@@ -1,6 +1,6 @@
 ## Version History
 
-### Version 1.2.0.1
+### Version 1.2.0.2
 #### Enhancements:
 1. Light & Dark mode Fluent UI toolbar icons added for the plugin.
 2. Including ARM64 build. (_Please note that I am unable to test the ARM64 build since I don't have an ARM64 device, and it is being provided AS IS._)
@@ -11,6 +11,11 @@
 The Notepad++ 8.0 has introduced the Fluent UI icons in Small/Large, Light/Dark & Unfilled/Filled modes, making for a total of 8 possible combinations. But the newly added API function [`NPPM_ADDTOOLBARICON_FORDARKMODE`](https://github.com/notepad-plus-plus/notepad-plus-plus/commit/8a898bae3f84c03c44aaed25001e9fa1ddfa09aa) has allowed the plugins to supply images for only 4 Fluent UI images among the possible set of 8.
 
 Due to the current NPP API limitation, this minor release for FWDataViz is only able to add Fluent UI icons for the Small/Large, Light/Dark Fluent UI modes but not the Filled/Unfilled Fluent UI modes. So the toolbar icons for this plugin will not change when switching between unfilled and filled Fluent UI selections in Notepad++ Preferences dialog.
+
+### Version 1.2.0.1
+#### Minor Update
+
+Changed menu item text from "Show Panel" to "Show GotoLineColPanel" since this same text gets used to display balloon tip for the toolbar icon.
 
 ### Version 1.2.0.0
 #### Enhancements:

@@ -88,7 +88,7 @@ INT_PTR CALLBACK PreferencesDialog::run_dlgProc(UINT message, WPARAM wParam, LPA
                break;
          }
 
-         return FALSE;
+         break;
 
       case WM_HSCROLL:
          if (lParam == (LPARAM)hEdgeBuffer)
@@ -96,11 +96,36 @@ INT_PTR CALLBACK PreferencesDialog::run_dlgProc(UINT message, WPARAM wParam, LPA
          else if (lParam == (LPARAM)hCaretFlash)
             syncTbarToText(hCaretFlash, IDC_PREFS_CARET_FLASH_VALUE);
 
-         return FALSE;
+         break;
 
-      default:
-         return 0;
+      case WM_INITDIALOG:
+         if (NppDarkMode::isEnabled()) {
+            NppDarkMode::autoSubclassAndThemeChildControls(_hSelf);
+         }
+         break;
+
+      case WM_CTLCOLORDLG:
+      case WM_CTLCOLORLISTBOX:
+      case WM_CTLCOLORSTATIC:
+         if (NppDarkMode::isEnabled()) {
+            return NppDarkMode::onCtlColorDarker(reinterpret_cast<HDC>(wParam));
+         }
+         break;
+
+      case WM_CTLCOLOREDIT:
+         if (NppDarkMode::isEnabled()) {
+            return NppDarkMode::onCtlColorSofter(reinterpret_cast<HDC>(wParam));
+         }
+         break;
+
+      case WM_PRINTCLIENT:
+         if (NppDarkMode::isEnabled()) {
+            return TRUE;
+         }
+         break;
    }
+
+   return FALSE;
 }
 
 void PreferencesDialog::enableControl(int controlID, bool enabled) {

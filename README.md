@@ -23,7 +23,7 @@ The spin controls on the line and column fields provide quick navigation between
 
 ## Preferences Dialog
 
-![Preferences](https://raw.githubusercontent.com/shriprem/Goto-Line-Col-NPP-Plugin/master/images/Preferencesv1.1.png)
+![Preferences](https://raw.githubusercontent.com/shriprem/Goto-Line-Col-NPP-Plugin/master/images/Preferences.png)
 
 The plugin has the following customizable Preference settings (default values are within parantheses):
 

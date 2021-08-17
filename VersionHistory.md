@@ -1,5 +1,20 @@
 ## Version History
 
+### Version 2.0.0.0
+#### Enhancements:
+1. Darkmode enabled for the plugin panel and dialog boxes.
+
+#### `NOTE` 
+Notepad++ user configuration settings are saved into the config.xml file by Notepad++ only during the application closing event. The GotoLineCol plugin is only able to read these settings changes in the config.xml file during the next launch of Notepad++.
+
+So, when Darkmode settings are changed, Notepad++ will need to be restarted for the plugin to reflect these settings changes.
+
+### Plugin Panel in Dark mode
+![GotoLineCol Panel](https://raw.githubusercontent.com/shriprem/Goto-Line-Col-NPP-Plugin/master/images/PanelBytePos_dm.png)
+
+### Preferences Dialog in Dark mode
+![Preferences](https://raw.githubusercontent.com/shriprem/Goto-Line-Col-NPP-Plugin/master/images/Preferences_dm.png)
+
 ### Version 1.2.0.2
 #### Enhancements:
 1. Light & Dark mode Fluent UI toolbar icons added for the plugin.

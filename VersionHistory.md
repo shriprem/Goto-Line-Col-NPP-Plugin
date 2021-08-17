@@ -4,12 +4,13 @@
 #### Enhancements:
 1. Darkmode enabled for the plugin panel and dialog boxes.
 
-#### `NOTE` 
+#### `NOTE`
 Notepad++ user configuration settings are saved into the config.xml file by Notepad++ only during the application closing event. The GotoLineCol plugin is only able to read these settings changes in the config.xml file during the next launch of Notepad++.
 
 So, when Darkmode settings are changed, Notepad++ will need to be restarted for the plugin to reflect these settings changes.
 
 See: [Sample Dark mode Plugin UI screenshots](https://github.com/shriprem/Goto-Line-Col-NPP-Plugin/blob/master/DarkModeUI.md)
+
 ---
 
 ### Version 1.2.0.2
@@ -23,12 +24,14 @@ See: [Sample Dark mode Plugin UI screenshots](https://github.com/shriprem/Goto-L
 The Notepad++ 8.0 has introduced the Fluent UI icons in Small/Large, Light/Dark & Unfilled/Filled modes, making for a total of 8 possible combinations. But the newly added API function [`NPPM_ADDTOOLBARICON_FORDARKMODE`](https://github.com/notepad-plus-plus/notepad-plus-plus/commit/8a898bae3f84c03c44aaed25001e9fa1ddfa09aa) has allowed the plugins to supply images for only 4 Fluent UI images among the possible set of 8.
 
 Due to the current NPP API limitation, this minor release for FWDataViz is only able to add Fluent UI icons for the Small/Large, Light/Dark Fluent UI modes but not the Filled/Unfilled Fluent UI modes. So the toolbar icons for this plugin will not change when switching between unfilled and filled Fluent UI selections in Notepad++ Preferences dialog.
+
 ---
 
 ### Version 1.2.0.1
 #### Minor Update
 
 Changed menu item text from "Show Panel" to "Show GotoLineColPanel" since this same text gets used to display balloon tip for the toolbar icon.
+
 ---
 
 ### Version 1.2.0.0
@@ -38,6 +41,7 @@ Changed menu item text from "Show Panel" to "Show GotoLineColPanel" since this s
     * No more need to view this info within a calltip that jumps around the screen
 2. Added toolbar icon to show & hide the plugin panel:
 ![Show_Panel_icon](https://raw.githubusercontent.com/shriprem/Goto-Line-Col-NPP-Plugin/master/images/show_panel_toolbutton.png)
+
 ---
 
 ### Version 1.1.0.0
@@ -49,6 +53,7 @@ Changed menu item text from "Show Panel" to "Show GotoLineColPanel" since this s
 
 #### Fixed Issue:
 1. The calltip was getting displayed only after clicking the *Go* button twice.
+
 ---
 
 ### Version 1.0.0.1

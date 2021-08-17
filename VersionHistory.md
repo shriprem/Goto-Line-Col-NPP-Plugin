@@ -9,11 +9,7 @@ Notepad++ user configuration settings are saved into the config.xml file by Note
 
 So, when Darkmode settings are changed, Notepad++ will need to be restarted for the plugin to reflect these settings changes.
 
-### Plugin Panel in Dark mode
-![GotoLineCol Panel](https://raw.githubusercontent.com/shriprem/Goto-Line-Col-NPP-Plugin/master/images/PanelBytePos_dm.png)
-
-### Preferences Dialog in Dark mode
-![Preferences](https://raw.githubusercontent.com/shriprem/Goto-Line-Col-NPP-Plugin/master/images/Preferences_dm.png)
+See: [Dark mode Plugin UI](https://github.com/shriprem/Goto-Line-Col-NPP-Plugin/blob/master/DarkModeUI.md)
 
 ### Version 1.2.0.2
 #### Enhancements:

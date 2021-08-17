@@ -7,6 +7,8 @@ It is also handy for quickly inspecting byte-level content in files. The plugin 
 
 By default, the plugin uses byte-based positioning to navigate to the specified column.
 
+Now featuring [Dark mode Plugin UI](https://github.com/shriprem/Goto-Line-Col-NPP-Plugin/blob/master/DarkModeUI.md)
+
 ## Plugin Panel
 
 ![GotoLineCol Panel](https://raw.githubusercontent.com/shriprem/Goto-Line-Col-NPP-Plugin/master/images/PanelBytePos.png)

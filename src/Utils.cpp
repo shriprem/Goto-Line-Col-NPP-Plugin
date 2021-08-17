@@ -50,6 +50,65 @@ bool changeFontStyle(HWND hDlg, int controlID, fontStyle style) {
 
 // ***************** PUBLIC *****************
 
+int Utils::StringtoInt(const wstring& str, int base) {
+   if (str.length() < 1)
+      return 0;
+   else
+      return stoi(str, nullptr, base);
+}
+
+LPCWSTR Utils::ToUpper(LPWSTR str) {
+   return std::use_facet<std::ctype<wchar_t>>(std::locale()).toupper(str, str + wcslen(str));
+}
+
+wstring Utils::NarrowToWide(const string& str) {
+   return std::wstring_convert<std::codecvt_utf8<wchar_t>>().from_bytes(str);
+}
+
+string Utils::WideToNarrow(const wstring& wStr) {
+   return std::wstring_convert<std::codecvt_utf8<wchar_t>>().to_bytes(wStr);
+}
+
+COLORREF Utils::intToRGB(int color) {
+   return RGB(GetRValue(color), GetGValue(color), GetBValue(color));
+}
+
+int Utils::scaleDPIX(int x) {
+   HDC hdc = GetDC(NULL);
+   if (!hdc) return 0;
+
+   int scaleX{ MulDiv(x, GetDeviceCaps(hdc, LOGPIXELSX), 96) };
+   ReleaseDC(NULL, hdc);
+   return scaleX;
+}
+
+int Utils::scaleDPIY(int y) {
+   HDC hdc = GetDC(NULL);
+   if (!hdc) return 0;
+
+   int scaleY{ MulDiv(y, GetDeviceCaps(hdc, LOGPIXELSY), 96) };
+   ReleaseDC(NULL, hdc);
+   return scaleY;
+}
+
+wstring Utils::getSpecialFolder(int folderID) {
+   TCHAR sFolderPath[MAX_PATH]{};
+   const HRESULT ret = SHGetFolderPath(NULL, folderID, NULL, SHGFP_TYPE_CURRENT, sFolderPath);
+
+   return ((ret == S_OK) ? wstring{ sFolderPath } : NULL);
+}
+
+wstring Utils::getKnownFolderPath(REFKNOWNFOLDERID folderID) {
+   PWSTR path;
+
+   const HRESULT ret = SHGetKnownFolderPath(folderID, KF_FLAG_DEFAULT, NULL, &path);
+   if (ret != S_OK) return L"";
+
+   wstring sFolderPath{ path };
+   CoTaskMemFree(path);
+   return sFolderPath;
+}
+
 HWND Utils::addTooltip(HWND hDlg, int controlID, LPWSTR pTitle, LPWSTR pMessage, BOOL bBalloon) {
    if (!controlID || !hDlg || !pMessage)
       return FALSE;
@@ -114,6 +173,10 @@ bool Utils::checkBaseOS(winVer os) {
    return (nppMessage(NPPM_GETWINDOWSVERSION, NULL, NULL) >= os);
 }
 
+bool Utils::checkKeyHeldDown(int vKey) {
+   return (GetKeyState(vKey) & 0x8000) > 0;
+}
+
 bool Utils::getClipboardText(HWND hwnd, wstring& clipText) {
    bool bRet{ FALSE };
 
@@ -160,13 +223,13 @@ wstring Utils::getVersionInfo(LPCWSTR key) {
 
       if (GetFileVersionInfo(sModuleFilePath, verHandle, verSize, verData)) {
 
-         VerQueryValue(verData, L"\\VarFileInfo\\Translation", (VOID FAR * FAR*)& lpTranslate, & querySize);
+         VerQueryValue(verData, L"\\VarFileInfo\\Translation", (VOID FAR* FAR*)& lpTranslate, &querySize);
 
          wchar_t qVal[100]{};
          swprintf(qVal, 100, L"\\StringFileInfo\\%04X%04X\\%s",
             lpTranslate[0].wLanguage, lpTranslate[0].wCodePage, key);
 
-         if (VerQueryValue(verData, wstring(qVal).c_str(), (VOID FAR * FAR*) & lpBuffer, &querySize)) {
+         if (VerQueryValue(verData, wstring(qVal).c_str(), (VOID FAR* FAR*)& lpBuffer, &querySize)) {
             if (querySize) {
                sVersionInfo = wstring((LPCTSTR)lpBuffer);
             }
@@ -188,7 +251,7 @@ void Utils::loadBitmap(HWND hDlg, int controlID, int resource) {
    DeleteObject(hBitmap);
 }
 
-void Utils::setFont(HWND hDlg, int controlID, wstring &name, int height, int weight, bool italic, bool underline) {
+void Utils::setFont(HWND hDlg, int controlID, wstring& name, int height, int weight, bool italic, bool underline) {
    HWND hwndCtrl = GetDlgItem(hDlg, controlID);
    LOGFONT lf{ 0 };
 
@@ -221,8 +284,4 @@ bool Utils::setFontItalic(HWND hDlg, int controlID) {
 
 bool Utils::setFontUnderline(HWND hDlg, int controlID) {
    return changeFontStyle(hDlg, controlID, FS_UNDERLINE);
-}
-
-COLORREF Utils::intToRGB(int color) {
-    return RGB(GetRValue(color), GetGValue(color), GetBValue(color));
 }

@@ -1,7 +1,7 @@
 @ECHO OFF
 
 SET BIN_DIR=bin
-SET NOTEPAD_DIR=E:\Portable\Notepad++
+SET NOTEPAD_DIR=E:\Portable\Notepad++ - x86
 
 COPY license.txt %BIN_DIR%
 COPY %BIN_DIR%\GotoLineCol.dll "%NOTEPAD_DIR%\plugins\GotoLineCol\"

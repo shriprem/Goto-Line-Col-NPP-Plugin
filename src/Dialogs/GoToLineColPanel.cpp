@@ -53,6 +53,31 @@ INT_PTR CALLBACK GotoLineColPanel::run_dlgProc(UINT message, WPARAM wParam, LPAR
 
          break;
 
+      case WM_INITDIALOG:
+         if (NppDarkMode::isEnabled()) {
+            NppDarkMode::autoSubclassAndThemeChildControls(_hSelf);
+         }
+         break;
+
+      case WM_CTLCOLORDLG:
+      case WM_CTLCOLORLISTBOX:
+      case WM_CTLCOLORSTATIC:
+         if (NppDarkMode::isEnabled()) {
+            return NppDarkMode::onCtlColorDarker(reinterpret_cast<HDC>(wParam));
+         }
+         break;
+
+      case WM_PRINTCLIENT:
+         if (NppDarkMode::isEnabled()) {
+            return TRUE;
+         }
+         break;
+
+      case NPPM_INTERNAL_REFRESHDARKMODE:
+         //MessageBox(_hSelf, VIZ_PANEL_DARKMODE_CHANGED, MENU_PANEL_NAME, MB_YESNO);
+         //NppDarkMode::autoThemeChildControls(_hSelf);
+         break;
+
       case WM_SETFOCUS:
          if (allPrefs.fillOnFocus)
             updatePanelColPos();

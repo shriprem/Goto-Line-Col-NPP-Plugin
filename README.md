@@ -1,5 +1,6 @@
-# GotoLineCol Notepad++ Plugin 
-Version 1.2.0.0
+# GotoLineCol Notepad++ Plugin
+
+[Current Version: 2.0.0.0](https://github.com/shriprem/Goto-Line-Col-NPP-Plugin/blob/master/VersionHistory.md)
 
 A plugin for navigating to a specified line and column position in a file.
 
@@ -7,7 +8,7 @@ It is also handy for quickly inspecting byte-level content in files. The plugin 
 
 By default, the plugin uses byte-based positioning to navigate to the specified column.
 
-Now featuring [Dark mode Plugin User Interface](https://github.com/shriprem/Goto-Line-Col-NPP-Plugin/blob/master/DarkModeUI.md)
+[Dark mode rendering](https://github.com/shriprem/Goto-Line-Col-NPP-Plugin/blob/master/DarkModeUI.md) of the plugin UI.
 
 ## Plugin Panel
 

@@ -73,11 +73,6 @@ INT_PTR CALLBACK GotoLineColPanel::run_dlgProc(UINT message, WPARAM wParam, LPAR
          }
          break;
 
-      case NPPM_INTERNAL_REFRESHDARKMODE:
-         //MessageBox(_hSelf, VIZ_PANEL_DARKMODE_CHANGED, MENU_PANEL_NAME, MB_YESNO);
-         //NppDarkMode::autoThemeChildControls(_hSelf);
-         break;
-
       case WM_SETFOCUS:
          if (allPrefs.fillOnFocus)
             updatePanelColPos();

@@ -5,9 +5,7 @@ void PreferencesIO::init() {
 
    // if no existing config path, create it
    if (!PathFileExists(iniFilePath))
-   {
       CreateDirectory(iniFilePath, NULL);
-   }
 
    PathAppend(iniFilePath, configFileName);
 
@@ -35,7 +33,7 @@ ALL_PREFERENCES PreferencesIO::loadPreferences() {
    allPrefs.centerCaret = getPref(centerCaretKey, TRUE);
 
    int edgeBuffer = getPref(edgeBufferKey, 10);
-   allPrefs.edgeBuffer = (edgeBuffer < 1) ? 1 : ((edgeBuffer > 10) ? 10 : edgeBuffer);
+   allPrefs.edgeBuffer = (edgeBuffer < 1) ? 1 : ((edgeBuffer > 20) ? 20 : edgeBuffer);
 
    int caretFlash = getPref(caretFlashSecondsKey, 3);
    allPrefs.caretFlashSeconds = (caretFlash < 1) ? 1 : ((caretFlash > 10) ? 10 : caretFlash);
@@ -43,7 +41,9 @@ ALL_PREFERENCES PreferencesIO::loadPreferences() {
    allPrefs.showTooltip = getPref(showTooltipKey, TRUE);
 
    int tooltipSeconds = getPref(tooltipSecondsKey, 20);
-   allPrefs.tooltipSeconds = (tooltipSeconds < 1) ? 1 : ((tooltipSeconds > 20) ? 20 : tooltipSeconds);
+   allPrefs.tooltipSeconds = (tooltipSeconds < 1) ? 1 : ((tooltipSeconds > 30) ? 30 : tooltipSeconds);
+
+   allPrefs.hiddenProcCmdLine = getPref(hiddenProcCmdLineKey, TRUE);
 
    return allPrefs;
 }
@@ -60,6 +60,7 @@ ALL_PREFERENCES PreferencesIO::resetPreferences() {
    defPrefs.caretFlashSeconds = 3;
    defPrefs.showTooltip = TRUE;
    defPrefs.tooltipSeconds = 20;
+   defPrefs.hiddenProcCmdLine = TRUE;
 
    return defPrefs;
 }
@@ -79,4 +80,6 @@ void PreferencesIO::savePreferences(ALL_PREFERENCES prefs) {
 
    setPref(showTooltipKey, prefs.showTooltip);
    setPref(tooltipSecondsKey, prefs.tooltipSeconds);
+
+   setPref(hiddenProcCmdLineKey, prefs.hiddenProcCmdLine);
 }

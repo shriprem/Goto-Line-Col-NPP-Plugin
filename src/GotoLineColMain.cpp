@@ -64,9 +64,7 @@ extern "C" __declspec(dllexport) FuncItem * getFuncsArray(int *nbF)
 extern "C" __declspec(dllexport) void beNotified(SCNotification *notifyCode) {
    switch (notifyCode->nmhdr.code) {
       case NPPN_BUFFERACTIVATED:
-         if (_prefsIO.allPrefs.fillOnTabChange && _gotoPanel.isVisible()) {
-            _gotoPanel.updatePanelColPos();
-         }
+         _gotoPanel.onBufferActivated();
          break;
 
       case NPPN_TBMODIFICATION:

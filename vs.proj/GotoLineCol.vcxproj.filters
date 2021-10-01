@@ -37,6 +37,9 @@
     <ClCompile Include="..\src\NPP\tinyxml2.cpp">
       <Filter>_NPP Framework</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\CommandLineOptions.cpp">
+      <Filter>Base</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\NPP\Docking.h">
@@ -107,6 +110,9 @@
     </ClInclude>
     <ClInclude Include="..\src\NPP\tinyxml2.h">
       <Filter>_NPP Framework</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\CommandLineOptions.h">
+      <Filter>Base</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

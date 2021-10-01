@@ -55,7 +55,6 @@ LRESULT nppMessage(UINT messageID, WPARAM wparam, LPARAM lparam);
 // Plugin Command Functions
 void ToggleGotoLineColPanel();
 void ShowGotoLineColPanel(bool show);
-void GotoLineColDlgLoadPreferences();
 
 void ShowPreferencesDialog();
 void ShowAboutDialog();

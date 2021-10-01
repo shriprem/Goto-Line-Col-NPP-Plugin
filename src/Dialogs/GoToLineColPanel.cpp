@@ -1,5 +1,4 @@
 #include "GoToLineColPanel.h"
-#include <time.h>
 #include <wchar.h>
 
 INT_PTR CALLBACK GotoLineColPanel::run_dlgProc(UINT message, WPARAM wParam, LPARAM lParam) {
@@ -17,7 +16,7 @@ INT_PTR CALLBACK GotoLineColPanel::run_dlgProc(UINT message, WPARAM wParam, LPAR
             case IDCANCEL:
             case IDCLOSE:
                setFocusOnEditor();
-               ShowGotoLineColPanel(false);
+               display(false);
                break;
 
             case IDC_GOLINECOL_PREFS:
@@ -89,6 +88,12 @@ INT_PTR CALLBACK GotoLineColPanel::run_dlgProc(UINT message, WPARAM wParam, LPAR
    return FALSE;
 }
 
+void GotoLineColPanel::initPrefs() {
+   _prefsIO.init();
+   allPrefs = _prefsIO.loadPreferences();
+   cmdOpt.scan();
+}
+
 void GotoLineColPanel::initPanel() {
    bool recentOS = Utils::checkBaseOS(WV_VISTA);
    wstring fontName = recentOS ? L"Consolas" : L"Courier New";
@@ -97,8 +102,17 @@ void GotoLineColPanel::initPanel() {
    Utils::setFontBold(_hSelf, IDOK);
    Utils::setFont(_hSelf, IDC_GOLINECOL_FIELD_LABEL, fontName, fontHeight, FW_BOLD, FALSE, TRUE);
    Utils::setFont(_hSelf, IDC_GOLINECOL_FIELD_INFO, fontName, fontHeight);
-
    if (_gLanguage != LANG_ENGLISH) localize();
+}
+
+void GotoLineColPanel::onBufferActivated() {
+   int lineNum{}, colNum{};
+   if ((isVisible() || allPrefs.hiddenProcCmdLine) && cmdOpt.gotoCol(lineNum, colNum)) {
+      navigateToColPos(lineNum, colNum);
+   }
+   else if (isVisible() && allPrefs.fillOnTabChange) {
+      updatePanelColPos();
+   }
 }
 
 void GotoLineColPanel::localize() {
@@ -287,17 +301,18 @@ void GotoLineColPanel::switchCol(bool bNext) {
 }
 
 int GotoLineColPanel::navigateToColPos() {
+   return navigateToColPos(getInputLineValidated(), getInputColumn());
+}
+
+int GotoLineColPanel::navigateToColPos(int line, int column) {
    HWND hScintilla{ getCurrentScintilla() };
    if (!hScintilla) return FALSE;
-
-   int line = getInputLineValidated();
 
    SendMessage(hScintilla, SCI_ENSUREVISIBLE, line - 1, 0);
 
    int lineMaxPos = getLineMaxPos(line);
    int lineStartPos = static_cast<int>(SendMessage(hScintilla, SCI_POSITIONFROMLINE, line - 1, 0));
 
-   int column = getInputColumn();
 
    if (allPrefs.centerCaret) {
       SendMessage(hScintilla, SCI_SETXCARETPOLICY, CARET_JUMPS | CARET_EVEN, (LPARAM)0);
@@ -330,6 +345,7 @@ int GotoLineColPanel::navigateToColPos() {
 
    return TRUE;
 }
+
 
 void GotoLineColPanel::initCursorPosData(HWND hScintilla, int line, int column, int atPos) {
    UCHAR atChar;

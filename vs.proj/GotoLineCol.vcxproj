@@ -27,6 +27,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\src\CommandLineOptions.h" />
     <ClInclude Include="..\src\Dialogs\AboutDialog.h" />
     <ClInclude Include="..\src\Dialogs\GoToLineColPanel.h" />
     <ClInclude Include="..\src\Dialogs\PreferencesDialog.h" />
@@ -52,6 +53,7 @@
     <ClInclude Include="..\src\Utils.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\src\CommandLineOptions.cpp" />
     <ClCompile Include="..\src\Dialogs\AboutDialog.cpp" />
     <ClCompile Include="..\src\Dialogs\GoToLineColPanel.cpp" />
     <ClCompile Include="..\src\Dialogs\PreferencesDialog.cpp" />

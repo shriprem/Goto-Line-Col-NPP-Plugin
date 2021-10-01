@@ -1,5 +1,13 @@
 ## Version History
 
+### Version 2.1.0.0
+#### Enhancements:
+1. Command Line Option to load multiple documents and position them all at the same line and character/byte column.
+
+See: [Command Line Options](https://github.com/shriprem/Goto-Line-Col-NPP-Plugin/blob/master/docs/CommandLineOptions.md)
+
+---
+
 ### Version 2.0.0.0
 #### Enhancements:
 1. Darkmode rendering enabled for the plugin panel and dialog boxes.
@@ -9,7 +17,7 @@ Notepad++ user configuration settings are saved into the config.xml file by Note
 
 So, when Darkmode settings are changed, Notepad++ will need to be restarted for the plugin to reflect these settings changes.
 
-See: [Sample screenshots of the plugin UI in dark mode.](https://github.com/shriprem/Goto-Line-Col-NPP-Plugin/blob/master/DarkModeUI.md)
+See: [Sample screenshots of the plugin UI in dark mode.](https://github.com/shriprem/Goto-Line-Col-NPP-Plugin/blob/master/docs/DarkModeUI.md)
 
 ---
 

@@ -1,5 +1,6 @@
 #pragma once
 
+#include "../CommandLineOptions.h"
 #include "../Utils.h"
 #include "../PreferencesIO.h"
 #include "../NPP/DockingDlgInterface.h"
@@ -15,18 +16,21 @@ class GotoLineColPanel : public DockingDlgInterface {
 public :
    GotoLineColPanel() :DockingDlgInterface(IDD_GOTOLINECOL_DOCKPANEL) {};
 
+   void initPrefs();
    void initPanel();
+
+   void onBufferActivated();
    void localize();
    virtual void display(bool toShow=true);
    void setParent(HWND parent2set);
    void loadPreferences();
-   void updatePanelColPos();
    void clearCalltip();
    void loadCursorPosData();
 
 protected :
    ALL_PREFERENCES allPrefs{};
    char cursorPosData[BUFFER_500];
+   CommandLineOptions cmdOpt{};
 
    virtual INT_PTR CALLBACK run_dlgProc(UINT message, WPARAM wParam, LPARAM lParam);
    static DWORD WINAPI threadPositionHighlighter(void*);
@@ -43,5 +47,7 @@ protected :
    void switchLine(bool bNext);
    void switchCol(bool bNext);
    int navigateToColPos();
+   int navigateToColPos(int line, int column);
+   void updatePanelColPos();
    void initCursorPosData(HWND hScintilla, int line, int column, int atPos);
 };

@@ -1,6 +1,6 @@
 # GotoLineCol Notepad++ Plugin
 
-[Current Version: 2.0.0.0](https://github.com/shriprem/Goto-Line-Col-NPP-Plugin/blob/master/VersionHistory.md)
+[Current Version: 2.1.0.0](https://github.com/shriprem/Goto-Line-Col-NPP-Plugin/blob/master/VersionHistory.md)
 
 A plugin for navigating to a specified line and column position in a file.
 
@@ -8,8 +8,14 @@ It is also handy for quickly inspecting byte-level content in files. The plugin 
 
 By default, the plugin uses byte-based positioning to navigate to the specified column.
 
-[Dark mode rendering](https://github.com/shriprem/Goto-Line-Col-NPP-Plugin/blob/master/DarkModeUI.md) of the plugin UI.
+#### See also:
+1. <a href="https://github.com/shriprem/Goto-Line-Col-NPP-Plugin/blob/master/VersionHistory.md">Version History</a>
+2. <a href="https://github.com/shriprem/Goto-Line-Col-NPP-Plugin/blob/master/docs/FAQs.md">Frequently Asked Questions</a>
+3. [Dark mode rendering](https://github.com/shriprem/Goto-Line-Col-NPP-Plugin/blob/master/docs/DarkModeUI.md) of the plugin UI.
+4. [Command Line Options](https://github.com/shriprem/Goto-Line-Col-NPP-Plugin/blob/master/docs/CommandLineOptions.md)
 
+
+---
 ## Plugin Panel
 
 ![GotoLineCol Panel](https://raw.githubusercontent.com/shriprem/Goto-Line-Col-NPP-Plugin/master/images/PanelBytePos.png)
@@ -89,6 +95,3 @@ When the cursor is set at its default width of '1', it can be hard to spot the c
 For this setting, specify the number of seconds to have the cursor flashing in block mode at the destination position.
 
 ---
-### Also, see:
-1. <a href="https://github.com/shriprem/Goto-Line-Col-NPP-Plugin/blob/master/VersionHistory.md">Version History</a>
-2. <a href="https://github.com/shriprem/Goto-Line-Col-NPP-Plugin/blob/master/FAQs.md">Frequently Asked Questions</a>

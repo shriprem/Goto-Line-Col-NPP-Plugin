@@ -6,9 +6,6 @@
 
 #define TOOLTIPS_COUNT 12
 
-extern NppData nppData;
-extern PreferencesIO _prefsIO;
-
 using Utils::addTooltip;
 
 class PreferencesDialog : public StaticDialog {
@@ -23,7 +20,7 @@ protected:
    void localize();
 
    void enableControl(int controlID, bool enabled);
-   int getCheckedState(int controlID);
+   bool getCheckedState(int controlID);
    void setCheckedState(int controlID, int val);
    int getEditValue(int controlID);
    int getTbarPosition(HWND hTBar);

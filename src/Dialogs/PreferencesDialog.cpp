@@ -1,4 +1,9 @@
+#include "GoToLineColPanel.h"
 #include "PreferencesDialog.h"
+
+extern NppData nppData;
+extern PreferencesIO _prefsIO;
+extern GotoLineColPanel _gotoPanel;
 
 void PreferencesDialog::doDialog(HINSTANCE hInst) {
    if (!isCreated()) {
@@ -132,7 +137,7 @@ void PreferencesDialog::enableControl(int controlID, bool enabled) {
    EnableWindow(GetDlgItem(_hSelf, controlID), enabled);
 }
 
-int PreferencesDialog::getCheckedState(int controlID) {
+bool PreferencesDialog::getCheckedState(int controlID) {
    return (IsDlgButtonChecked(_hSelf, controlID) == BST_CHECKED);
 }
 
@@ -202,8 +207,10 @@ void PreferencesDialog::savePreferences() {
    tPrefs.showTooltip = getCheckedState(IDC_PREFS_TOOLTIP_SHOW);
    tPrefs.tooltipSeconds = getEditValue(IDC_PREFS_TOOLTIP_DURATION);
 
+   tPrefs.hiddenProcCmdLine = _prefsIO.loadPreferences().hiddenProcCmdLine;
+
    _prefsIO.savePreferences(tPrefs);
-   GotoLineColDlgLoadPreferences();
+   _gotoPanel.loadPreferences();
 }
 
 void PreferencesDialog::createTooltips() {

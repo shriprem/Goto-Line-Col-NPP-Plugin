@@ -13,9 +13,10 @@ struct ALL_PREFERENCES {
    int caretFlashSeconds = 3;
    int showTooltip = TRUE;
    int tooltipSeconds = 20;
+   int hiddenProcCmdLine = TRUE;
 };
 
-const int PREFS_STR_MAX_LEN = 20;
+const int PREFS_STR_MAX_LEN = 30;
 
 class PreferencesIO {
 public:
@@ -45,4 +46,6 @@ protected:
 
    const TCHAR showTooltipKey[PREFS_STR_MAX_LEN]         = L"ShowTooltip";
    const TCHAR tooltipSecondsKey[PREFS_STR_MAX_LEN]      = L"TooltipSeconds";
+
+   const TCHAR hiddenProcCmdLineKey[PREFS_STR_MAX_LEN]   = L"HiddenPanel_ProcessCmdLine";
 };

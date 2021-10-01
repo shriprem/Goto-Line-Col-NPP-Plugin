@@ -42,7 +42,7 @@ void pluginInit(HANDLE hModule) {
 void pluginCleanUp(){}
 
 void commandMenuInit() {
-   _prefsIO.init();
+   _gotoPanel.initPrefs();
 
    ShortcutKey *shKeyOpen = new ShortcutKey;
    shKeyOpen->_isAlt = false;
@@ -116,11 +116,6 @@ void ShowGotoLineColPanel(bool show) {
 
    _gotoPanel.display(show);
    if (show) _gotoPanel.loadPreferences();
-}
-
-void GotoLineColDlgLoadPreferences() {
-   if (_gotoPanel.isVisible())
-      _gotoPanel.loadPreferences();
 }
 
 void ShowPreferencesDialog() {

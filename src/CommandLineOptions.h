@@ -1,5 +1,6 @@
 #pragma once
 
+#include "PreferencesIO.h"
 #include "Utils.h"
 
 #include<filesystem>
@@ -8,6 +9,7 @@
 #include <windows.h>
 
 #define DEBUG_CMD_LINE_SCAN FALSE
+#define DEBUG_PREF_VALUES FALSE
 
 using std::regex_replace;
 using std::wregex;
@@ -18,8 +20,9 @@ using fsp = std::filesystem::path;
 class CommandLineOptions
 {
 public:
-   void scan();
-   bool gotoCol(int& lineNum, int& colNum);
+   void scan(ALL_PREFERENCES& allPrefs);
+   bool gotoCol(int& lineNum, int& colNum, bool bPersist);
+   void displayPrefs(ALL_PREFERENCES& allPrefs);
 
 private:
    int cmdLineNum{ -1 }, cmdColNum{ -1 };

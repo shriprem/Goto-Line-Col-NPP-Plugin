@@ -23,9 +23,10 @@ public :
    void localize();
    virtual void display(bool toShow=true);
    void setParent(HWND parent2set);
-   void loadPreferences();
+   void loadPreferencesToPanel(bool bFromIniFile);
    void clearCalltip();
    void loadCursorPosData();
+   ALL_PREFERENCES getPrefs() { return allPrefs; }
 
 protected :
    ALL_PREFERENCES allPrefs{};

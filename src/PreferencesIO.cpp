@@ -43,7 +43,8 @@ ALL_PREFERENCES PreferencesIO::loadPreferences() {
    int tooltipSeconds = getPref(tooltipSecondsKey, 20);
    allPrefs.tooltipSeconds = (tooltipSeconds < 1) ? 1 : ((tooltipSeconds > 30) ? 30 : tooltipSeconds);
 
-   allPrefs.hiddenProcCmdLine = getPref(hiddenProcCmdLineKey, TRUE);
+   allPrefs.cmdProcHidden = getPref(cmdProcHiddenKey, TRUE);
+   allPrefs.cmdProcPersist = getPref(cmdProcPersistKey, FALSE);
 
    return allPrefs;
 }
@@ -60,7 +61,8 @@ ALL_PREFERENCES PreferencesIO::resetPreferences() {
    defPrefs.caretFlashSeconds = 3;
    defPrefs.showTooltip = TRUE;
    defPrefs.tooltipSeconds = 20;
-   defPrefs.hiddenProcCmdLine = TRUE;
+   defPrefs.cmdProcHidden = TRUE;
+   defPrefs.cmdProcPersist = FALSE;
 
    return defPrefs;
 }
@@ -81,5 +83,6 @@ void PreferencesIO::savePreferences(ALL_PREFERENCES prefs) {
    setPref(showTooltipKey, prefs.showTooltip);
    setPref(tooltipSecondsKey, prefs.tooltipSeconds);
 
-   setPref(hiddenProcCmdLineKey, prefs.hiddenProcCmdLine);
+   setPref(cmdProcHiddenKey, prefs.cmdProcHidden);
+   setPref(cmdProcPersistKey, prefs.cmdProcPersist);
 }

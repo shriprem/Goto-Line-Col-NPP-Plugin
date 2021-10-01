@@ -115,7 +115,7 @@ void ShowGotoLineColPanel(bool show) {
    }
 
    _gotoPanel.display(show);
-   if (show) _gotoPanel.loadPreferences();
+   if (show) _gotoPanel.loadPreferencesToPanel(FALSE);
 }
 
 void ShowPreferencesDialog() {

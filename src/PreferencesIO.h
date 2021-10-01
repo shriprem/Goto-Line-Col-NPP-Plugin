@@ -13,7 +13,8 @@ struct ALL_PREFERENCES {
    int caretFlashSeconds = 3;
    int showTooltip = TRUE;
    int tooltipSeconds = 20;
-   int hiddenProcCmdLine = TRUE;
+   int cmdProcHidden = TRUE;
+   int cmdProcPersist = FALSE;
 };
 
 const int PREFS_STR_MAX_LEN = 30;
@@ -47,5 +48,6 @@ protected:
    const TCHAR showTooltipKey[PREFS_STR_MAX_LEN]         = L"ShowTooltip";
    const TCHAR tooltipSecondsKey[PREFS_STR_MAX_LEN]      = L"TooltipSeconds";
 
-   const TCHAR hiddenProcCmdLineKey[PREFS_STR_MAX_LEN]   = L"HiddenPanel_ProcessCmdLine";
+   const TCHAR cmdProcHiddenKey[PREFS_STR_MAX_LEN]       = L"CmdProcHidden";
+   const TCHAR cmdProcPersistKey[PREFS_STR_MAX_LEN]      = L"CmdProcPersist";
 };

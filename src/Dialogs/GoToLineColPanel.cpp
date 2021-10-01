@@ -1,6 +1,8 @@
 #include "GoToLineColPanel.h"
 #include <wchar.h>
 
+extern GotoLineColPanel _gotoPanel;
+
 INT_PTR CALLBACK GotoLineColPanel::run_dlgProc(UINT message, WPARAM wParam, LPARAM lParam) {
    switch (message) {
       case WM_COMMAND :
@@ -91,7 +93,7 @@ INT_PTR CALLBACK GotoLineColPanel::run_dlgProc(UINT message, WPARAM wParam, LPAR
 void GotoLineColPanel::initPrefs() {
    _prefsIO.init();
    allPrefs = _prefsIO.loadPreferences();
-   cmdOpt.scan();
+   cmdOpt.scan(allPrefs);
 }
 
 void GotoLineColPanel::initPanel() {
@@ -107,7 +109,7 @@ void GotoLineColPanel::initPanel() {
 
 void GotoLineColPanel::onBufferActivated() {
    int lineNum{}, colNum{};
-   if ((isVisible() || allPrefs.hiddenProcCmdLine) && cmdOpt.gotoCol(lineNum, colNum)) {
+   if ((isVisible() || allPrefs.cmdProcHidden) && cmdOpt.gotoCol(lineNum, colNum, allPrefs.cmdProcPersist)) {
       navigateToColPos(lineNum, colNum);
    }
    else if (isVisible() && allPrefs.fillOnTabChange) {
@@ -136,11 +138,12 @@ void GotoLineColPanel::setParent(HWND parent2set) {
    _hParent = parent2set;
 };
 
-void GotoLineColPanel::loadPreferences() {
+void GotoLineColPanel::loadPreferencesToPanel(bool bFromIniFile) {
    HWND hScintilla{ getCurrentScintilla() };
    if (!hScintilla) return;
 
-   allPrefs = _prefsIO.loadPreferences();
+   if (bFromIniFile)
+      allPrefs = _prefsIO.loadPreferences();
 
    SetDlgItemText(_hSelf, IDC_GOCOL_STATIC,
       allPrefs.useByteCol ? GOLINECOL_LABEL_BYTE_COL : GOLINECOL_LABEL_CHAR_COL);
@@ -450,7 +453,7 @@ DWORD WINAPI GotoLineColPanel::threadPositionHighlighter(void*) {
    HWND hScintilla{ getCurrentScintilla() };
    if (!hScintilla) return FALSE;
 
-   ALL_PREFERENCES allPrefs = _prefsIO.loadPreferences();
+   ALL_PREFERENCES allPrefs = _gotoPanel.getPrefs();
 
    // Look for Idem Potency Hold
    if (idemPotentKey)

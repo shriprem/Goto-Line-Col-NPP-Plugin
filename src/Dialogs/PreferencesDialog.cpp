@@ -192,7 +192,7 @@ void PreferencesDialog::loadPreferences(bool iniFile) {
 }
 
 void PreferencesDialog::savePreferences() {
-   ALL_PREFERENCES tPrefs;
+   ALL_PREFERENCES tPrefs{_prefsIO.loadPreferences()};
 
    tPrefs.fillOnFocus = getCheckedState(IDC_PREFS_AF_ONFOCUS);
    tPrefs.fillOnTabChange = getCheckedState(IDC_PREFS_AF_ONTABCHANGE);
@@ -207,10 +207,8 @@ void PreferencesDialog::savePreferences() {
    tPrefs.showTooltip = getCheckedState(IDC_PREFS_TOOLTIP_SHOW);
    tPrefs.tooltipSeconds = getEditValue(IDC_PREFS_TOOLTIP_DURATION);
 
-   tPrefs.hiddenProcCmdLine = _prefsIO.loadPreferences().hiddenProcCmdLine;
-
    _prefsIO.savePreferences(tPrefs);
-   _gotoPanel.loadPreferences();
+   _gotoPanel.loadPreferencesToPanel(TRUE);
 }
 
 void PreferencesDialog::createTooltips() {

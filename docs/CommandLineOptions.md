@@ -28,13 +28,13 @@ NPP_DIR\notepad++.exe DirA_File1 DirA_File2 DirB_File3 -n8 -c42 -z -GLCb1 -z -GL
 
 * &dagger; The Config file is: `NPP_PLUGINS_CONFIG_DIR/GotoLineCol.ini`.
    * For installed versions, the `NPP_PLUGINS_CONFIG_DIR` is usually: `%APPDATA%\Notepad++` folder. For example: `C:\Users\WIN_USER\AppData\Roaming\Notepad++`.
-   * For portable versions, the `NPP_PLUGINS_CONFIG_DIR` is the same as the portable folder of `NPP_DIR/plugins/Config`.
+   * For portable versions, the `NPP_PLUGINS_CONFIG_DIR` is colocated at `NPP_DIR/plugins/Config`.
 
 * &Dagger; The *CmdProc...* options are not configurable via the [Preferences dialog](https://github.com/shriprem/Goto-Line-Col-NPP-Plugin/blob/master/docs/PreferencesDialog.md). For a durable setting of these options, they will need to be manually edited in the `NPP_PLUGINS_CONFIG_DIR/GotoLineCol.ini` file.
 
 * When any of the listed (`-GLC`) options are not used in the command line, the values specified in the Config File&dagger; (see above) will be used instead.
 
-#### Usage Tips:
+### Usage Tips:
 1. The command line processing by the plugin is possible only with a fresh instance of Notepad++. If Notepad++ is already running, use the `-multiInst` option in the command line to launch a new instance. See: [Notepad++ Usage via the command prompt](https://npp-user-manual.org/docs/command-prompt/).
 
 2. When launching files with identical names from the command line, specify their full paths.

@@ -7,7 +7,10 @@ The command line options allow multiple files to be launched in Notepad++, and t
 NPP_DIR\notepad++.exe DirA_File1 DirA_File2 DirB_File3 -n8 -c42 -z -GLCb1 -z -GLCc1 -z -GLCd1 -z -GLCe14  -GLCf1 -z -GLCh0 -z -GLCp1 -z -GLCq1
 ```
 **In the above sample usage**:
-* The **`-n`**, **`-c`** and **`-z`** options are native to Notepad++. For more info on these three, see: [Notepad++ Usage via the command prompt](https://npp-user-manual.org/docs/command-prompt/).
+* The **`-n`**, **`-c`** and **`-z`** options are native to Notepad++.
+   * **`-n<line_number>`** will cause all files specified on the command line to be positioned at the specified line.
+   * **`-c<column_number>`** will cause all files specified on the command line to be positioned at the specified column. **GotoLineCol** plugin will use this value to position using byte counts or character counts.
+   * For more info on these Notepad++ native options, see: [Notepad++ Usage via the command prompt](https://npp-user-manual.org/docs/command-prompt/).
 
 * All the other options are specific to the **GotoLineCol** plugin. These options start with a common **`-GLC`** prefix.
 
@@ -41,7 +44,7 @@ NPP_DIR\notepad++.exe DirA_File1 DirA_File2 DirB_File3 -n8 -c42 -z -GLCb1 -z -GL
 
 3. The file and folder names are not case sensitive. However if the file path has spaces, enclose it with double quotes. For example: `"C:\Users\John Doe\My Documents\Sample File.txt"`
 
-4. Precede each **`-GLC`** option with a **`-z`** option to suppress Notepad++ from treating them as file names. Failure to shield the **`-GLC`** options will lead to multiple prompts from Notepad++ to try to open these options as files.
+4. Precede each **`-GLC`** option with a **`-z`** option to suppress Notepad++ from treating them as file names. Failure to shield the **`-GLC`** options will lead to multiple prompts from Notepad++ mistakenly trying to open these options as files.
 
 5. The **`-GLC`** options specified in the command line will be overridden if the [Preferences Dialog](https://github.com/shriprem/Goto-Line-Col-NPP-Plugin/blob/master/docs/PreferencesDialog.md) is opened, and its **OK** button is pressed.
 

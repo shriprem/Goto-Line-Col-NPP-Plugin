@@ -79,13 +79,13 @@ Changed menu item text from "Show Panel" to "Show GotoLineColPanel" since this s
 ### Version 1.0.0.1
 1. Increased Line and Column input fields to accept up to 8 digits.
 
-**Release:** [1.0.0.1 Release](https://github.com/shriprem/Goto-Line-Col-NPP-Plugin/releases/tag/1.0.0.1)
+**Release:** [1.0.0.1 Release](https://github.com/shriprem/Goto-Line-Col-NPP-Plugin/releases/tag/v1.0.0.1)
 
 ---
 
 ### Version 1.0.0
 First Release
 
-**Release:** [1.0.0 Release](https://github.com/shriprem/Goto-Line-Col-NPP-Plugin/releases/tag/1.0.0)
+**Release:** [1.0.0 Release](https://github.com/shriprem/Goto-Line-Col-NPP-Plugin/releases/tag/v1.0.0)
 
 

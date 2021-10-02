@@ -6,12 +6,12 @@ void CommandLineOptions::scan(ALL_PREFERENCES& allPrefs) {
    wregex leadingSpaces{ L"^[ ]*" };
    wregex multiSpaces{ L"[ ]{2,}" };
 
-   wstring cmdLine{}, cmdOption{}, prefix2{}, prefix5{};
+   wstring cmdLine{}, cmdOption{}, prefix2{};
    std::size_t nOptEnd{}, nQuoteOffset{};
 
    cmdLine = GetCommandLine();
 
-   // Strip any leading spaces in the command line
+   // Strip any leading spaces & adjacent multiple spaces in the command line
    cmdLine = regex_replace(cmdLine, leadingSpaces, L"");
    cmdLine = regex_replace(cmdLine, multiSpaces, L" ");
 
@@ -37,7 +37,6 @@ void CommandLineOptions::scan(ALL_PREFERENCES& allPrefs) {
       }
 
       prefix2 = cmdOption.substr(0, 2);
-      prefix5 = cmdOption.substr(0, 5);
 
       if (prefix2 == L"-n") {
          if (!bLineNumFound) {
@@ -54,31 +53,8 @@ void CommandLineOptions::scan(ALL_PREFERENCES& allPrefs) {
       else if (prefix2 == L"-z") {
          continue;
       }
-      else if (prefix5 == L"-GLCb") {
-         allPrefs.useByteCol = Utils::StringtoInt(cmdOption.substr(5)) != FALSE;
-      }
-      else if (prefix5 == L"-GLCc") {
-         allPrefs.centerCaret = Utils::StringtoInt(cmdOption.substr(5)) != FALSE;
-      }
-      else if (prefix5 == L"-GLCd") {
-         allPrefs.showCalltip = Utils::StringtoInt(cmdOption.substr(5)) != FALSE;
-      }
-      else if (prefix5 == L"-GLCe") {
-         int edgeBuffer = Utils::StringtoInt(cmdOption.substr(5));
-         allPrefs.edgeBuffer = (edgeBuffer < 1) ? 1 : ((edgeBuffer > 20) ? 20 : edgeBuffer);
-      }
-      else if (prefix5 == L"-GLCf") {
-         int caretFlash = Utils::StringtoInt(cmdOption.substr(5));
-         allPrefs.caretFlashSeconds = (caretFlash < 1) ? 1 : ((caretFlash > 10) ? 10 : caretFlash);
-      }
-      else if (prefix5 == L"-GLCh") {
-         allPrefs.braceHilite = Utils::StringtoInt(cmdOption.substr(5)) != FALSE;
-      }
-      else if (prefix5 == L"-GLCp") {
-         allPrefs.cmdProcPersist = Utils::StringtoInt(cmdOption.substr(5)) != FALSE;
-      }
-      else if (prefix5 == L"-GLCq") {
-         allPrefs.cmdProcHidden = Utils::StringtoInt(cmdOption.substr(5)) != FALSE;
+      else if (cmdOption.substr(0, 4) == L"-GLC") {
+         scanGLC(allPrefs, cmdOption.substr(4));
       }
       else {
          FilePath FP;
@@ -106,8 +82,48 @@ void CommandLineOptions::scan(ALL_PREFERENCES& allPrefs) {
       sVerify += L"\r\nPath: " + FP.path;
    }
 
+   sVerify += L"\r\n\r\n=== PREFERENCES ===\r\n" + getAllPrefsList(allPrefs);
    MessageBox(nullptr, sVerify.c_str(), L"", MB_OK);
 #endif // DEBUG_CMD_LINE_SCAN
+}
+
+void CommandLineOptions::scanGLC(ALL_PREFERENCES& allPrefs, wstring glcOptions) {
+   std::size_t nOptEnd{};
+   int nOptVal{};
+   wstring sOption{}, sOptKey{};
+
+   while (glcOptions.length() > 0) {
+      nOptEnd = glcOptions.find(L";", 1);
+
+      if (nOptEnd == wstring::npos) {
+         sOption = glcOptions.substr(0);
+         glcOptions = L"";
+      }
+      else {
+         sOption = glcOptions.substr(0, nOptEnd);
+         glcOptions = glcOptions.substr(nOptEnd + 1);
+      }
+
+      sOptKey = sOption.substr(0, 1);
+      nOptVal = Utils::StringtoInt(sOption.substr(1));
+
+      if (sOptKey == L"b")
+         allPrefs.useByteCol = (nOptVal != FALSE);
+      else if (sOptKey == L"c")
+         allPrefs.centerCaret = (nOptVal != FALSE);
+      else if (sOptKey == L"d")
+         allPrefs.showCalltip = (nOptVal != FALSE);
+      else if (sOptKey == L"e")
+         allPrefs.edgeBuffer = (nOptVal < 1) ? 1 : ((nOptVal > 20) ? 20 : nOptVal);
+      else if (sOptKey == L"f")
+         allPrefs.caretFlashSeconds = (nOptVal < 1) ? 1 : ((nOptVal > 10) ? 10 : nOptVal);
+      else if (sOptKey == L"h")
+         allPrefs.braceHilite = (nOptVal != FALSE);
+      else if (sOptKey == L"p")
+         allPrefs.cmdProcPersist = (nOptVal != FALSE);
+      else if (sOptKey == L"q")
+         allPrefs.cmdProcHidden = (nOptVal != FALSE);
+   }
 }
 
 bool CommandLineOptions::gotoCol(int& lineNum, int& colNum, bool bPersist) {
@@ -153,7 +169,7 @@ bool CommandLineOptions::gotoCol(int& lineNum, int& colNum, bool bPersist) {
    return FALSE;
 }
 
-void CommandLineOptions::displayPrefs(ALL_PREFERENCES& allPrefs) {
+wstring CommandLineOptions::getAllPrefsList(ALL_PREFERENCES& allPrefs) {
    wstring prefs{};
 
    prefs = L"UseByteCount: " + to_wstring(allPrefs.useByteCol) +
@@ -165,7 +181,6 @@ void CommandLineOptions::displayPrefs(ALL_PREFERENCES& allPrefs) {
       L"\r\nPersistGoto: " + to_wstring(allPrefs.cmdProcPersist) +
       L"\r\nQuietProc: " + to_wstring(allPrefs.cmdProcHidden);
 
-#if DEBUG_PREF_VALUES
-   MessageBox(NULL, prefs.c_str(), L"", MB_OK);
-#endif // DEBUG_PREF_VALUES
+   return prefs;
 }
+

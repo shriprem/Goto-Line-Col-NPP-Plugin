@@ -110,7 +110,9 @@ void GotoLineColPanel::initPanel() {
 void GotoLineColPanel::onBufferActivated() {
    int lineNum{}, colNum{};
    if ((isVisible() || allPrefs.cmdProcHidden) && cmdOpt.gotoCol(lineNum, colNum, allPrefs.cmdProcPersist)) {
+      idemPotentKey = FALSE;
       navigateToColPos(lineNum, colNum);
+      if (isVisible()) updatePanelColPos(FALSE);
    }
    else if (isVisible() && allPrefs.fillOnTabChange) {
       updatePanelColPos();
@@ -158,7 +160,7 @@ void GotoLineColPanel::loadPreferencesToPanel(bool bFromIniFile) {
    SetDlgItemText(_hSelf, IDC_GOCOL_UTF8_CHAR_NOTE, utf8CharNote.c_str());
 }
 
-void GotoLineColPanel::updatePanelColPos() {
+void GotoLineColPanel::updatePanelColPos(bool bClearIdemPotentKey) {
    HWND hScintilla{ getCurrentScintilla() };
    if (!hScintilla) return;
 
@@ -173,7 +175,7 @@ void GotoLineColPanel::updatePanelColPos() {
    updateColumnRangeText(line);
 
    // Clear Idem Potent key if it's still set from a premature program termination
-   idemPotentKey = FALSE;
+   if (bClearIdemPotentKey) idemPotentKey = FALSE;
 }
 
 void GotoLineColPanel::clearCalltip() {

@@ -51,7 +51,7 @@ If you then switch to the first tab, the same sequence of navigation and post-na
 
 With the persistent mode OFF (`p0`), the navigation and post-navigation actions will be performed only once per file. Therefore, if `p0` was specified on the command prompt, if you were to switch back to the second tab, there will be no navigation and post-navigation actions since this will not be the first-time visit to this tab.
 
-With the persistent mode ON (`p1`), the navigation and post-navigation actions will be repeated on each visit to the file tabs, as long as the current line of the file remains the same as the one specified with the `-n` option. If only the column position has changed, the caret will be pulled back to the column position specified with the `-c` option. The state of the current line will act as an anchor for the persistent mode on a per-file basis.
+With the persistent mode ON (`p1`), the navigation and post-navigation actions will be repeated on each visit to the file tabs, as long as the current line number of the file remains the same as the one specified with the `-n` option. If only the column position has changed, the caret will be pulled back to the column position specified with the `-c` option. The match of the current line number will act as a trigger for the persistent mode on a per-file basis.
 
 ### Usage Tips:
 1. The command line processing by the plugin is possible only with a fresh instance of Notepad++. If Notepad++ is already running, use the `-multiInst` option to launch a new instance. See: [Notepad++ Usage via the command prompt](https://npp-user-manual.org/docs/command-prompt/).
@@ -65,4 +65,6 @@ With the persistent mode ON (`p1`), the navigation and post-navigation actions w
 5. Demarcate the sub-options of **`-GLC`** with just a semicolon each. Ensure that there is no space between the semicolon and the next sub-option.
 
 6. The **`-GLC`** sub-option values will be overridden if the [Preferences Dialog](https://github.com/shriprem/Goto-Line-Col-NPP-Plugin/blob/master/docs/PreferencesDialog.md) is opened, and its **OK** button is pressed.
+
+7. Although the [kludgy syntax](https://github.com/shriprem/Goto-Line-Col-NPP-Plugin/discussions/14) of v2.1.0.0 may still work in v2.1.1.0 and later versions, prefer to use the compact syntax.
 

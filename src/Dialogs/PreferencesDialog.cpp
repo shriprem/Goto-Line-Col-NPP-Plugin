@@ -192,6 +192,7 @@ void PreferencesDialog::loadPreferences(bool iniFile) {
 }
 
 void PreferencesDialog::savePreferences() {
+   // First, fill in stored/default values for non-GUI keys like CmdProc***
    ALL_PREFERENCES tPrefs{_prefsIO.loadPreferences()};
 
    tPrefs.fillOnFocus = getCheckedState(IDC_PREFS_AF_ONFOCUS);

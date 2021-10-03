@@ -1,10 +1,14 @@
 ## Version History
 
 ### Version 2.1.1.0
-#### Enhancement:
-1. Consolidated GLC command line options.
-   * Sample GLC option usage in this version: ` -z -GLCb1;c0;d1;e18;f1;h1;p1;q1`
-   * Equivalent usage in version 2.1.0.0 was: `-z -GLCb1 -z -GLCc0 -z -GLCd1 -z -GLCe18  -z -GLCf1 -z -GLCh1 -z -GLCp1 -z -GLCq1`
+#### Enhancement: Consolidated GLC command line options.
+ Sample GLC option usage in this version: **` -z -GLCb1;c0;d1;e18;f1;h1;p1;q1`**
+
+Equivalent usage in version 2.1.0.0 was:
+```
+-z -GLCb1 -z -GLCc0 -z -GLCd1 -z -GLCe18  -z -GLCf1 -z -GLCh1 -z -GLCp1 -z -GLCq1
+```
+[*Although the kludgy syntax of v2.1.0.0 may still work in v2.1.1.0 and later versions, prefer to use the compact syntax.*]
 
 See: [Command Line Options](https://github.com/shriprem/Goto-Line-Col-NPP-Plugin/blob/master/docs/CommandLineOptions.md)
 

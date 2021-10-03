@@ -49,6 +49,6 @@ protected :
    void switchCol(bool bNext);
    int navigateToColPos();
    int navigateToColPos(int line, int column);
-   void updatePanelColPos();
+   void updatePanelColPos(bool bClearIdemPotentKey=TRUE);
    void initCursorPosData(HWND hScintilla, int line, int column, int atPos);
 };

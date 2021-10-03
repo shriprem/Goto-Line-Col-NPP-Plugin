@@ -1,6 +1,6 @@
 # GotoLineCol Notepad++ Plugin
 
-[Current Version: 2.1.0.0](https://github.com/shriprem/Goto-Line-Col-NPP-Plugin/blob/master/VersionHistory.md)
+[Current Version: 2.1.1.0](https://github.com/shriprem/Goto-Line-Col-NPP-Plugin/blob/master/VersionHistory.md)
 
 A plugin for navigating to a specified line and column position in a file.
 

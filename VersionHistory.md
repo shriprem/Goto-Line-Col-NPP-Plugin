@@ -1,5 +1,17 @@
 ## Version History
 
+### Version 2.1.1.0
+#### Enhancement:
+1. Consolidated GLC command line options.
+   * Sample GLC option usage in this version: ` -z -GLCb1;c0;d1;e18;f1;h1;p1;q1`
+   * Equivalent usage in version 2.1.0.0 was: `-z -GLCb1 -z -GLCc0 -z -GLCd1 -z -GLCe18  -z -GLCf1 -z -GLCh1 -z -GLCp1 -z -GLCq1`
+
+See: [Command Line Options](https://github.com/shriprem/Goto-Line-Col-NPP-Plugin/blob/master/docs/CommandLineOptions.md)
+
+**Release:** [2.1.1.0 Release](https://github.com/shriprem/Goto-Line-Col-NPP-Plugin/releases/tag/v2.1.1.0)
+
+---
+
 ### Version 2.1.0.0
 #### Enhancements:
 1. Command Line Option to load multiple documents and position them all at the same line and character/byte column.

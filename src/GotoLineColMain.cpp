@@ -14,7 +14,7 @@
 
 #include "PluginDefinition.h"
 #include "Dialogs/GoToLineColPanel.h"
-#include "NPP/NppDarkMode.h"
+#include "NPP_Plugin_Darkmode.h"
 
 extern FuncItem pluginMenuItems[MI_COUNT];
 extern NppData nppData;
@@ -25,7 +25,7 @@ BOOL APIENTRY DllMain(HANDLE hModule, DWORD  reasonForCall, LPVOID /*lpReserved*
     switch (reasonForCall) {
       case DLL_PROCESS_ATTACH:
         pluginInit(hModule);
-        NppDarkMode::initDarkMode();
+        NPPDM_InitDarkMode(nppData._nppHandle);
         break;
 
       case DLL_PROCESS_DETACH:

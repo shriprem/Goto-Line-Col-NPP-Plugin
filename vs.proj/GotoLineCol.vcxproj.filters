@@ -25,18 +25,6 @@
     <ClCompile Include="..\src\Utils.cpp">
       <Filter>Base</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\NPP\DarkMode.cpp">
-      <Filter>_NPP Framework</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\NPP\NppDarkMode.cpp">
-      <Filter>_NPP Framework</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\NPP\NppParameters.cpp">
-      <Filter>_NPP Framework</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\NPP\tinyxml2.cpp">
-      <Filter>_NPP Framework</Filter>
-    </ClCompile>
     <ClCompile Include="..\src\CommandLineOptions.cpp">
       <Filter>Base</Filter>
     </ClCompile>
@@ -93,25 +81,13 @@
     <ClInclude Include="..\src\Utils.h">
       <Filter>Base</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\NPP\DarkMode.h">
-      <Filter>_NPP Framework</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\NPP\IatHook.h">
-      <Filter>_NPP Framework</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\NPP\NppDarkMode.h">
-      <Filter>_NPP Framework</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\NPP\NppParameters.h">
-      <Filter>_NPP Framework</Filter>
-    </ClInclude>
     <ClInclude Include="..\src\NPP\Sci_Position.h">
       <Filter>_NPP Framework</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\NPP\tinyxml2.h">
-      <Filter>_NPP Framework</Filter>
-    </ClInclude>
     <ClInclude Include="..\src\CommandLineOptions.h">
+      <Filter>Base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\NPP_Plugin_Darkmode.h">
       <Filter>Base</Filter>
     </ClInclude>
   </ItemGroup>

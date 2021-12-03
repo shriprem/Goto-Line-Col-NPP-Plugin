@@ -1,5 +1,15 @@
 ## Version History
 
+### Version 2.2.0.0
+
+1. Darkmode for the plugin is now rendered by a separate DLL that can be shared by multiple plugins, thus reducing the overall memory footprint. For instance, if you have both the [FWDataViz](https://github.com/shriprem/FWDataViz) and [GotoLineCol](https://github.com/shriprem/Goto-Line-Col-NPP-Plugin) plugins installed, move the `NPP_Plugin_Darkmode.dll` file either from `<NPP_Plugins_folder>/FWDataViz` or `<NPP_Plugins_folder>/GotoLineCol` folder into the `<NPP_folder>`, and delete `NPP_Plugin_Darkmode.dll` in the other plugin folder.
+
+**Plugin Developers**: For more information on using `NPP_Plugin_Darkmode.dll` in your plugins, please refer to the documentation at the [NPP_Plugin_Darkmode](https://github.com/shriprem/NPP_Plugin_Darkmode) repository.
+
+**Release:** [2.2.0.0 Release](https://github.com/shriprem/Goto-Line-Col-NPP-Plugin/releases/tag/v2.2.0.0)
+
+---
+
 ### Version 2.1.1.0
 #### Enhancement: Consolidated GLC command line options.
  Sample GLC option usage in this version: **` -z -GLCb1;c0;d1;e18;f1;h1;p1;q1`**

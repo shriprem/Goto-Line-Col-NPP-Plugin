@@ -31,8 +31,7 @@ void PreferencesDialog::doDialog(HINSTANCE hInst) {
    addTooltip(_hSelf, IDC_PREFS_TOOLTIP_DURATION, L"", PREFS_TIP_TOOLTIP_DURATION);
 }
 
-void PreferencesDialog::localize()
-{
+void PreferencesDialog::localize() {
    SetWindowText(_hSelf, PREFS_DIALOG_TITLE);
 
    SetDlgItemText(_hSelf, IDC_PREFS_AF_ONFOCUS, PREFS_LABEL_AF_ONFOCUS);
@@ -54,80 +53,75 @@ void PreferencesDialog::localize()
 
 INT_PTR CALLBACK PreferencesDialog::run_dlgProc(UINT message, WPARAM wParam, LPARAM lParam) {
    switch (message) {
-      case WM_COMMAND:
-         switch LOWORD(wParam) {
-            case IDOK:
-               savePreferences();
-               display(FALSE);
-               break;
-
-            case IDCANCEL:
-               display(FALSE);
-               break;
-
-            case IDC_PREFS_DEFAULTS:
-               loadPreferences(false);
-               break;
-
-            case IDC_PREFS_CENTER_CARET:
-            {
-               BOOL bCenterCaret{ !getCheckedState(IDC_PREFS_CENTER_CARET) };
-               enableControl(IDC_PREFS_EDGE_BUFFER_LABEL, bCenterCaret);
-               enableControl(IDC_PREFS_EDGE_BUFFER_SLIDER, bCenterCaret);
-               enableControl(IDC_PREFS_EDGE_BUFFER_VALUE, bCenterCaret);
-               break;
-            }
-
-            case IDC_PREFS_TOOLTIP_SHOW:
-            {
-               BOOL bShowTooltip{ getCheckedState(IDC_PREFS_TOOLTIP_SHOW) };
-               enableControl(IDC_PREFS_TOOLTIP_DUR_LABEL, bShowTooltip);
-               enableControl(IDC_PREFS_TOOLTIP_DURATION, bShowTooltip);
-               bShowTooltip ? createTooltips() : destroyTooltips();
-               break;
-            }
-
-            case IDC_PREFS_TOOLTIP_DURATION:
-               if (HIWORD(wParam) == EN_KILLFOCUS)
-                  setTooltipsDuration(getEditValue(IDC_PREFS_TOOLTIP_DURATION));
-               break;
-         }
-
+   case WM_COMMAND:
+      switch LOWORD(wParam) {
+      case IDOK:
+         savePreferences();
+         display(FALSE);
          break;
 
-      case WM_HSCROLL:
-         if (lParam == (LPARAM)hEdgeBuffer)
-            syncTbarToText(hEdgeBuffer, IDC_PREFS_EDGE_BUFFER_VALUE);
-         else if (lParam == (LPARAM)hCaretFlash)
-            syncTbarToText(hCaretFlash, IDC_PREFS_CARET_FLASH_VALUE);
-
+      case IDCANCEL:
+         display(FALSE);
          break;
 
-      case WM_INITDIALOG:
-         if (NPPDM_IsEnabled()) {
-            NPPDM_AutoSubclassAndThemeChildControls(_hSelf);
-         }
+      case IDC_PREFS_DEFAULTS:
+         loadPreferences(false);
          break;
 
-      case WM_CTLCOLORDLG:
-      case WM_CTLCOLORLISTBOX:
-      case WM_CTLCOLORSTATIC:
-         if (NPPDM_IsEnabled()) {
-            return NPPDM_OnCtlColorDarker(reinterpret_cast<HDC>(wParam));
-         }
+      case IDC_PREFS_CENTER_CARET:
+      {
+         BOOL bCenterCaret{ !getCheckedState(IDC_PREFS_CENTER_CARET) };
+         enableControl(IDC_PREFS_EDGE_BUFFER_LABEL, bCenterCaret);
+         enableControl(IDC_PREFS_EDGE_BUFFER_SLIDER, bCenterCaret);
+         enableControl(IDC_PREFS_EDGE_BUFFER_VALUE, bCenterCaret);
          break;
+      }
 
-      case WM_CTLCOLOREDIT:
-         if (NPPDM_IsEnabled()) {
-            return NPPDM_OnCtlColorSofter(reinterpret_cast<HDC>(wParam));
-         }
+      case IDC_PREFS_TOOLTIP_SHOW:
+      {
+         BOOL bShowTooltip{ getCheckedState(IDC_PREFS_TOOLTIP_SHOW) };
+         enableControl(IDC_PREFS_TOOLTIP_DUR_LABEL, bShowTooltip);
+         enableControl(IDC_PREFS_TOOLTIP_DURATION, bShowTooltip);
+         bShowTooltip ? createTooltips() : destroyTooltips();
          break;
+      }
 
-      case WM_PRINTCLIENT:
-         if (NPPDM_IsEnabled()) {
-            return TRUE;
-         }
+      case IDC_PREFS_TOOLTIP_DURATION:
+         if (HIWORD(wParam) == EN_KILLFOCUS)
+            setTooltipsDuration(getEditValue(IDC_PREFS_TOOLTIP_DURATION));
          break;
+      }
+
+      break;
+
+   case WM_HSCROLL:
+      if (lParam == (LPARAM)hEdgeBuffer)
+         syncTbarToText(hEdgeBuffer, IDC_PREFS_EDGE_BUFFER_VALUE);
+      else if (lParam == (LPARAM)hCaretFlash)
+         syncTbarToText(hCaretFlash, IDC_PREFS_CARET_FLASH_VALUE);
+
+      break;
+
+   case WM_INITDIALOG:
+      if (NPPDM_IsEnabled()) {
+         NPPDM_AutoSubclassAndThemeChildControls(_hSelf);
+      }
+      break;
+
+   case WM_CTLCOLORDLG:
+   case WM_CTLCOLORBTN:
+   case WM_CTLCOLORLISTBOX:
+   case WM_CTLCOLORSTATIC:
+      if (NPPDM_IsEnabled()) {
+         return NPPDM_OnCtlColorDarker(reinterpret_cast<HDC>(wParam));
+      }
+      break;
+
+   case WM_CTLCOLOREDIT:
+      if (NPPDM_IsEnabled()) {
+         return NPPDM_OnCtlColorSofter(reinterpret_cast<HDC>(wParam));
+      }
+      break;
    }
 
    return FALSE;
@@ -193,7 +187,7 @@ void PreferencesDialog::loadPreferences(bool iniFile) {
 
 void PreferencesDialog::savePreferences() {
    // First, fill in stored/default values for non-GUI keys like CmdProc***
-   ALL_PREFERENCES tPrefs{_prefsIO.loadPreferences()};
+   ALL_PREFERENCES tPrefs{ _prefsIO.loadPreferences() };
 
    tPrefs.fillOnFocus = getCheckedState(IDC_PREFS_AF_ONFOCUS);
    tPrefs.fillOnTabChange = getCheckedState(IDC_PREFS_AF_ONTABCHANGE);

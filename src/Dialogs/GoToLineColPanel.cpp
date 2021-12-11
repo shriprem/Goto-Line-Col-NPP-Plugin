@@ -5,86 +5,81 @@ extern GotoLineColPanel _gotoPanel;
 
 INT_PTR CALLBACK GotoLineColPanel::run_dlgProc(UINT message, WPARAM wParam, LPARAM lParam) {
    switch (message) {
-      case WM_COMMAND :
-         switch LOWORD(wParam) {
-            case IDC_GOLINE_EDIT:
-               updateColumnRangeText(getInputLineValidated());
-               break;
-
-            case IDOK:
-               navigateToColPos();
-               break;
-
-            case IDCANCEL:
-            case IDCLOSE:
-               setFocusOnEditor();
-               display(false);
-               break;
-
-            case IDC_GOLINECOL_PREFS:
-               SetFocus(_hSelf);
-               ShowPreferencesDialog();
-               break;
-         }
-
+   case WM_COMMAND:
+      switch LOWORD(wParam) {
+      case IDC_GOLINE_EDIT:
+         updateColumnRangeText(getInputLineValidated());
          break;
 
-      case WM_LBUTTONDOWN:
-      case WM_MBUTTONDOWN:
-      case WM_RBUTTONDOWN:
+      case IDOK:
+         navigateToColPos();
+         break;
+
+      case IDCANCEL:
+      case IDCLOSE:
+         setFocusOnEditor();
+         display(false);
+         break;
+
+      case IDC_GOLINECOL_PREFS:
          SetFocus(_hSelf);
+         ShowPreferencesDialog();
          break;
+      }
 
-      case WM_NOTIFY:
-         switch (((LPNMHDR)lParam)->code) {
-            case UDN_DELTAPOS:
-               bool bNext{ ((LPNMUPDOWN)lParam)->iDelta > 0 };
+      break;
 
-               switch (((LPNMHDR)lParam)->idFrom) {
-                  case IDC_GOLINE_SPIN:
-                     switchLine(bNext);
-                     break;
+   case WM_LBUTTONDOWN:
+   case WM_MBUTTONDOWN:
+   case WM_RBUTTONDOWN:
+      SetFocus(_hSelf);
+      break;
 
-                  case IDC_GOCOL_SPIN:
-                     switchCol(bNext);
-                     break;
-               }
-               break;
-         }
+   case WM_NOTIFY:
+      switch (((LPNMHDR)lParam)->code) {
+      case UDN_DELTAPOS:
+         bool bNext{ ((LPNMUPDOWN)lParam)->iDelta > 0 };
 
-         break;
+         switch (((LPNMHDR)lParam)->idFrom) {
+         case IDC_GOLINE_SPIN:
+            switchLine(bNext);
+            break;
 
-      case WM_INITDIALOG:
-         if (NPPDM_IsEnabled()) {
-            NPPDM_AutoSubclassAndThemeChildControls(_hSelf);
-         }
-         break;
-
-      case WM_CTLCOLORDLG:
-      case WM_CTLCOLORLISTBOX:
-      case WM_CTLCOLORSTATIC:
-         if (NPPDM_IsEnabled()) {
-            return NPPDM_OnCtlColorDarker(reinterpret_cast<HDC>(wParam));
+         case IDC_GOCOL_SPIN:
+            switchCol(bNext);
+            break;
          }
          break;
+      }
 
-      case WM_PRINTCLIENT:
-         if (NPPDM_IsEnabled()) {
-            return TRUE;
-         }
-         break;
+      break;
 
-      case WM_SETFOCUS:
-         if (allPrefs.fillOnFocus)
-            updatePanelColPos();
-         break;
+   case WM_INITDIALOG:
+      if (NPPDM_IsEnabled()) {
+         NPPDM_AutoSubclassAndThemeChildControls(_hSelf);
+      }
+      break;
 
-      case WM_SHOWWINDOW:
-         Utils::checkMenuItem(MI_GOTO_PANEL, wParam);
-         break;
+   case WM_CTLCOLORDLG:
+   case WM_CTLCOLORBTN:
+   case WM_CTLCOLORLISTBOX:
+   case WM_CTLCOLORSTATIC:
+      if (NPPDM_IsEnabled()) {
+         return NPPDM_OnCtlColorDarker(reinterpret_cast<HDC>(wParam));
+      }
+      break;
 
-      default:
-         return DockingDlgInterface::run_dlgProc(message, wParam, lParam);
+   case WM_SETFOCUS:
+      if (allPrefs.fillOnFocus)
+         updatePanelColPos();
+      break;
+
+   case WM_SHOWWINDOW:
+      Utils::checkMenuItem(MI_GOTO_PANEL, wParam);
+      break;
+
+   default:
+      return DockingDlgInterface::run_dlgProc(message, wParam, lParam);
    }
 
    return FALSE;
@@ -224,7 +219,7 @@ int GotoLineColPanel::getDocumentColumn(HWND hScintilla, int pos, int line) {
 
 int GotoLineColPanel::setDocumentColumn(HWND hScintilla, int line, int lineStartPos, int lineMaxPos, int column) {
    column = (column < 1) ? 1 :
-            (column > lineMaxPos) ? lineMaxPos : column;
+      (column > lineMaxPos) ? lineMaxPos : column;
 
    int gotoPos = (allPrefs.useByteCol) ?
       lineStartPos + column - 1 :

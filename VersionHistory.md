@@ -2,7 +2,11 @@
 
 ### Version 2.2.0.0
 
-1. Darkmode for the plugin is now rendered by a separate DLL that can be shared by multiple plugins, thus reducing the overall memory footprint. For instance, if you have both the [FWDataViz](https://github.com/shriprem/FWDataViz) and [GotoLineCol](https://github.com/shriprem/Goto-Line-Col-NPP-Plugin) plugins installed, move the `NPP_Plugin_Darkmode.dll` file either from `<NPP_Plugins_folder>/FWDataViz` or `<NPP_Plugins_folder>/GotoLineCol` folder into the `<NPP_folder>`, and delete `NPP_Plugin_Darkmode.dll` in the other plugin folder.
+1. Darkmode for the _GoToLineCol_ plugin is now rendered by a standalone DLL that can be shared by multiple plugins, thus reducing the overall memory footprint. Notepad++ will only load a copy of the `NPP_Plugin_Darkmode.dll` located either in:
+   * The folder for the first plugin (_in alphabetical order_) that requires this DLL.
+   * Or, in the common `<NPP_executable_folder>`.
+
+   You can verify the singleton loading of the `NPP_Plugin_Darkmode.dll` using the [Process Explorer](https://docs.microsoft.com/en-us/sysinternals/downloads/process-explorer) utility.
 
 **Plugin Developers**: For more information on using `NPP_Plugin_Darkmode.dll` in your plugins, please refer to the documentation at the [NPP_Plugin_Darkmode](https://github.com/shriprem/NPP_Plugin_Darkmode) repository.
 

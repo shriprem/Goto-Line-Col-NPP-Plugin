@@ -1,5 +1,13 @@
 ## Version History
 
+### Version 2.2.0.1
+
+1. Updated `NPP_Plugin_Darkmode.dll` to [version 1.1.0.0](https://github.com/shriprem/NPP_Plugin_Darkmode/releases/tag/v1.1.0.0). This fixes darkmode rendering issue in Windows 11.
+
+**Release:** [2.2.0.1 Release](https://github.com/shriprem/Goto-Line-Col-NPP-Plugin/releases/tag/v2.2.0.1)
+
+---
+
 ### Version 2.2.0.0
 
 1. Darkmode for the _GoToLineCol_ plugin is now rendered by a standalone DLL that can be shared by multiple plugins, thus reducing the overall memory footprint. Notepad++ will only load a copy of the `NPP_Plugin_Darkmode.dll` located either in:

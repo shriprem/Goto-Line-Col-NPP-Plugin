@@ -1,5 +1,16 @@
 ## Version History
 
+### Version 2.2.0.2
+
+**Background:** With its v8.3 release, the Notepad++ *x64* binary will support opening 2GB+ files. However, this change causes compability issue with many *x64* plugins, [and they will need to be recompiled with a modified C++ header file](https://community.notepad-plus-plus.org/topic/22471/recompile-your-x64-plugins-with-new-header).
+
+The _GoToLineCol_ ***x64*** plugin was *not* affected by this incompatibility issue. Yet, this release incorporates the suggested modification of the C++ header file to prevent any future incompatibility issue.
+
+**Release:** [2.2.0.2 Release](https://github.com/shriprem/Goto-Line-Col-NPP-Plugin/releases/tag/v2.2.0.2)
+
+
+---
+
 ### Version 2.2.0.1
 
 1. Updated `NPP_Plugin_Darkmode.dll` to [version 1.1.0.0](https://github.com/shriprem/NPP_Plugin_Darkmode/releases/tag/v1.1.0.0). This fixes darkmode rendering issue in Windows 11.

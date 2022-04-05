@@ -20,6 +20,7 @@ protected:
    void localize();
 
    void enableControl(int controlID, bool enabled);
+   void redrawControl(int controlID);
    bool getCheckedState(int controlID);
    void setCheckedState(int controlID, int val);
    int getEditValue(int controlID);

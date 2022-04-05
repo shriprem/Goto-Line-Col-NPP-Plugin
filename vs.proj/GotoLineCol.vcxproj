@@ -64,6 +64,11 @@
     <ResourceCompile Include="..\src\Resources\GotoLineColPlugin.rc" />
     <ResourceCompile Include="..\src\Resources\GoToLineColUI.rc" />
   </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\src\Resources\goto.bmp" />
+    <Image Include="..\src\Resources\goto.ico" />
+    <Image Include="..\src\Resources\goto_dark.ico" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{9D04DBD5-E12E-44E0-A683-6F43F21D533B}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>

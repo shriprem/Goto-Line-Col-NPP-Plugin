@@ -67,10 +67,10 @@ BEGIN
                     "Button",BS_AUTOCHECKBOX | WS_TABSTOP,27,121,159,15
     LTEXT           "Edge Buffer at destination:",IDC_PREFS_EDGE_BUFFER_LABEL,32,146,145,12,SS_NOTIFY
     CONTROL         "",IDC_PREFS_EDGE_BUFFER_SLIDER,"msctls_trackbar32",TBS_AUTOTICKS | TBS_TOOLTIPS | WS_TABSTOP,32,160,145,12
-    CTEXT           "",IDC_PREFS_EDGE_BUFFER_VALUE,178,160,12,12,SS_NOTIFY | SS_SUNKEN,WS_EX_STATICEDGE
+    EDITTEXT        IDC_PREFS_EDGE_BUFFER_VALUE,178,160,12,12,ES_CENTER | ES_AUTOHSCROLL | ES_READONLY | ES_NUMBER
     LTEXT           "Cursor Flash duration (in seconds):",IDC_PREFS_CARET_FLASH_LABEL,32,187,145,15,SS_NOTIFY
     CONTROL         "",IDC_PREFS_CARET_FLASH_SLIDER,"msctls_trackbar32",TBS_AUTOTICKS | TBS_TOOLTIPS | WS_TABSTOP,32,201,145,12
-    CTEXT           "",IDC_PREFS_CARET_FLASH_VALUE,178,201,12,12,SS_NOTIFY | SS_SUNKEN,WS_EX_STATICEDGE
+    EDITTEXT        IDC_PREFS_CARET_FLASH_VALUE,178,201,12,12,ES_CENTER | ES_AUTOHSCROLL | ES_READONLY | ES_NUMBER
     DEFPUSHBUTTON   "&OK",IDOK,239,22,50,14
     PUSHBUTTON      "&Cancel",IDCANCEL,239,42,50,14
     PUSHBUTTON      "&Defaults",IDC_PREFS_DEFAULTS,239,199,50,14
@@ -87,17 +87,17 @@ END
 // TEXTINCLUDE
 //
 
-1 TEXTINCLUDE
+1 TEXTINCLUDE 
 BEGIN
     "resource.h\0"
 END
 
-2 TEXTINCLUDE
+2 TEXTINCLUDE 
 BEGIN
     "#include <windows.h>\0"
 END
 
-3 TEXTINCLUDE
+3 TEXTINCLUDE 
 BEGIN
     "\0"
 END
@@ -132,8 +132,7 @@ END
 // Bitmap
 //
 
-IDB_GOTO_TOOL_BTN_STD BITMAP                  "goto.bmp"
-
+IDB_GOTO_TOOL_BTN_STD   BITMAP                  "goto.bmp"
 
 
 /////////////////////////////////////////////////////////////////////////////
@@ -145,7 +144,7 @@ IDB_GOTO_TOOL_BTN_STD BITMAP                  "goto.bmp"
 // remains consistent on all systems.
 IDI_GOTO_TOOL_BTN_FLUENT ICON                    "goto.ico"
 
-IDI_GOTO_TOOL_BTN_DARK ICON                    "goto_dark.ico"
+IDI_GOTO_TOOL_BTN_DARK  ICON                    "goto_dark.ico"
 
 #endif    // English (United States) resources
 /////////////////////////////////////////////////////////////////////////////

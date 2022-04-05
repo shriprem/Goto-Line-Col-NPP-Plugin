@@ -71,7 +71,7 @@ INT_PTR CALLBACK PreferencesDialog::run_dlgProc(UINT message, WPARAM wParam, LPA
       case IDC_PREFS_CENTER_CARET:
       {
          BOOL bCenterCaret{ !getCheckedState(IDC_PREFS_CENTER_CARET) };
-         enableControl(IDC_PREFS_EDGE_BUFFER_LABEL, bCenterCaret);
+         redrawControl(IDC_PREFS_EDGE_BUFFER_LABEL);
          enableControl(IDC_PREFS_EDGE_BUFFER_SLIDER, bCenterCaret);
          enableControl(IDC_PREFS_EDGE_BUFFER_VALUE, bCenterCaret);
          break;
@@ -80,7 +80,7 @@ INT_PTR CALLBACK PreferencesDialog::run_dlgProc(UINT message, WPARAM wParam, LPA
       case IDC_PREFS_TOOLTIP_SHOW:
       {
          BOOL bShowTooltip{ getCheckedState(IDC_PREFS_TOOLTIP_SHOW) };
-         enableControl(IDC_PREFS_TOOLTIP_DUR_LABEL, bShowTooltip);
+         redrawControl(IDC_PREFS_TOOLTIP_DUR_LABEL);
          enableControl(IDC_PREFS_TOOLTIP_DURATION, bShowTooltip);
          bShowTooltip ? createTooltips() : destroyTooltips();
          break;
@@ -111,9 +111,23 @@ INT_PTR CALLBACK PreferencesDialog::run_dlgProc(UINT message, WPARAM wParam, LPA
    case WM_CTLCOLORDLG:
    case WM_CTLCOLORBTN:
    case WM_CTLCOLORLISTBOX:
-   case WM_CTLCOLORSTATIC:
       if (NPPDM_IsEnabled()) {
          return NPPDM_OnCtlColorDarker(reinterpret_cast<HDC>(wParam));
+      }
+      break;
+
+   case WM_CTLCOLORSTATIC:
+      switch (GetDlgCtrlID((HWND)lParam)) {
+      case IDC_PREFS_EDGE_BUFFER_LABEL:
+         return NPPDM_OnCtlColorIfEnabled(reinterpret_cast<HDC>(wParam), !getCheckedState(IDC_PREFS_CENTER_CARET));
+
+      case IDC_PREFS_TOOLTIP_DUR_LABEL:
+         return NPPDM_OnCtlColorIfEnabled(reinterpret_cast<HDC>(wParam), getCheckedState(IDC_PREFS_TOOLTIP_SHOW));
+
+      default:
+         if (NPPDM_IsEnabled()) {
+            return NPPDM_OnCtlColorDarker(reinterpret_cast<HDC>(wParam));
+         }
       }
       break;
 
@@ -129,6 +143,10 @@ INT_PTR CALLBACK PreferencesDialog::run_dlgProc(UINT message, WPARAM wParam, LPA
 
 void PreferencesDialog::enableControl(int controlID, bool enabled) {
    EnableWindow(GetDlgItem(_hSelf, controlID), enabled);
+}
+
+void PreferencesDialog::redrawControl(int controlID) {
+   InvalidateRect(GetDlgItem(_hSelf, controlID), NULL, TRUE);
 }
 
 bool PreferencesDialog::getCheckedState(int controlID) {
@@ -173,10 +191,10 @@ void PreferencesDialog::loadPreferences(bool iniFile) {
    setCheckedState(IDC_PREFS_TOOLTIP_SHOW, tPrefs.showTooltip);
    SetDlgItemInt(_hSelf, IDC_PREFS_TOOLTIP_DURATION, tPrefs.tooltipSeconds, FALSE);
 
-   enableControl(IDC_PREFS_EDGE_BUFFER_LABEL, !tPrefs.centerCaret);
+   redrawControl(IDC_PREFS_EDGE_BUFFER_LABEL);
    enableControl(IDC_PREFS_EDGE_BUFFER_SLIDER, !tPrefs.centerCaret);
    enableControl(IDC_PREFS_EDGE_BUFFER_VALUE, !tPrefs.centerCaret);
-   enableControl(IDC_PREFS_TOOLTIP_DUR_LABEL, tPrefs.showTooltip);
+   redrawControl(IDC_PREFS_TOOLTIP_DUR_LABEL);
    enableControl(IDC_PREFS_TOOLTIP_DURATION, tPrefs.showTooltip);
 
    if (tPrefs.showTooltip) {

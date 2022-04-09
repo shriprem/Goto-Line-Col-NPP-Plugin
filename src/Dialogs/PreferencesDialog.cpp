@@ -103,9 +103,7 @@ INT_PTR CALLBACK PreferencesDialog::run_dlgProc(UINT message, WPARAM wParam, LPA
       break;
 
    case WM_INITDIALOG:
-      if (NPPDM_IsEnabled()) {
-         NPPDM_AutoSubclassAndThemeChildControls(_hSelf);
-      }
+      NPPDM_AutoSubclassAndThemeChildControls(_hSelf);
       break;
 
    case WM_CTLCOLORDLG:

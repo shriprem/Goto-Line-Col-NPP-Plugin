@@ -51,10 +51,14 @@ bool changeFontStyle(HWND hDlg, int controlID, fontStyle style) {
 // ***************** PUBLIC *****************
 
 int Utils::StringtoInt(const wstring& str, int base) {
-   if (str.length() < 1)
-      return 0;
-   else
+   if (str.length() < 1) return 0;
+
+   try {
       return stoi(str, nullptr, base);
+   }
+   catch (...) {
+      return 0;
+   }
 }
 
 LPCWSTR Utils::ToUpper(LPWSTR str) {

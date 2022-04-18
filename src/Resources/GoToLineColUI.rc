@@ -1,28 +1,9 @@
-// Microsoft Visual C++ generated resource script.
-//
 #pragma code_page(65001)
 
 #include "resource.h"
-
-#define APSTUDIO_READONLY_SYMBOLS
-/////////////////////////////////////////////////////////////////////////////
-//
-// Generated from the TEXTINCLUDE 2 resource.
-//
+#include "control_ids.h"
 #include <windows.h>
-/////////////////////////////////////////////////////////////////////////////
-#undef APSTUDIO_READONLY_SYMBOLS
 
-/////////////////////////////////////////////////////////////////////////////
-// English (United States) resources
-
-#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
-LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
-
-/////////////////////////////////////////////////////////////////////////////
-//
-// Dialog
-//
 
 IDD_GOTOLINECOL_DOCKPANEL DIALOGEX 26, 41, 211, 223
 STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
@@ -81,72 +62,10 @@ BEGIN
 END
 
 
-#ifdef APSTUDIO_INVOKED
-/////////////////////////////////////////////////////////////////////////////
-//
-// TEXTINCLUDE
-//
-
-1 TEXTINCLUDE 
-BEGIN
-    "resource.h\0"
-END
-
-2 TEXTINCLUDE 
-BEGIN
-    "#include <windows.h>\0"
-END
-
-3 TEXTINCLUDE 
-BEGIN
-    "\0"
-END
-
-#endif    // APSTUDIO_INVOKED
+// BITMAPS
+IDB_GOTO_TOOL_BTN_STD   BITMAP                     "goto.bmp"
 
 
-/////////////////////////////////////////////////////////////////////////////
-//
-// DESIGNINFO
-//
-
-#ifdef APSTUDIO_INVOKED
-GUIDELINES DESIGNINFO
-BEGIN
-    IDD_GOTOLINECOL_DOCKPANEL, DIALOG
-    BEGIN
-        BOTTOMMARGIN, 222
-    END
-
-    IDD_PREFERENCES_DIALOG, DIALOG
-    BEGIN
-        RIGHTMARGIN, 334
-        BOTTOMMARGIN, 271
-    END
-END
-#endif    // APSTUDIO_INVOKED
-
-
-/////////////////////////////////////////////////////////////////////////////
-//
-// Bitmap
-//
-
-IDB_GOTO_TOOL_BTN_STD   BITMAP                  "goto.bmp"
-
-
-/////////////////////////////////////////////////////////////////////////////
-//
-// Icon
-//
-
-// Icon with lowest ID value placed first to ensure application icon
-// remains consistent on all systems.
-IDI_GOTO_TOOL_BTN_FLUENT ICON                    "goto.ico"
-
-IDI_GOTO_TOOL_BTN_DARK  ICON                    "goto_dark.ico"
-
-#endif    // English (United States) resources
-/////////////////////////////////////////////////////////////////////////////
-
-
+// ICONS
+IDI_GOTO_TOOL_BTN_FLUENT ICON                      "goto.ico"
+IDI_GOTO_TOOL_BTN_DARK  ICON                       "goto_dark.ico"

@@ -25,6 +25,7 @@
 
 #include "NPP/PluginInterface.h"
 #include "Resources/resource.h"
+#include "Resources/control_ids.h"
 #include "Resources/localization.h"
 
 using std::string;
@@ -58,3 +59,4 @@ void ShowGotoLineColPanel(bool show);
 
 void ShowPreferencesDialog();
 void ShowAboutDialog();
+void refreshDarkMode();

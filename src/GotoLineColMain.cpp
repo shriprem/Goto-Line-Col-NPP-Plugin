@@ -14,7 +14,7 @@
 
 #include "PluginDefinition.h"
 #include "Dialogs/GoToLineColPanel.h"
-#include "NPP_Plugin_Darkmode.h"
+#include "Darkmode/NPP_Plugin_Darkmode.h"
 
 extern FuncItem pluginMenuItems[MI_COUNT];
 extern NppData nppData;
@@ -25,7 +25,6 @@ BOOL APIENTRY DllMain(HANDLE hModule, DWORD  reasonForCall, LPVOID /*lpReserved*
     switch (reasonForCall) {
       case DLL_PROCESS_ATTACH:
         pluginInit(hModule);
-        NPPDM_InitDarkMode(nppData._nppHandle);
         break;
 
       case DLL_PROCESS_DETACH:
@@ -70,6 +69,11 @@ extern "C" __declspec(dllexport) void beNotified(SCNotification *notifyCode) {
       case NPPN_TBMODIFICATION:
          Utils::addToolbarIcon(MI_GOTO_PANEL, IDB_GOTO_TOOL_BTN_STD,
             IDI_GOTO_TOOL_BTN_FLUENT, IDI_GOTO_TOOL_BTN_DARK);
+         break;
+
+      case NPPN_DARKMODECHANGED:
+         NPPDM_QueryNPPDarkmode();
+         refreshDarkMode();
          break;
 
       case SCN_UPDATEUI:

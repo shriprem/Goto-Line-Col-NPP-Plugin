@@ -59,12 +59,21 @@ INT_PTR CALLBACK GotoLineColPanel::run_dlgProc(UINT message, WPARAM wParam, LPAR
       break;
 
    case WM_CTLCOLORDLG:
-   case WM_CTLCOLORBTN:
    case WM_CTLCOLORLISTBOX:
    case WM_CTLCOLORSTATIC:
       if (NPPDM_IsEnabled()) {
          return NPPDM_OnCtlColorDarker(reinterpret_cast<HDC>(wParam));
       }
+      break;
+
+   case WM_CTLCOLOREDIT:
+      if (NPPDM_IsEnabled()) {
+         return NPPDM_OnCtlColorSofter(reinterpret_cast<HDC>(wParam));
+      }
+      break;
+
+   case WM_PRINTCLIENT:
+      if (NPPDM_IsEnabled()) return TRUE;
       break;
 
    case WM_SETFOCUS:
@@ -86,7 +95,7 @@ INT_PTR CALLBACK GotoLineColPanel::run_dlgProc(UINT message, WPARAM wParam, LPAR
 void GotoLineColPanel::initPrefs() {
    _prefsIO.init();
    allPrefs = _prefsIO.loadPreferences();
-   cmdOpt.scan(allPrefs);
+   scanCommandLine();
 }
 
 void GotoLineColPanel::initPanel() {
@@ -103,9 +112,8 @@ void GotoLineColPanel::initPanel() {
 void GotoLineColPanel::onBufferActivated() {
    int lineNum{}, colNum{};
    if ((isVisible() || allPrefs.cmdProcHidden) && cmdOpt.gotoCol(lineNum, colNum, allPrefs.cmdProcPersist)) {
-      idemPotentKey = FALSE;
       navigateToColPos(lineNum, colNum);
-      if (isVisible()) updatePanelColPos(FALSE);
+      if (isVisible()) updatePanelColPos();
    }
    else if (isVisible() && allPrefs.fillOnTabChange) {
       updatePanelColPos();
@@ -153,7 +161,7 @@ void GotoLineColPanel::loadPreferencesToPanel(bool bFromIniFile) {
    SetDlgItemText(_hSelf, IDC_GOCOL_UTF8_CHAR_NOTE, utf8CharNote.c_str());
 }
 
-void GotoLineColPanel::updatePanelColPos(bool bClearIdemPotentKey) {
+void GotoLineColPanel::updatePanelColPos() {
    HWND hScintilla{ getCurrentScintilla() };
    if (!hScintilla) return;
 
@@ -166,9 +174,6 @@ void GotoLineColPanel::updatePanelColPos(bool bClearIdemPotentKey) {
 
    SetDlgItemText(_hSelf, IDC_GOCOL_EDIT, to_wstring(col).c_str());
    updateColumnRangeText(line);
-
-   // Clear Idem Potent key if it's still set from a premature program termination
-   if (bClearIdemPotentKey) idemPotentKey = FALSE;
 }
 
 void GotoLineColPanel::clearCalltip() {

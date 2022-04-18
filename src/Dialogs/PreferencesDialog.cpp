@@ -31,6 +31,13 @@ void PreferencesDialog::doDialog(HINSTANCE hInst) {
    addTooltip(_hSelf, IDC_PREFS_TOOLTIP_DURATION, L"", PREFS_TIP_TOOLTIP_DURATION);
 }
 
+void PreferencesDialog::refreshDarkMode() {
+   NPPDM_AutoSubclassAndThemeChildControls(_hSelf);
+
+   SendMessage(hEdgeBuffer, TBM_SETRANGEMIN, FALSE, 1);
+   SendMessage(hCaretFlash, TBM_SETRANGEMIN, FALSE, 1);
+}
+
 void PreferencesDialog::localize() {
    SetWindowText(_hSelf, PREFS_DIALOG_TITLE);
 
@@ -107,7 +114,6 @@ INT_PTR CALLBACK PreferencesDialog::run_dlgProc(UINT message, WPARAM wParam, LPA
       break;
 
    case WM_CTLCOLORDLG:
-   case WM_CTLCOLORBTN:
    case WM_CTLCOLORLISTBOX:
       if (NPPDM_IsEnabled()) {
          return NPPDM_OnCtlColorDarker(reinterpret_cast<HDC>(wParam));
@@ -133,6 +139,10 @@ INT_PTR CALLBACK PreferencesDialog::run_dlgProc(UINT message, WPARAM wParam, LPA
       if (NPPDM_IsEnabled()) {
          return NPPDM_OnCtlColorSofter(reinterpret_cast<HDC>(wParam));
       }
+      break;
+
+   case WM_PRINTCLIENT:
+      if (NPPDM_IsEnabled()) return TRUE;
       break;
    }
 

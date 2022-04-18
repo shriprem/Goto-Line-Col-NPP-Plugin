@@ -1,5 +1,19 @@
 ## Version History
 
+### Version 2.3.0.0
+
+1. Dynamic change of Dark mode tones: When dark mode settings are changed in the Preferences dialog of Notepad++ (version 8.4.1 or higher), they will be immediately reflected in the _GoToLineCol_ plugin user interfaces -- without requiring a restart of Notepad++.
+
+2. Fixed blurry disabled static texts in dark mode.
+
+3. Fixed std::stoi exception with non-numeric input. Fixes #[19](https://github.com/shriprem/Goto-Line-Col-NPP-Plugin/issues/19) & #[22](https://github.com/shriprem/Goto-Line-Col-NPP-Plugin/issues/22).
+
+
+**Release:** [2.3.0.0 Release](https://github.com/shriprem/Goto-Line-Col-NPP-Plugin/releases/tag/v2.3.0.0)
+
+
+---
+
 ### Version 2.2.0.2
 
 **Background:** With its v8.3 release, the Notepad++ *x64* binary will support opening 2GB+ files. However, this change causes compability issue with many *x64* plugins, [and they will need to be recompiled with a modified C++ header file](https://community.notepad-plus-plus.org/topic/22471/recompile-your-x64-plugins-with-new-header).

@@ -18,6 +18,7 @@ public :
 
    void initPrefs();
    void initPanel();
+   void scanCommandLine() { cmdOpt.scan(allPrefs); };
 
    void onBufferActivated();
    void localize();
@@ -49,6 +50,6 @@ protected :
    void switchCol(bool bNext);
    int navigateToColPos();
    int navigateToColPos(int line, int column);
-   void updatePanelColPos(bool bClearIdemPotentKey=TRUE);
+   void updatePanelColPos();
    void initCursorPosData(HWND hScintilla, int line, int column, int atPos);
 };

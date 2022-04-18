@@ -43,6 +43,7 @@ void pluginCleanUp(){}
 
 void commandMenuInit() {
    _gotoPanel.initPrefs();
+   NPPDM_InitDarkMode();
 
    ShortcutKey *shKeyOpen = new ShortcutKey;
    shKeyOpen->_isAlt = false;
@@ -124,4 +125,15 @@ void ShowPreferencesDialog() {
 
 void ShowAboutDialog() {
    _aboutDlg.doDialog((HINSTANCE)_gModule);
+}
+
+void refreshDarkMode() {
+   if (_gotoPanel.isCreated())
+      NPPDM_AutoSubclassAndThemeChildControls(_gotoPanel.getHSelf());
+
+   if (_prefsDlg.isCreated())
+      _prefsDlg.refreshDarkMode();
+
+   if (_aboutDlg.isCreated())
+      NPPDM_AutoSubclassAndThemeChildControls(_aboutDlg.getHSelf());
 }

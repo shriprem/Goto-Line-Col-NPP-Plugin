@@ -12,6 +12,7 @@ class PreferencesDialog : public StaticDialog {
 public:
    PreferencesDialog() : StaticDialog() {};
    void doDialog(HINSTANCE hInst);
+   void refreshDarkMode();
 
 protected:
    HWND hEdgeBuffer, hCaretFlash, hTooltips[TOOLTIPS_COUNT];

@@ -1,23 +1,26 @@
 #include "CommandLineOptions.h"
 
 void CommandLineOptions::scan(ALL_PREFERENCES& allPrefs) {
-   bool bQuoted{}, bExecFound{}, bLineNumFound{}, bColNumFound{};
+   if (Utils::getNPPVersion() < NPP_MIN_VERSION_WITH_CURRENTCMDLINE) return;
+
+   bool bQuoted{}, bLineNumFound{}, bColNumFound{};
    wstring quote{ L"\"" };
    wregex leadingSpaces{ L"^[ ]*" };
-   wregex multiSpaces{ L"[ ]{2,}" };
 
-   wstring cmdLine{}, cmdOption{}, prefix2{};
-   std::size_t nOptEnd{}, nQuoteOffset{};
-
-   cmdLine = GetCommandLine();
+   int cmdLen{ static_cast<int>(nppMessage(NPPM_GETCURRENTCMDLINE, 0, NULL)) + 1 };
+   wstring cmdLine(cmdLen, '\0');
+   nppMessage(NPPM_GETCURRENTCMDLINE, cmdLen, (LPARAM)cmdLine.data());
 
    // Strip any leading spaces & adjacent multiple spaces in the command line
    cmdLine = regex_replace(cmdLine, leadingSpaces, L"");
-   cmdLine = regex_replace(cmdLine, multiSpaces, L" ");
+   cmdLine = regex_replace(cmdLine, wregex{ L"[ ]{2,}" }, L" ");
+
+   wstring cmdOption{};
+   std::size_t nOptEnd{}, nQuoteOffset{}, nOptQuotePos{};
 
    filePaths.clear();
 
-   while (cmdLine.length() > 0) {
+   while (!cmdLine.empty()) {
       bQuoted = (cmdLine.substr(0, 1) == quote);
       nOptEnd = cmdLine.find(bQuoted ? quote : L" ", 1);
       nQuoteOffset = bQuoted ? 1 : 0;
@@ -28,33 +31,37 @@ void CommandLineOptions::scan(ALL_PREFERENCES& allPrefs) {
       }
       else {
          cmdOption = cmdLine.substr(nQuoteOffset, nOptEnd - nQuoteOffset);
-         cmdLine = regex_replace(cmdLine.substr(nOptEnd + 1), leadingSpaces, L"");
+         nOptQuotePos = cmdOption.find(quote, 1);
+         if (nOptQuotePos == wstring::npos) {
+            cmdLine = cmdLine.substr(nOptEnd + 1);
+         }
+         else {
+            nOptEnd = cmdLine.find(quote, nOptQuotePos + 1);
+            if (nOptEnd != wstring::npos) {
+               cmdOption = cmdLine.substr(nQuoteOffset, nOptEnd + 1);
+               cmdLine = cmdLine.substr(nOptEnd + 2);
+            }
+         }
+         cmdLine = regex_replace(cmdLine, leadingSpaces, L"");
       }
 
-      if (!bExecFound) {
-         bExecFound = TRUE;
-         continue;
-      }
-
-      prefix2 = cmdOption.substr(0, 2);
-
-      if (prefix2 == L"-n") {
+      if (cmdOption.substr(0, 2) == L"-n") {
          if (!bLineNumFound) {
             cmdLineNum = Utils::StringtoInt(cmdOption.substr(2));
             bLineNumFound = TRUE;
          }
       }
-      else if (prefix2 == L"-c") {
+      else if (cmdOption.substr(0, 2) == L"-c") {
          if (!bColNumFound) {
             cmdColNum = Utils::StringtoInt(cmdOption.substr(2));
             bColNumFound = TRUE;
          }
       }
-      else if (prefix2 == L"-z") {
-         continue;
+      else if (cmdOption.substr(0, 15) == L"-pluginMessage=") {
+         scanGLC(allPrefs, cmdOption.substr(15));
       }
-      else if (cmdOption.substr(0, 4) == L"-GLC") {
-         scanGLC(allPrefs, cmdOption.substr(4));
+      else if (cmdOption.substr(0, 1) == L"-") {
+         continue;
       }
       else {
          FilePath FP;
@@ -85,6 +92,38 @@ void CommandLineOptions::scan(ALL_PREFERENCES& allPrefs) {
    sVerify += L"\r\n\r\n=== PREFERENCES ===\r\n" + getAllPrefsList(allPrefs);
    MessageBox(nullptr, sVerify.c_str(), L"", MB_OK);
 #endif // DEBUG_CMD_LINE_SCAN
+}
+
+void CommandLineOptions::scanPluginMessage(ALL_PREFERENCES& allPrefs, wstring pluginMessage) {
+   wregex leadingSpaces{ L"^[ ]*" };
+
+   // Strip surrounding quotes
+   if (pluginMessage.substr(0, 1) == L"\"")
+      pluginMessage = pluginMessage.substr(1, pluginMessage.length() - 2);
+
+   // Strip leading spaces & adjacent multiple spaces
+   pluginMessage = regex_replace(pluginMessage, leadingSpaces, L"");
+
+   wstring pluginOption{};
+   std::size_t nOptEnd{};
+
+   while (pluginMessage.length() > 0) {
+      nOptEnd = pluginMessage.find(L" ", 1);
+
+      if (nOptEnd == wstring::npos) {
+         pluginOption = pluginOption;
+         pluginMessage = L"";
+      }
+      else {
+         pluginOption = pluginMessage.substr(0, nOptEnd);
+         pluginMessage = regex_replace(pluginMessage.substr(nOptEnd + 1), leadingSpaces, L"");
+      }
+
+      if (pluginOption.substr(0, 3) == L"GLC") {
+         scanGLC(allPrefs, pluginOption.substr(3));
+         break;
+      }
+   }
 }
 
 void CommandLineOptions::scanGLC(ALL_PREFERENCES& allPrefs, wstring glcOptions) {
@@ -183,4 +222,3 @@ wstring CommandLineOptions::getAllPrefsList(ALL_PREFERENCES& allPrefs) {
 
    return prefs;
 }
-

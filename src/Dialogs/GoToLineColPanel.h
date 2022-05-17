@@ -14,11 +14,13 @@ constexpr int BUFFER_20{ 20 };
 
 class GotoLineColPanel : public DockingDlgInterface {
 public :
+   bool _newCmdLine{};
+
    GotoLineColPanel() :DockingDlgInterface(IDD_GOTOLINECOL_DOCKPANEL) {};
 
    void initPrefs();
    void initPanel();
-   void scanCommandLine() { cmdOpt.scan(allPrefs); };
+   void scanCommandLine() { cmdOpt.scan(allPrefs); _newCmdLine = FALSE; };
 
    void onBufferActivated();
    void localize();

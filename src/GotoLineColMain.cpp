@@ -63,6 +63,8 @@ extern "C" __declspec(dllexport) FuncItem * getFuncsArray(int *nbF)
 extern "C" __declspec(dllexport) void beNotified(SCNotification *notifyCode) {
    switch (notifyCode->nmhdr.code) {
       case NPPN_BUFFERACTIVATED:
+         if (_gotoPanel._newCmdLine)
+            _gotoPanel.scanCommandLine();
          _gotoPanel.onBufferActivated();
          break;
 
@@ -74,6 +76,10 @@ extern "C" __declspec(dllexport) void beNotified(SCNotification *notifyCode) {
       case NPPN_DARKMODECHANGED:
          NPPDM_QueryNPPDarkmode();
          refreshDarkMode();
+         break;
+
+      case NPPN_CMDLINEPLUGINMSG:
+         _gotoPanel._newCmdLine = TRUE;
          break;
 
       case SCN_UPDATEUI:

@@ -9,6 +9,7 @@
 #include <windows.h>
 
 #define DEBUG_CMD_LINE_SCAN FALSE
+#define NPP_MIN_VERSION_WITH_CURRENTCMDLINE      8.41f
 
 using std::regex_replace;
 using std::wregex;
@@ -21,7 +22,6 @@ class CommandLineOptions
 public:
    void scan(ALL_PREFERENCES& allPrefs);
    bool gotoCol(int& lineNum, int& colNum, bool bPersist);
-   wstring getAllPrefsList(ALL_PREFERENCES& allPrefs);
 
 private:
    int cmdLineNum{ -1 }, cmdColNum{ -1 };
@@ -32,6 +32,8 @@ private:
    };
    vector<FilePath> filePaths{};
 
+   void scanPluginMessage(ALL_PREFERENCES& allPrefs, wstring pluginMessage);
    void scanGLC(ALL_PREFERENCES& allPrefs, wstring glcOptions);
+   wstring getAllPrefsList(ALL_PREFERENCES& allPrefs);
 };
 

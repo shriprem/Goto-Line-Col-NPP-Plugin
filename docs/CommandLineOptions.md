@@ -4,20 +4,16 @@ The command line options allow multiple files to be launched in Notepad++, and t
 
 #### Sample Usage with all options specified:
 ```
-NPP_DIR\notepad++.exe DirPathA_File1 DirPathA_File2 DirPathB_File3 -n8 -c42 -z -GLCb1;c0;d1;e18;f1;h1;p1;q1
+NPP_DIR\notepad++.exe DirPathA_File1 DirPathA_File2 DirPathB_File3 -n8 -c42 -pluginMessage=GLCb1;c0;d1;e18;f1;h1;p1;q1
 ```
 **In the above sample usage**:
-* The **`-n`**, **`-c`** and **`-z`** options are native to Notepad++.
+* The **`-n`** and **`-c`** options are native to Notepad++.
    * **`-n<line_number>`** will cause all files specified on the command prompt to be positioned at the specified line.
    * **`-c<column_number>`** will cause all files specified on the command prompt to be positioned at the specified column. **GotoLineCol** plugin will use this value to reposition using byte counts, if **`b1`** was specified.
    * For example: `NPP_DIR\notepad++.exe Sample.txt `**`-n148 -c861`** will open the *Sample.txt* file at line *148* and column *861*.
    * For more info on these Notepad++ native options, see: [Notepad++ - Usage via the command prompt](https://npp-user-manual.org/docs/command-prompt/).
 
-* The **`-GLC`** option is specific to the **GotoLineCol** plugin.
-
-* The **`-GLC`** option needs to be preceded by the **`-z`** option to suppress Notepad++ from treating this option as a filename.
-
-* The **`-GLC`** option can have several sub-options. Each sub-option has a single-letter key, followed by its value. The sub-options are separated by just a semicolon. There shall be no space between the semicolon and the next sub-option.
+* The **`-pluginMessage=GLCb1;c0;d1;e18;f1;h1;p1;q1`** option is for the **GotoLineCol** plugin. Each sub-option that follows the `GLC` prefix has a single-letter key, followed by its value. The sub-options are separated by just a semicolon. There shall be no space between the semicolon and the next sub-option.
 
 
 ### GLC Sub-options List
@@ -38,14 +34,14 @@ NPP_DIR\notepad++.exe DirPathA_File1 DirPathA_File2 DirPathB_File3 -n8 -c42 -z -
 
 * &Dagger; The *CmdProc...* options are not configurable via the [Preferences dialog](https://github.com/shriprem/Goto-Line-Col-NPP-Plugin/blob/master/docs/PreferencesDialog.md). For a durable setting of these options, they will need to be manually edited in the `NPP_PLUGINS_CONFIG_DIR/GotoLineCol.ini` file.
 
-* When any of the listed (`-GLC`) sub-options are not used in the command line, the values specified in the Config File&dagger; (see above) or their defaults (see: [Preferences dialog](https://github.com/shriprem/Goto-Line-Col-NPP-Plugin/blob/master/docs/PreferencesDialog.md)) will be used instead.
+* When any of the listed `GLC` sub-options are not used in the command line, the values specified in the Config File&dagger; (see above) or their defaults (see: [Preferences dialog](https://github.com/shriprem/Goto-Line-Col-NPP-Plugin/blob/master/docs/PreferencesDialog.md)) will be used instead.
 
 ### Persistent Mode
 To understand the role of the **CmdProcPersist** sub-option, consider a situation where two files were launched with the following command line option:
 ```
-NPP_DIR\notepad++.exe File1 File2 -n8 -c42 -z -GLCb1;d1;f2;h1;p1
+NPP_DIR\notepad++.exe File1 File2 -n8 -c42 -pluginMessage=GLCb1;d1;f2;h1;p1
 ```
-Notepad++ will open the two files in two tabs. The second tab will be the active tab. In this active tab, the **`-n`** and **`-c`** options will cause the caret to be positioned on line 8 and _character_ column 42. The **`-b1`** sub-option will reposition the caret, if necessary, to _byte_ column 42. The other **`-GLC`** sub-options will then cause these post-navigational actions: a calltip to be displayed, the caret to flash in block mode for 2 seconds, and the character at this position to be highlighted.
+Notepad++ will open the two files in two tabs. The second tab will be the active tab. In this active tab, the **`-n`** and **`-c`** options will cause the caret to be positioned on line 8 and _character_ column 42. The **`b1`** sub-option will reposition the caret, if necessary, to _byte_ column 42. The other **`GLC`** sub-options will then cause these post-navigational actions: a calltip to be displayed, the caret to flash in block mode for 2 seconds, and the character at this position to be highlighted.
 
 If you then switch to the first tab, the same sequence of navigation and post-navigation actions will be performed afresh on this tab.
 
@@ -54,18 +50,14 @@ With the persistent mode OFF (`p0`), the navigation and post-navigation actions 
 With the persistent mode ON (`p1`), the navigation and post-navigation actions will be repeated on each visit to the file tabs, as long as the current line number of the file matches the value specified with the `-n` option. If only the column position has changed, the caret will be pulled back to the column position specified with the `-c` option. The match of the current line number will act as a trigger for the persistent mode on a per-file basis.
 
 ### Usage Tips:
-1. The command line processing by the plugin is possible only with a fresh instance of Notepad++. If Notepad++ is already running, use the `-multiInst` option to launch a new instance. See: [Notepad++ - Usage via the command prompt](https://npp-user-manual.org/docs/command-prompt/).
+1. When launching files with identical names from the command line, specify their full paths.
 
-2. When launching files with identical names from the command line, specify their full paths.
+2. The file and folder names are not case sensitive. However if the file path has spaces, enclose it with double quotes. For example: `"C:\Users\John Doe\My Documents\Sample File.txt"`
 
-3. The file and folder names are not case sensitive. However if the file path has spaces, enclose it with double quotes. For example: `"C:\Users\John Doe\My Documents\Sample File.txt"`
+3. Demarcate the **`GLC`** sub-options with just a semicolon each. Ensure that there is no space between the semicolon and the next sub-option.
 
-4. Precede the **`-GLC`** option with a **`-z`** option to suppress Notepad++ from treating it as a filename. Failure to shield the **`-GLC`** option will lead to a Notepad++ prompt mistakenly asking if a file needs to be created with such a name.
+4. The **`GLC`** sub-option values will be overridden if the [Preferences Dialog](https://github.com/shriprem/Goto-Line-Col-NPP-Plugin/blob/master/docs/PreferencesDialog.md) is opened, and its **OK** button is pressed.
 
-5. Demarcate the **`-GLC`** sub-options with just a semicolon each. Ensure that there is no space between the semicolon and the next sub-option.
+5. Trying to specify the **`-n`** or **`-c`** or **`-pluginMessage=`** more than once will cause Notepad++ to treat the repeats as filenames.
 
-6. The **`-GLC`** sub-option values will be overridden if the [Preferences Dialog](https://github.com/shriprem/Goto-Line-Col-NPP-Plugin/blob/master/docs/PreferencesDialog.md) is opened, and its **OK** button is pressed.
-
-7. Although the [kludgy syntax](https://github.com/shriprem/Goto-Line-Col-NPP-Plugin/discussions/14) of v2.1.0.0 may still work in v2.1.1.0 and later versions, prefer to use the compact syntax.
-
-8. Trying to specify the **`-n`** or **`-c`** more than once will cause Notepad++ to treat the repeats as filenames. On the other hand, when there are repetitions with the **`-GLC`** sub-options, the latest specified values will prevail. 
+6. If you need to specify command line options for other plugins, use quotes and separate the options for the plugins with spaces. Like so: `-pluginMessage="GLCb1;c0;d1;e18;f1;h1;p1;q1 PLUGINa... PLUGINb... PLUGINc..."`.

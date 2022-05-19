@@ -1,5 +1,15 @@
 ## Version History
 
+### Version 2.4.0.0
+
+1. _GotoLineCol_ is now able to process file names & parameters specified with the most recent invocation of Notepad++ from the command line. Earlier, the plugin was able to access just the command line used during the initial launch of Notepad++ but not during subsequent re-invocations. This feature enhancement works with Notepad++ 8.4.2 or later versions.
+
+
+**Release:** [2.4.0.0 Release](https://github.com/shriprem/Goto-Line-Col-NPP-Plugin/releases/tag/v2.4.0.0)
+
+
+---
+
 ### Version 2.3.0.0
 
 1. Dynamic change of Dark mode tones: When dark mode settings are changed in the Preferences dialog of Notepad++ (version 8.4.1 or higher), they will be immediately reflected in the _GoToLineCol_ plugin user interfaces -- without requiring a restart of Notepad++.

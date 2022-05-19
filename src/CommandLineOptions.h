@@ -9,7 +9,7 @@
 #include <windows.h>
 
 #define DEBUG_CMD_LINE_SCAN FALSE
-#define NPP_MIN_VERSION_WITH_CURRENTCMDLINE      8.41f
+#define NPP_MIN_VERSION_WITH_CURRENTCMDLINE      8.42f
 
 using std::regex_replace;
 using std::wregex;

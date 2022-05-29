@@ -135,5 +135,5 @@ void refreshDarkMode() {
       _prefsDlg.refreshDarkMode();
 
    if (_aboutDlg.isCreated())
-      NPPDM_AutoSubclassAndThemeChildControls(_aboutDlg.getHSelf());
+      _aboutDlg.refreshDarkMode();
 }

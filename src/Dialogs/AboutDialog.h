@@ -11,6 +11,7 @@ class AboutDialog : public StaticDialog {
 public:
    AboutDialog() : StaticDialog() {};
    void doDialog(HINSTANCE hInst);
+   void refreshDarkMode();
 
 protected:
    INT_PTR CALLBACK run_dlgProc(UINT Message, WPARAM wParam, LPARAM lParam);

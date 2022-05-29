@@ -33,6 +33,7 @@ void PreferencesDialog::doDialog(HINSTANCE hInst) {
 
 void PreferencesDialog::refreshDarkMode() {
    NPPDM_AutoSubclassAndThemeChildControls(_hSelf);
+   redraw();
 
    SendMessage(hEdgeBuffer, TBM_SETRANGEMIN, FALSE, 1);
    SendMessage(hCaretFlash, TBM_SETRANGEMIN, FALSE, 1);

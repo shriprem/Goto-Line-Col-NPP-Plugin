@@ -31,9 +31,7 @@
     <ClInclude Include="..\src\Darkmode\DarkMode.h" />
     <ClInclude Include="..\src\Darkmode\IatHook.h" />
     <ClInclude Include="..\src\Darkmode\NppDarkMode.h" />
-    <ClInclude Include="..\src\Darkmode\NppParameters.h" />
     <ClInclude Include="..\src\Darkmode\NPP_Plugin_Darkmode.h" />
-    <ClInclude Include="..\src\Darkmode\tinyxml2.h" />
     <ClInclude Include="..\src\Dialogs\AboutDialog.h" />
     <ClInclude Include="..\src\Dialogs\GoToLineColPanel.h" />
     <ClInclude Include="..\src\Dialogs\PreferencesDialog.h" />
@@ -58,9 +56,7 @@
     <ClCompile Include="..\src\CommandLineOptions.cpp" />
     <ClCompile Include="..\src\Darkmode\DarkMode.cpp" />
     <ClCompile Include="..\src\Darkmode\NppDarkMode.cpp" />
-    <ClCompile Include="..\src\Darkmode\NppParameters.cpp" />
     <ClCompile Include="..\src\Darkmode\NPP_Plugin_Darkmode.cpp" />
-    <ClCompile Include="..\src\Darkmode\tinyxml2.cpp" />
     <ClCompile Include="..\src\Dialogs\AboutDialog.cpp" />
     <ClCompile Include="..\src\Dialogs\GoToLineColPanel.cpp" />
     <ClCompile Include="..\src\Dialogs\PreferencesDialog.cpp" />

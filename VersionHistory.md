@@ -2,7 +2,9 @@
 
 ### Version 2.4.0.0
 
-1. _GotoLineCol_ is now able to process file names & parameters specified with the most recent invocation of Notepad++ from the command line. Earlier, the plugin was able to access just the command line used during the initial launch of Notepad++ but not during subsequent re-invocations. This feature enhancement works with Notepad++ 8.4.2 or later versions.
+1. _GotoLineCol_ is now able to process file names & parameters specified with the most recent invocation of Notepad++ from the command line. (Previously, the plugin was able to access just the command line used during the initial launch of Notepad++ but not during subsequent re-invocations.) This feature enhancement works with Notepad++ 8.4.2 or later versions.
+
+2. With Notepad++ 8.4.2, plugins now have query support for Darkmode. By utilizing this support, the Darkmode render code in the _FWDataViz_ plugin has been significantly trimmed down. This has resulted in a smaller size of the plugin DLL for this version.
 
 
 **Release:** [2.4.0.0 Release](https://github.com/shriprem/Goto-Line-Col-NPP-Plugin/releases/tag/v2.4.0.0)

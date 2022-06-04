@@ -99,7 +99,7 @@ wstring Utils::getSpecialFolder(int folderID) {
    TCHAR sFolderPath[MAX_PATH]{};
    const HRESULT ret = SHGetFolderPath(NULL, folderID, NULL, SHGFP_TYPE_CURRENT, sFolderPath);
 
-   return ((ret == S_OK) ? wstring{ sFolderPath } : NULL);
+   return ((ret == S_OK) ? wstring{ sFolderPath } : L"");
 }
 
 wstring Utils::getKnownFolderPath(REFKNOWNFOLDERID folderID) {
@@ -231,7 +231,7 @@ wstring Utils::getVersionInfo(LPCWSTR key) {
    if (verSize) {
       LPSTR verData = new char[verSize];
 
-      if (GetFileVersionInfo(sModuleFilePath, verHandle, verSize, verData)) {
+      if (GetFileVersionInfo(sModuleFilePath, NULL, verSize, verData)) {
 
          VerQueryValue(verData, L"\\VarFileInfo\\Translation", (VOID FAR* FAR*)& lpTranslate, &querySize);
 
@@ -241,7 +241,7 @@ wstring Utils::getVersionInfo(LPCWSTR key) {
 
          if (VerQueryValue(verData, wstring(qVal).c_str(), (VOID FAR* FAR*)& lpBuffer, &querySize)) {
             if (querySize) {
-               sVersionInfo = wstring((LPCTSTR)lpBuffer);
+               sVersionInfo = wstring(reinterpret_cast<LPCTSTR>(lpBuffer));
             }
          }
       }
@@ -257,8 +257,8 @@ void Utils::loadBitmap(HWND hDlg, int controlID, int resource) {
 
    if (hBitmap) {
       SendMessage(hwndCtrl, BM_SETIMAGE, IMAGE_BITMAP, (LPARAM)hBitmap);
+      DeleteObject(hBitmap);
    }
-   DeleteObject(hBitmap);
 }
 
 void Utils::setFont(HWND hDlg, int controlID, wstring& name, int height, int weight, bool italic, bool underline) {

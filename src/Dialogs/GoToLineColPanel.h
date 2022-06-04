@@ -33,7 +33,7 @@ public :
 
 protected :
    ALL_PREFERENCES allPrefs{};
-   char cursorPosData[BUFFER_500];
+   char cursorPosData[BUFFER_500]{};
    CommandLineOptions cmdOpt{};
 
    virtual INT_PTR CALLBACK run_dlgProc(UINT message, WPARAM wParam, LPARAM lParam);

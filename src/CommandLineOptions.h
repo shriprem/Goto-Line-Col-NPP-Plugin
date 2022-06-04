@@ -28,7 +28,7 @@ private:
 
    struct FilePath {
       wstring path;
-      bool has_root;
+      bool has_root{};
    };
    vector<FilePath> filePaths{};
 

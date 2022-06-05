@@ -104,7 +104,7 @@ void ShowGotoLineColPanel(bool show) {
       if (!_gotoPanel.isCreated()) {
          _gotoPanel.create(&data);
 
-         data.uMask = DWS_DF_CONT_RIGHT;
+         data.uMask = DWS_DF_CONT_RIGHT | DWS_USEOWNDARKMODE;
          data.pszModuleName = _gotoPanel.getPluginFileName();
          data.dlgID = MI_GOTO_PANEL;
          data.pszName = MENU_PANEL_NAME;

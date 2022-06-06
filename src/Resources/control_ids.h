@@ -18,8 +18,9 @@
 #define IDC_GOCOL_FOOTNOTE_A            9032
 #define IDC_GOCOL_FOOTNOTE_B            9033
 #define IDB_GOTO_TOOL_BTN_STD           9051
-#define IDI_GOTO_TOOL_BTN_FLUENT        9052
-#define IDI_GOTO_TOOL_BTN_DARK          9053
+#define IDI_GOTO_TOOL_BTN_STD           9052
+#define IDI_GOTO_TOOL_BTN_FLUENT        9053
+#define IDI_GOTO_TOOL_BTN_DARK          9054
 
 
 #define IDD_PREFERENCES_DIALOG          9100

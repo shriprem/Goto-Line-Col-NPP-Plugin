@@ -139,10 +139,25 @@
     <Filter Include="Darkmode">
       <UniqueIdentifier>{30cde513-fb91-46bb-948c-0884abb10335}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Resources\Bitmaps">
+      <UniqueIdentifier>{cb835a7a-1a6d-4d3c-a725-5e9bc5d14575}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resources\Icons">
+      <UniqueIdentifier>{071469b0-9413-4d75-b1d0-c90225afa6f0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="..\src\Resources\goto.bmp" />
-    <Image Include="..\src\Resources\goto.ico" />
-    <Image Include="..\src\Resources\goto_dark.ico" />
+    <Image Include="..\src\Resources\goto.bmp">
+      <Filter>Resources\Bitmaps</Filter>
+    </Image>
+    <Image Include="..\src\Resources\goto.ico">
+      <Filter>Resources\Icons</Filter>
+    </Image>
+    <Image Include="..\src\Resources\goto_dark.ico">
+      <Filter>Resources\Icons</Filter>
+    </Image>
+    <Image Include="..\src\Resources\goto_fluent.ico">
+      <Filter>Resources\Icons</Filter>
+    </Image>
   </ItemGroup>
 </Project>

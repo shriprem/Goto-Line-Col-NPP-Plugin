@@ -104,10 +104,12 @@ void ShowGotoLineColPanel(bool show) {
       if (!_gotoPanel.isCreated()) {
          _gotoPanel.create(&data);
 
-         data.uMask = DWS_DF_CONT_RIGHT | DWS_USEOWNDARKMODE;
+         data.uMask = DWS_DF_CONT_RIGHT | DWS_ICONTAB | DWS_USEOWNDARKMODE;
          data.pszModuleName = _gotoPanel.getPluginFileName();
          data.dlgID = MI_GOTO_PANEL;
          data.pszName = MENU_PANEL_NAME;
+         data.hIconTab = (HICON)::LoadImage(_gModule, MAKEINTRESOURCE(IDI_GOTO_TOOL_BTN_STD), IMAGE_ICON, 14, 14,
+            LR_LOADMAP3DCOLORS | LR_LOADTRANSPARENT);
 
          nppMessage(NPPM_DMMREGASDCKDLG, 0, (LPARAM)& data);
 

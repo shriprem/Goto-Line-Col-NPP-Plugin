@@ -67,5 +67,6 @@ IDB_GOTO_TOOL_BTN_STD   BITMAP                     "goto.bmp"
 
 
 // ICONS
-IDI_GOTO_TOOL_BTN_FLUENT ICON                      "goto.ico"
+IDI_GOTO_TOOL_BTN_STD ICON                         "goto.ico"
+IDI_GOTO_TOOL_BTN_FLUENT ICON                      "goto_fluent.ico"
 IDI_GOTO_TOOL_BTN_DARK  ICON                       "goto_dark.ico"

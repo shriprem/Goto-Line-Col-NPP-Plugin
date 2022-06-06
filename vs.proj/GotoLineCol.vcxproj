@@ -74,6 +74,7 @@
   <ItemGroup>
     <Image Include="..\src\Resources\goto.bmp" />
     <Image Include="..\src\Resources\goto.ico" />
+    <Image Include="..\src\Resources\goto_fluent.ico" />
     <Image Include="..\src\Resources\goto_dark.ico" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

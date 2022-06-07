@@ -30,11 +30,9 @@ INT_PTR CALLBACK GotoLineColPanel::run_dlgProc(UINT message, WPARAM wParam, LPAR
       break;
 
    case WM_LBUTTONDOWN:
-      scanCommandLine();
-      [[fallthrough]];
-
    case WM_MBUTTONDOWN:
    case WM_RBUTTONDOWN:
+      scanCommandLine();
       SetFocus(_hSelf);
       break;
 

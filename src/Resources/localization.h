@@ -52,6 +52,7 @@
 
 
 // Preferences Dialog Tooltips
+#define UTILS_REGEX_ERROR           L"Invalid Regular Expression"
 #define PREFS_TIP_AF_ONFOCUS        L"When the Goto panel regains focus, the line and column fields in it will be refreshed with the current document's current cursor position.\r\n\r\nEffective only when the focus-changing click is on the panel's title bar or a blank area in the panel or the Preferences button. This refresh is suppressed when the focus-changing click is within the Goto Line/Column input fields or on the Go button.\r\n\r\nUncheck this option if your workflow needs the Goto panel's line and column values to stay fixed regardless of changes in the current document's cursor position."
 #define PREFS_TIP_AF_ONTABCHANGE    L"When a different document becomes active either via a tab switch or file open or close actions, the line and column fields in the Goto panel will be refreshed with the newly active document's current cursor position.\r\n\r\nIn some situations -- when perhaps inspecting similar datafiles, it may be preferrable to have the line and column values stay fixed across the files. Uncheck this option for such workflows."
 #define PREFS_TIP_SHOW_CALLTIP      L"Uncheck this option if you do not wish to view a calltip listing the line, column and byte code of the character at the destination position.\r\n\r\n[The calltip will disappear when the document cursor position shifts.]"

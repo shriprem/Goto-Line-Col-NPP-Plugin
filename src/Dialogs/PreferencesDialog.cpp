@@ -46,7 +46,6 @@ void PreferencesDialog::localize() {
    SetDlgItemText(_hSelf, IDC_PREFS_AF_ONTABCHANGE, PREFS_LABEL_AF_ONTABCHANGE);
    SetDlgItemText(_hSelf, IDC_PREFS_SHOW_CALLTIP, PREFS_LABEL_SHOW_CALLTIP);
    SetDlgItemText(_hSelf, IDC_PREFS_BRACE_HILITE, PREFS_LABEL_BRACE_HILITE);
-   SetDlgItemText(_hSelf, IDC_PREFS_USE_BYTE_COL, PREFS_LABEL_USE_BYTE_COL);
    SetDlgItemText(_hSelf, IDC_PREFS_EDGE_BUFFER_LABEL, PREFS_LABEL_EDGE_BUFFER);
    SetDlgItemText(_hSelf, IDC_PREFS_CARET_FLASH_LABEL, PREFS_LABEL_CARET_FLASH);
 
@@ -191,7 +190,6 @@ void PreferencesDialog::loadPreferences(bool iniFile) {
    setCheckedState(IDC_PREFS_AF_ONTABCHANGE, tPrefs.fillOnTabChange);
    setCheckedState(IDC_PREFS_SHOW_CALLTIP, tPrefs.showCalltip);
    setCheckedState(IDC_PREFS_BRACE_HILITE, tPrefs.braceHilite);
-   setCheckedState(IDC_PREFS_USE_BYTE_COL, tPrefs.useByteCol);
    setCheckedState(IDC_PREFS_CENTER_CARET, tPrefs.centerCaret);
 
    setTbarPosition(hEdgeBuffer, IDC_PREFS_EDGE_BUFFER_VALUE, tPrefs.edgeBuffer);
@@ -220,7 +218,6 @@ void PreferencesDialog::savePreferences() {
    tPrefs.fillOnTabChange = getCheckedState(IDC_PREFS_AF_ONTABCHANGE);
    tPrefs.showCalltip = getCheckedState(IDC_PREFS_SHOW_CALLTIP);
    tPrefs.braceHilite = getCheckedState(IDC_PREFS_BRACE_HILITE);
-   tPrefs.useByteCol = getCheckedState(IDC_PREFS_USE_BYTE_COL);
    tPrefs.centerCaret = getCheckedState(IDC_PREFS_CENTER_CARET);
 
    tPrefs.edgeBuffer = getTbarPosition(hEdgeBuffer);
@@ -230,7 +227,7 @@ void PreferencesDialog::savePreferences() {
    tPrefs.tooltipSeconds = getEditValue(IDC_PREFS_TOOLTIP_DURATION);
 
    _prefsIO.savePreferences(tPrefs);
-   _gotoPanel.loadPreferencesToPanel(TRUE);
+   _gotoPanel.reloadPanelPreferences();
 }
 
 void PreferencesDialog::createTooltips() {
@@ -242,24 +239,22 @@ void PreferencesDialog::createTooltips() {
       hTooltips[2] = addTooltip(_hSelf, IDC_PREFS_SHOW_CALLTIP, PREFS_LABEL_SHOW_CALLTIP, PREFS_TIP_SHOW_CALLTIP);
    if (!hTooltips[3])
       hTooltips[3] = addTooltip(_hSelf, IDC_PREFS_BRACE_HILITE, PREFS_LABEL_BRACE_HILITE, PREFS_TIP_BRACE_HILITE);
+
    if (!hTooltips[4])
-      hTooltips[4] = addTooltip(_hSelf, IDC_PREFS_USE_BYTE_COL, PREFS_LABEL_USE_BYTE_COL, PREFS_TIP_USE_BYTE_COL);
+      hTooltips[4] = addTooltip(_hSelf, IDC_PREFS_CENTER_CARET, PREFS_LABEL_CENTER_CARET, PREFS_TIP_CENTER_CURSOR);
    if (!hTooltips[5])
-      hTooltips[5] = addTooltip(_hSelf, IDC_PREFS_CENTER_CARET, PREFS_LABEL_CENTER_CARET, PREFS_TIP_CENTER_CURSOR);
-
+      hTooltips[5] = addTooltip(_hSelf, IDC_PREFS_EDGE_BUFFER_LABEL, PREFS_LABEL_EDGE_BUFFER, PREFS_TIP_EDGE_BUFFER);
    if (!hTooltips[6])
-      hTooltips[6] = addTooltip(_hSelf, IDC_PREFS_EDGE_BUFFER_LABEL, PREFS_LABEL_EDGE_BUFFER, PREFS_TIP_EDGE_BUFFER);
+      hTooltips[6] = addTooltip(_hSelf, IDC_PREFS_EDGE_BUFFER_SLIDER, PREFS_LABEL_EDGE_BUFFER, PREFS_TIP_EDGE_BUFFER);
    if (!hTooltips[7])
-      hTooltips[7] = addTooltip(_hSelf, IDC_PREFS_EDGE_BUFFER_SLIDER, PREFS_LABEL_EDGE_BUFFER, PREFS_TIP_EDGE_BUFFER);
-   if (!hTooltips[8])
-      hTooltips[8] = addTooltip(_hSelf, IDC_PREFS_EDGE_BUFFER_VALUE, PREFS_LABEL_EDGE_BUFFER, PREFS_TIP_EDGE_BUFFER);
+      hTooltips[7] = addTooltip(_hSelf, IDC_PREFS_EDGE_BUFFER_VALUE, PREFS_LABEL_EDGE_BUFFER, PREFS_TIP_EDGE_BUFFER);
 
+   if (!hTooltips[8])
+      hTooltips[8] = addTooltip(_hSelf, IDC_PREFS_CARET_FLASH_LABEL, PREFS_LABEL_CARET_FLASH, PREFS_TIP_CARET_FLASH);
    if (!hTooltips[9])
-      hTooltips[9] = addTooltip(_hSelf, IDC_PREFS_CARET_FLASH_LABEL, PREFS_LABEL_CARET_FLASH, PREFS_TIP_CARET_FLASH);
+      hTooltips[9] = addTooltip(_hSelf, IDC_PREFS_CARET_FLASH_SLIDER, PREFS_LABEL_CARET_FLASH, PREFS_TIP_CARET_FLASH);
    if (!hTooltips[10])
-      hTooltips[10] = addTooltip(_hSelf, IDC_PREFS_CARET_FLASH_SLIDER, PREFS_LABEL_CARET_FLASH, PREFS_TIP_CARET_FLASH);
-   if (!hTooltips[11])
-      hTooltips[11] = addTooltip(_hSelf, IDC_PREFS_CARET_FLASH_VALUE, PREFS_LABEL_CARET_FLASH, PREFS_TIP_CARET_FLASH);
+      hTooltips[10] = addTooltip(_hSelf, IDC_PREFS_CARET_FLASH_VALUE, PREFS_LABEL_CARET_FLASH, PREFS_TIP_CARET_FLASH);
 }
 
 void PreferencesDialog::setTooltipsDuration(int duration) {

@@ -25,6 +25,12 @@ INT_PTR CALLBACK GotoLineColPanel::run_dlgProc(UINT message, WPARAM wParam, LPAR
          SetFocus(_hSelf);
          ShowPreferencesDialog();
          break;
+
+      case IDC_GOCOL_PREF_USE_BYTE_CHAR:
+         allPrefs.useByteCol = IsDlgButtonChecked(_hSelf, IDC_GOCOL_PREF_USE_BYTE_CHAR);
+         _prefsIO.saveByteCol(allPrefs.useByteCol);
+         updatePanelInfo();
+         break;
       }
 
       break;
@@ -104,6 +110,8 @@ void GotoLineColPanel::initPanel() {
    wstring fontName = recentOS ? L"Consolas" : L"Courier New";
    int fontHeight = recentOS ? 10 : 8;
 
+   CheckDlgButton(_hSelf, IDC_GOCOL_PREF_USE_BYTE_CHAR, (allPrefs.useByteCol != FALSE) ? BST_CHECKED : BST_UNCHECKED);
+
    Utils::setFontBold(_hSelf, IDOK);
    Utils::setFont(_hSelf, IDC_GOLINECOL_FIELD_LABEL, fontName, fontHeight, FW_BOLD, FALSE, TRUE);
    Utils::setFont(_hSelf, IDC_GOLINECOL_FIELD_INFO, fontName, fontHeight);
@@ -127,6 +135,7 @@ void GotoLineColPanel::localize() {
    SetDlgItemText(_hSelf, IDOK, GOLINECOL_LABEL_BTN_GO);
    SetDlgItemText(_hSelf, IDCLOSE, GOLINECOL_LABEL_BTN_CLOSE);
    SetDlgItemText(_hSelf, IDC_GOLINECOL_PREFS, MENU_PREFERENCES);
+   SetDlgItemText(_hSelf, IDC_GOCOL_PREF_USE_BYTE_CHAR, GOCOL_PREF_USE_BYTE_CHAR);
    SetDlgItemText(_hSelf, IDC_GOLINECOL_FIELD_LABEL, GOLINECOL_FIELD_LABEL);
 }
 
@@ -142,12 +151,14 @@ void GotoLineColPanel::setParent(HWND parent2set) {
    _hParent = parent2set;
 };
 
-void GotoLineColPanel::loadPreferencesToPanel(bool bFromIniFile) {
+void GotoLineColPanel::reloadPanelPreferences() {
+   allPrefs = _prefsIO.loadPreferences();
+   updatePanelInfo();
+}
+
+void GotoLineColPanel::updatePanelInfo() {
    HWND hScintilla{ getCurrentScintilla() };
    if (!hScintilla) return;
-
-   if (bFromIniFile)
-      allPrefs = _prefsIO.loadPreferences();
 
    SetDlgItemText(_hSelf, IDC_GOCOL_STATIC,
       allPrefs.useByteCol ? GOLINECOL_LABEL_BYTE_COL : GOLINECOL_LABEL_CHAR_COL);
@@ -160,6 +171,8 @@ void GotoLineColPanel::loadPreferencesToPanel(bool bFromIniFile) {
 
    wstring utf8CharNote = allPrefs.useByteCol ? GOLINECOL_UTF8_MULTI_COL : GOLINECOL_UTF8_SINGLE_COL;
    SetDlgItemText(_hSelf, IDC_GOCOL_UTF8_CHAR_NOTE, utf8CharNote.c_str());
+
+   updatePanelColPos();
 }
 
 void GotoLineColPanel::updatePanelColPos() {

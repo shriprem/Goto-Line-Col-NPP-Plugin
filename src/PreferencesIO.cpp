@@ -12,6 +12,7 @@ void PreferencesIO::init() {
    // if no existing config file, create it
    if (!PathFileExists(iniFilePath)) {
       loadPreferences();
+      saveByteCol(allPrefs.useByteCol);
       savePreferences(allPrefs);
    }
 }
@@ -74,7 +75,6 @@ void PreferencesIO::savePreferences(ALL_PREFERENCES prefs) {
    setPref(autoFillOnTabChangeKey, prefs.fillOnTabChange);
    setPref(showCallTipKey, prefs.showCalltip);
    setPref(braceHiliteKey, prefs.braceHilite);
-   setPref(useByteColKey, prefs.useByteCol);
    setPref(centerCaretKey, prefs.centerCaret);
 
    setPref(edgeBufferKey, prefs.edgeBuffer);
@@ -85,4 +85,8 @@ void PreferencesIO::savePreferences(ALL_PREFERENCES prefs) {
 
    setPref(cmdProcHiddenKey, prefs.cmdProcHidden);
    setPref(cmdProcPersistKey, prefs.cmdProcPersist);
+}
+
+void PreferencesIO::saveByteCol(int useByteCol) {
+   setPref(useByteColKey, useByteCol);
 }

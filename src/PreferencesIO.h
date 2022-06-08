@@ -29,6 +29,7 @@ public:
    ALL_PREFERENCES loadPreferences();
    ALL_PREFERENCES resetPreferences();
    void savePreferences(ALL_PREFERENCES prefs);
+   void saveByteCol(int useByteCol);
 
 protected:
    TCHAR iniFilePath[MAX_PATH];

@@ -4,7 +4,7 @@
 #include "../PreferencesIO.h"
 #include "../NPP/StaticDialog.h"
 
-#define TOOLTIPS_COUNT 12
+#define TOOLTIPS_COUNT 11
 
 using Utils::addTooltip;
 

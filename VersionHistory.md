@@ -1,10 +1,18 @@
 ## Version History
 
-### Version 2.4.0.0
+### Version 2.4.1.0 [June 8, 2022]
+1. For quicker and more convenient access, the **_Use byte count for column value computation_** checkbox is now available on the plugin side panel.
+2. Enhanced Darkmode support.
+
+**Release:** [2.4.1.0 Release](https://github.com/shriprem/Goto-Line-Col-NPP-Plugin/releases/tag/v2.4.1.0)
+
+---
+
+### Version 2.4.0.0 [May 29, 2022]
 
 1. _GotoLineCol_ is now able to process file names & parameters specified with the most recent invocation of Notepad++ from the command line. (Previously, the plugin was able to access just the command line used during the initial launch of Notepad++ but not during subsequent re-invocations.) This feature enhancement works with Notepad++ 8.4.2 or later versions. For more info, see: [Command Line Options](https://github.com/shriprem/Goto-Line-Col-NPP-Plugin/blob/master/docs/CommandLineOptions.md).
 
-2. With Notepad++ 8.4.2, plugins now have query support for Darkmode. By utilizing this support, the Darkmode render code in the _FWDataViz_ plugin has been significantly trimmed down. This has resulted in a smaller size of the plugin DLL for this version.
+2. With Notepad++ 8.4.1, plugins now have query support for Darkmode. By utilizing this support, the Darkmode render code in the _FWDataViz_ plugin has been significantly trimmed down. This has resulted in a smaller size of the plugin DLL for this version.
 
 
 **Release:** [2.4.0.0 Release](https://github.com/shriprem/Goto-Line-Col-NPP-Plugin/releases/tag/v2.4.0.0)
@@ -12,7 +20,7 @@
 
 ---
 
-### Version 2.3.0.0
+### Version 2.3.0.0 [May 7, 2022]
 
 1. Dynamic change of Dark mode tones: When dark mode settings are changed in the Preferences dialog of Notepad++ (version 8.4.1 or higher), they will be immediately reflected in the _GoToLineCol_ plugin user interfaces -- without requiring a restart of Notepad++.
 
@@ -26,7 +34,7 @@
 
 ---
 
-### Version 2.2.0.2
+### Version 2.2.0.2 [February 4, 2022]
 
 **Background:** With its v8.3 release, the Notepad++ *x64* binary will support opening 2GB+ files. However, this change causes compability issue with many *x64* plugins, [and they will need to be recompiled with a modified C++ header file](https://community.notepad-plus-plus.org/topic/22471/recompile-your-x64-plugins-with-new-header).
 
@@ -37,7 +45,7 @@ The _GoToLineCol_ ***x64*** plugin was *not* affected by this incompatibility is
 
 ---
 
-### Version 2.2.0.1
+### Version 2.2.0.1 [December 16, 2021]
 
 1. Updated `NPP_Plugin_Darkmode.dll` to [version 1.1.0.0](https://github.com/shriprem/NPP_Plugin_Darkmode/releases/tag/v1.1.0.0). This fixes darkmode rendering issue in Windows 11.
 
@@ -45,7 +53,7 @@ The _GoToLineCol_ ***x64*** plugin was *not* affected by this incompatibility is
 
 ---
 
-### Version 2.2.0.0
+### Version 2.2.0.0 [December 2, 2021]
 
 1. Darkmode for the _GoToLineCol_ plugin is now rendered by a standalone DLL that can be shared by multiple plugins, thus reducing the overall memory footprint. Notepad++ will only load a copy of the `NPP_Plugin_Darkmode.dll` located either in:
    * The folder for the first plugin (_in alphabetical order_) that requires this DLL.
@@ -59,7 +67,7 @@ The _GoToLineCol_ ***x64*** plugin was *not* affected by this incompatibility is
 
 ---
 
-### Version 2.1.1.0
+### Version 2.1.1.0 [October 2, 2021]
 #### Enhancement: Consolidated GLC command line options.
  Sample GLC option usage in this version: **` -z -GLCb1;c0;d1;e18;f1;h1;p1;q1`**
 
@@ -75,7 +83,7 @@ See: [Command Line Options](https://github.com/shriprem/Goto-Line-Col-NPP-Plugin
 
 ---
 
-### Version 2.1.0.0
+### Version 2.1.0.0 [October 1, 2021]
 #### Enhancements:
 1. Command Line Option to load multiple documents and position them all at the same line and character/byte column.
 
@@ -85,7 +93,7 @@ See: [Command Line Options](https://github.com/shriprem/Goto-Line-Col-NPP-Plugin
 
 ---
 
-### Version 2.0.0.0
+### Version 2.0.0.0 [August 18, 2021]
 #### Enhancements:
 1. Darkmode rendering enabled for the plugin panel and dialog boxes.
 
@@ -100,7 +108,7 @@ See: [Sample screenshots of the plugin UI in dark mode.](https://github.com/shri
 
 ---
 
-### Version 1.2.0.2
+### Version 1.2.0.2 [June 18, 2021]
 #### Enhancements:
 1. Light & Dark mode Fluent UI toolbar icons added for the plugin.
 2. Including ARM64 build. (_Please note that I am unable to test the ARM64 build since I don't have an ARM64 device, and it is being provided AS IS._)
@@ -116,7 +124,7 @@ Due to the current NPP API limitation, this minor release for FWDataViz is only 
 
 ---
 
-### Version 1.2.0.1
+### Version 1.2.0.1 [April 15, 2021]
 #### Minor Update
 
 Changed menu item text from "Show Panel" to "Show GotoLineColPanel" since this same text gets used to display balloon tip for the toolbar icon.
@@ -125,7 +133,7 @@ Changed menu item text from "Show Panel" to "Show GotoLineColPanel" since this s
 
 ---
 
-### Version 1.2.0.0
+### Version 1.2.0.0 [January 13, 2021]
 #### Enhancements:
 1. Added real-time display of Cursor Position data, at a fixed spot, on the plugin panel. That means:
     * No more need for repetitive clicking of the Goto button
@@ -137,7 +145,7 @@ Changed menu item text from "Show Panel" to "Show GotoLineColPanel" since this s
 
 ---
 
-### Version 1.1.0.0
+### Version 1.1.0.0 [June 21, 2020]
 #### Enhancements:
 1. Added UTF-8 byte sequence and Unicode code point display in the calltip.
 2. Added *Char Column* and *Byte Column* display in the calltip.
@@ -151,14 +159,14 @@ Changed menu item text from "Show Panel" to "Show GotoLineColPanel" since this s
 
 ---
 
-### Version 1.0.0.1
+### Version 1.0.0.1 [January 30, 2020]
 1. Increased Line and Column input fields to accept up to 8 digits.
 
 **Release:** [1.0.0.1 Release](https://github.com/shriprem/Goto-Line-Col-NPP-Plugin/releases/tag/v1.0.0.1)
 
 ---
 
-### Version 1.0.0
+### Version 1.0.0 [January 8, 2020]
 First Release
 
 **Release:** [1.0.0 Release](https://github.com/shriprem/Goto-Line-Col-NPP-Plugin/releases/tag/v1.0.0)

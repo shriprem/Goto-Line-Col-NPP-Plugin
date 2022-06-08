@@ -38,13 +38,6 @@ After the cursor flash (see: <a href="#cursor-flash-duration-3-seconds">Cursor F
 
 Uncheck this option if you do not wish to have the character highlighted at the destination position.
 
-### Use byte count for column value computation (Checked)
-When this option is unchecked, a TAB character on the destination line will be counted using its expanded width -- a number specified in Notepad++ Preferences/Language section. In fact, Notepad++ also expands TABs in its column computation.
-
-A multi-byte UTF-8 character will be counted as one column position when this option is unchecked.
-
-For viewing files with fixed-width format data, leave this option checked.
-
 ### Cursor is centered in the editor at destination (Checked)
 When this option is checked, the cursor will try to position as close as possible to the center of the editor view area.
 

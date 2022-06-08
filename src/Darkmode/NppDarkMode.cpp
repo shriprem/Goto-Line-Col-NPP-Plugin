@@ -1816,11 +1816,12 @@ namespace NppDarkMode
          }
          else {
             auto mPosX = Utils::scaleDPIX(4);
+            auto mPosY = Utils::scaleDPIX(2);
 
             ::SetTextColor(hdc, isHotUp ? getTextColor() : getDarkerTextColor());
             ::ExtTextOut(hdc,
                rcArrowUp.left + mPosX,
-               rcArrowUp.top,
+               rcArrowUp.top - mPosY,
                ETO_CLIPPED,
                &rcArrowUp, L"˄",
                1,
@@ -1829,7 +1830,7 @@ namespace NppDarkMode
             ::SetTextColor(hdc, isHotDown ? getTextColor() : getDarkerTextColor());
             ::ExtTextOut(hdc,
                rcArrowDown.left + mPosX,
-               rcArrowDown.top - Utils::scaleDPIX(2),
+               rcArrowDown.top - mPosY,
                ETO_CLIPPED,
                &rcArrowDown, L"˅",
                1,

@@ -50,8 +50,19 @@ bool changeFontStyle(HWND hDlg, int controlID, fontStyle style) {
 
 // ***************** PUBLIC *****************
 
+int Utils::StringtoInt(const string& str, int base) {
+   if (str.empty()) return 0;
+
+   try {
+      return stoi(str, nullptr, base);
+   }
+   catch (...) {
+      return 0;
+   }
+}
+
 int Utils::StringtoInt(const wstring& str, int base) {
-   if (str.length() < 1) return 0;
+   if (str.empty()) return 0;
 
    try {
       return stoi(str, nullptr, base);
@@ -71,6 +82,32 @@ wstring Utils::NarrowToWide(const string& str) {
 
 string Utils::WideToNarrow(const wstring& wStr) {
    return std::wstring_convert<std::codecvt_utf8<wchar_t>>().to_bytes(wStr);
+}
+
+bool Utils::isInvalidRegex(const string& expr) {
+   try {
+      std::regex re(expr);
+   }
+   catch (const std::regex_error&) {
+      return true;
+   }
+
+   return false;
+}
+
+bool Utils::isInvalidRegex(const wstring& expr, HWND hWnd, const wstring& context) {
+   try {
+      std::wregex re(expr);
+   }
+   catch (const std::regex_error& e) {
+      MessageBox(hWnd,
+         (context + ((!context.empty()) ? L"\r\n" : L"") + NarrowToWide(e.what())).c_str(),
+         FWVIZ_DIALOG_REGEX_ERROR,
+         MB_OK | MB_ICONERROR);
+      return true;
+   }
+
+   return false;
 }
 
 COLORREF Utils::intToRGB(int color) {
@@ -113,7 +150,7 @@ wstring Utils::getKnownFolderPath(REFKNOWNFOLDERID folderID) {
    return sFolderPath;
 }
 
-HWND Utils::addTooltip(HWND hDlg, int controlID, LPWSTR pTitle, LPWSTR pMessage, BOOL bBalloon) {
+HWND Utils::addTooltip(HWND hDlg, int controlID, LPWSTR pTitle, LPWSTR pMessage, bool bBalloon) {
    if (!controlID || !hDlg || !pMessage)
       return FALSE;
 
@@ -144,6 +181,12 @@ HWND Utils::addTooltip(HWND hDlg, int controlID, LPWSTR pTitle, LPWSTR pMessage,
    SendMessage(hwndTip, TTM_SETTITLE, TTI_INFO, (LPARAM)pTitle);
    SendMessage(hwndTip, TTM_SETMAXTIPWIDTH, 0, (LPARAM)PREFS_TIP_MAX_WIDTH);
 
+   return hwndTip;
+}
+
+HWND Utils::addTooltip(HWND hDlg, int controlID, LPWSTR pTitle, LPWSTR pMessage, int duration, bool bBalloon) {
+   HWND hwndTip{ addTooltip(hDlg, controlID, pTitle, pMessage, bBalloon) };
+   SendMessage(hwndTip, TTM_SETDELAYTIME, TTDT_AUTOPOP, (LPARAM)(duration * 1000));
    return hwndTip;
 }
 
@@ -187,6 +230,11 @@ bool Utils::checkKeyHeldDown(int vKey) {
    return (GetKeyState(vKey) & 0x8000) > 0;
 }
 
+void Utils::setComboBoxSelection(HWND hList, int index) {
+   SendMessage(hList, CB_SETCURSEL, (WPARAM)index, 0);
+   InvalidateRect(hList, nullptr, FALSE);
+}
+
 bool Utils::getClipboardText(HWND hwnd, wstring& clipText) {
    bool bRet{ FALSE };
 
@@ -227,26 +275,19 @@ wstring Utils::getVersionInfo(LPCWSTR key) {
 
    GetModuleFileName(_gModule, sModuleFilePath, MAX_PATH);
    verSize = GetFileVersionInfoSize(sModuleFilePath, &verHandle);
+   if (verSize < 1) return L"";
 
-   if (verSize) {
-      LPSTR verData = new char[verSize];
+   string versionData(verSize, '\0');
+   if (!GetFileVersionInfo(sModuleFilePath, NULL, verSize, versionData.data())) return L"";
+   VerQueryValue(versionData.data(), L"\\VarFileInfo\\Translation", (VOID FAR* FAR*)& lpTranslate, &querySize);
 
-      if (GetFileVersionInfo(sModuleFilePath, NULL, verSize, verData)) {
+   wstring verSubBlock(100, '\0');
+   swprintf(verSubBlock.data(), 100, L"\\StringFileInfo\\%04X%04X\\%s",
+      lpTranslate[0].wLanguage, lpTranslate[0].wCodePage, key);
 
-         VerQueryValue(verData, L"\\VarFileInfo\\Translation", (VOID FAR* FAR*)& lpTranslate, &querySize);
-
-         wchar_t qVal[100]{};
-         swprintf(qVal, 100, L"\\StringFileInfo\\%04X%04X\\%s",
-            lpTranslate[0].wLanguage, lpTranslate[0].wCodePage, key);
-
-         if (VerQueryValue(verData, wstring(qVal).c_str(), (VOID FAR* FAR*)& lpBuffer, &querySize)) {
-            if (querySize) {
-               sVersionInfo = wstring{ lpBuffer };
-            }
-         }
-      }
-      delete[] verData;
-   }
+   if (VerQueryValue(versionData.data(), verSubBlock.c_str(), (VOID FAR* FAR*)& lpBuffer, &querySize)
+      && querySize)
+      sVersionInfo = wstring{ lpBuffer };
 
    return sVersionInfo;
 }

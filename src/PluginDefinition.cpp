@@ -43,7 +43,7 @@ void pluginCleanUp(){}
 
 void commandMenuInit() {
    _gotoPanel.initPrefs();
-   NPPDM_InitDarkMode();
+   NPPDM_InitDarkMode(nppData._nppHandle);
 
    ShortcutKey *shKeyOpen = new ShortcutKey;
    shKeyOpen->_isAlt = false;

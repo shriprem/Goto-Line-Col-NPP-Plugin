@@ -145,6 +145,10 @@ void GotoLineColPanel::display(bool toShow) {
    if (toShow) {
       SetFocus(GetDlgItem(_hSelf, IDC_GOLINE_EDIT));
    }
+}
+void GotoLineColPanel::refreshDarkMode() {
+   NPPDM_AutoThemeChildControls(_hSelf);
+   redraw();
 };
 
 void GotoLineColPanel::setParent(HWND parent2set) {

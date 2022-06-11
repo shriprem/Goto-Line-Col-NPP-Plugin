@@ -131,7 +131,7 @@ void ShowAboutDialog() {
 
 void refreshDarkMode() {
    if (_gotoPanel.isCreated())
-      NPPDM_AutoSubclassAndThemeChildControls(_gotoPanel.getHSelf());
+      _gotoPanel.refreshDarkMode();
 
    if (_prefsDlg.isCreated())
       _prefsDlg.refreshDarkMode();

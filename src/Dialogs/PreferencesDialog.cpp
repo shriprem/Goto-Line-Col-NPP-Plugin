@@ -32,7 +32,7 @@ void PreferencesDialog::doDialog(HINSTANCE hInst) {
 }
 
 void PreferencesDialog::refreshDarkMode() {
-   NPPDM_AutoSubclassAndThemeChildControls(_hSelf);
+   NPPDM_AutoThemeChildControls(_hSelf);
    redraw();
 
    SendMessage(hEdgeBuffer, TBM_SETRANGEMIN, FALSE, 1);

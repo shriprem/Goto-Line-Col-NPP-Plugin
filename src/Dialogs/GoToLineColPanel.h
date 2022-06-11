@@ -25,6 +25,7 @@ public :
    void onBufferActivated();
    void localize();
    virtual void display(bool toShow=true);
+   void refreshDarkMode();
    void setParent(HWND parent2set);
    void reloadPanelPreferences();
    void updatePanelInfo();

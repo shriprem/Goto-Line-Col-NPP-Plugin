@@ -13,7 +13,7 @@ void AboutDialog::doDialog(HINSTANCE hInst) {
 }
 
 void AboutDialog::refreshDarkMode() {
-   NPPDM_AutoSubclassAndThemeChildControls(_hSelf);
+   NPPDM_AutoThemeChildControls(_hSelf);
    redraw();
 }
 
@@ -41,8 +41,8 @@ void AboutDialog::localize() {
 INT_PTR CALLBACK AboutDialog::run_dlgProc(UINT message, WPARAM wParam, LPARAM lParam) {
    switch (message) {
    case WM_INITDIALOG:
-      NPPDM_InitSysLink(GetDlgItem(_hSelf, IDC_ABOUT_PROD_URL));
       NPPDM_AutoSubclassAndThemeChildControls(_hSelf);
+      NPPDM_InitSysLink(GetDlgItem(_hSelf, IDC_ABOUT_PROD_URL));
       break;
 
    case WM_COMMAND:

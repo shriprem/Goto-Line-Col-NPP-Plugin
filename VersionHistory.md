@@ -1,10 +1,10 @@
 ## Version History
 
-### Version 2.4.1.0 [June 8, 2022]
+### Version 2.4.2.0 [June 11, 2022]
 1. For quicker and more convenient access, the **_Use byte count for column value computation_** checkbox is now available on the plugin side panel.
 2. Enhanced Darkmode support.
 
-**Release:** [2.4.1.0 Release](https://github.com/shriprem/Goto-Line-Col-NPP-Plugin/releases/tag/v2.4.1.0)
+**Release:** [2.4.2.0 Release](https://github.com/shriprem/Goto-Line-Col-NPP-Plugin/releases/tag/v2.4.2.0)
 
 ---
 

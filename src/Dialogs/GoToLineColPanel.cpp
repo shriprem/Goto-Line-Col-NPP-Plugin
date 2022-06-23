@@ -302,7 +302,7 @@ void GotoLineColPanel::switchLine(bool bNext) {
 void GotoLineColPanel::switchCol(bool bNext) {
    int inputCol{ getInputColumn() };
 
-   if (bNext) {
+   if (!bNext) {
       if (inputCol + 1 > getLineMaxPos(getInputLineValidated())) {
          clearCalltip();
          return;

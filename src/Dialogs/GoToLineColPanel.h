@@ -41,19 +41,19 @@ protected :
    virtual INT_PTR CALLBACK run_dlgProc(UINT message, WPARAM wParam, LPARAM lParam);
    static DWORD WINAPI threadPositionHighlighter(void*);
 
-   static int getLineCount();
+   static intptr_t getLineCount();
    static void setFocusOnEditor();
-   int getLineMaxPos(int line);
-   int getDocumentColumn(HWND hScintilla, int pos, int line);
-   int setDocumentColumn(HWND hScintilla, int line, int lineStartPos, int lineMaxPos, int column);
-   int getInputLineValidated();
+   intptr_t getLineMaxPos(intptr_t line);
+   intptr_t getDocumentColumn(HWND hScintilla, intptr_t pos, intptr_t line);
+   intptr_t setDocumentColumn(HWND hScintilla, intptr_t line, intptr_t lineStartPos, intptr_t lineMaxPos, intptr_t column);
+   intptr_t getInputLineValidated();
    int getInputColumn() const;
    void updateLineRangeText();
-   void updateColumnRangeText(int line);
+   void updateColumnRangeText(intptr_t line);
    void switchLine(bool bNext);
    void switchCol(bool bNext);
    int navigateToColPos();
-   int navigateToColPos(int line, int column);
+   int navigateToColPos(intptr_t line, intptr_t column);
    void updatePanelColPos();
-   void initCursorPosData(HWND hScintilla, int line, int column, int atPos);
+   void initCursorPosData(HWND hScintilla, intptr_t line, intptr_t column, intptr_t atPos);
 };

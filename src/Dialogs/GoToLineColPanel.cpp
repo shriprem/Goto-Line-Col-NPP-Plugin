@@ -183,9 +183,9 @@ void GotoLineColPanel::updatePanelColPos() {
    HWND hScintilla{ getCurrentScintilla() };
    if (!hScintilla) return;
 
-   int pos = static_cast<int>(SendMessage(hScintilla, SCI_GETCURRENTPOS, 0, 0));
-   int line = static_cast<int>(SendMessage(hScintilla, SCI_LINEFROMPOSITION, pos, 0)) + 1;
-   int col = getDocumentColumn(hScintilla, pos, line);
+   intptr_t pos = SendMessage(hScintilla, SCI_GETCURRENTPOS, 0, 0);
+   intptr_t line = SendMessage(hScintilla, SCI_LINEFROMPOSITION, pos, 0) + 1;
+   intptr_t col = getDocumentColumn(hScintilla, pos, line);
 
    SetDlgItemText(_hSelf, IDC_GOLINE_EDIT, to_wstring(line).c_str());
    updateLineRangeText();
@@ -203,11 +203,11 @@ void GotoLineColPanel::clearCalltip() {
 
 /// *** Private Functions: *** ///
 
-int GotoLineColPanel::getLineCount() {
+intptr_t GotoLineColPanel::getLineCount() {
    HWND hScintilla{ getCurrentScintilla() };
    if (!hScintilla) return -1;
 
-   return static_cast<int>(SendMessage(hScintilla, SCI_GETLINECOUNT, 0, 0));
+   return SendMessage(hScintilla, SCI_GETLINECOUNT, 0, 0);
 };
 
 void GotoLineColPanel::setFocusOnEditor() {
@@ -217,47 +217,43 @@ void GotoLineColPanel::setFocusOnEditor() {
    SendMessage(hScintilla, SCI_GRABFOCUS, 0, 0);
 };
 
-int GotoLineColPanel::getLineMaxPos(int line) {
+intptr_t GotoLineColPanel::getLineMaxPos(intptr_t line) {
    HWND hScintilla{ getCurrentScintilla() };
    if (!hScintilla) return -1;
 
-   int endPos = static_cast<int>(SendMessage(hScintilla, SCI_GETLINEENDPOSITION, line - 1, 0));
+   intptr_t endPos = SendMessage(hScintilla, SCI_GETLINEENDPOSITION, line - 1, 0);
 
-   int col = (allPrefs.useByteCol) ?
-      endPos - static_cast<int>(SendMessage(hScintilla, SCI_POSITIONFROMLINE, line - 1, 0)) :
-      static_cast<int>(SendMessage(hScintilla, SCI_GETCOLUMN, endPos, 0));
+   intptr_t col = (allPrefs.useByteCol) ?
+      endPos - SendMessage(hScintilla, SCI_POSITIONFROMLINE, line - 1, 0) : SendMessage(hScintilla, SCI_GETCOLUMN, endPos, 0);
 
    return col + 1;
 };
 
-int GotoLineColPanel::getDocumentColumn(HWND hScintilla, int pos, int line) {
-   int col = (allPrefs.useByteCol) ?
-      pos - static_cast<int>(SendMessage(hScintilla, SCI_POSITIONFROMLINE, line - 1, 0)) :
-      static_cast<int>(SendMessage(hScintilla, SCI_GETCOLUMN, pos, 0));
+intptr_t GotoLineColPanel::getDocumentColumn(HWND hScintilla, intptr_t pos, intptr_t line) {
+   intptr_t col = (allPrefs.useByteCol) ?
+      pos - SendMessage(hScintilla, SCI_POSITIONFROMLINE, line - 1, 0) : SendMessage(hScintilla, SCI_GETCOLUMN, pos, 0);
 
    return col + 1;
 }
 
-int GotoLineColPanel::setDocumentColumn(HWND hScintilla, int line, int lineStartPos, int lineMaxPos, int column) {
+intptr_t GotoLineColPanel::setDocumentColumn(HWND hScintilla, intptr_t line, intptr_t lineStartPos, intptr_t lineMaxPos, intptr_t column) {
    column = (column < 1) ? 1 :
       (column > lineMaxPos) ? lineMaxPos : column;
 
-   int gotoPos = (allPrefs.useByteCol) ?
-      lineStartPos + column - 1 :
-      static_cast<int>(SendMessage(hScintilla, SCI_FINDCOLUMN, line - 1, column - 1));
+   intptr_t gotoPos = (allPrefs.useByteCol) ? lineStartPos + column - 1 : SendMessage(hScintilla, SCI_FINDCOLUMN, line - 1, column - 1);
 
    SendMessage(hScintilla, SCI_GOTOPOS, gotoPos, 0);
    return gotoPos;
 }
 
-int GotoLineColPanel::getInputLineValidated() {
+intptr_t GotoLineColPanel::getInputLineValidated() {
    BOOL isSuccessful;
 
-   int line = GetDlgItemInt(_hSelf, IDC_GOLINE_EDIT, &isSuccessful, FALSE);
+   intptr_t line = GetDlgItemInt(_hSelf, IDC_GOLINE_EDIT, &isSuccessful, FALSE);
    if (!isSuccessful)
       return 1;
 
-   int lineCount = getLineCount();
+   intptr_t lineCount = getLineCount();
    return ((line < 0) ? 1 : ((line > lineCount) ? lineCount : line));
 };
 
@@ -272,12 +268,12 @@ void GotoLineColPanel::updateLineRangeText() {
    SetDlgItemText(_hSelf, IDC_GOLINE_RANGE, (GOLINECOL_MAX_FOR_FILE + to_wstring(getLineCount()) + L"]").c_str());
 }
 
-void GotoLineColPanel::updateColumnRangeText(int line) {
+void GotoLineColPanel::updateColumnRangeText(intptr_t line) {
    SetDlgItemText(_hSelf, IDC_GOCOL_RANGE, (GOLINECOL_MAX_FOR_LINE + to_wstring(getLineMaxPos(line)) + L"]").c_str());
 }
 
 void GotoLineColPanel::switchLine(bool bNext) {
-   int inputLine{ getInputLineValidated() };
+   intptr_t inputLine{ getInputLineValidated() };
 
    if (bNext) {
       if (inputLine + 1 > getLineCount()) {
@@ -325,14 +321,14 @@ int GotoLineColPanel::navigateToColPos() {
    return navigateToColPos(getInputLineValidated(), getInputColumn());
 }
 
-int GotoLineColPanel::navigateToColPos(int line, int column) {
+int GotoLineColPanel::navigateToColPos(intptr_t line, intptr_t column) {
    HWND hScintilla{ getCurrentScintilla() };
    if (!hScintilla) return FALSE;
 
    SendMessage(hScintilla, SCI_ENSUREVISIBLE, line - 1, 0);
 
-   int lineMaxPos = getLineMaxPos(line);
-   int lineStartPos = static_cast<int>(SendMessage(hScintilla, SCI_POSITIONFROMLINE, line - 1, 0));
+   intptr_t lineMaxPos = getLineMaxPos(line);
+   intptr_t lineStartPos = SendMessage(hScintilla, SCI_POSITIONFROMLINE, line - 1, 0);
 
 
    if (allPrefs.centerCaret) {
@@ -348,7 +344,7 @@ int GotoLineColPanel::navigateToColPos(int line, int column) {
       setDocumentColumn(hScintilla, line, lineStartPos, lineMaxPos, column + allPrefs.edgeBuffer);
    }
 
-   int atPos = setDocumentColumn(hScintilla, line, lineStartPos, lineMaxPos, column);
+   intptr_t atPos = setDocumentColumn(hScintilla, line, lineStartPos, lineMaxPos, column);
    setFocusOnEditor();
 
    // Display call tip
@@ -368,24 +364,24 @@ int GotoLineColPanel::navigateToColPos(int line, int column) {
 }
 
 
-void GotoLineColPanel::initCursorPosData(HWND hScintilla, int line, int column, int atPos) {
+void GotoLineColPanel::initCursorPosData(HWND hScintilla, intptr_t line, intptr_t column, intptr_t atPos) {
    UCHAR atChar;
-   int colPos;
+   intptr_t colPos;
 
-   colPos = static_cast<int>(SendMessage(hScintilla, SCI_GETCOLUMN, atPos, 0)) + 1;
+   colPos = SendMessage(hScintilla, SCI_GETCOLUMN, atPos, 0) + 1;
    atChar = static_cast<UCHAR>(SendMessage(hScintilla, SCI_GETCHARAT, atPos, 0));
 
-   snprintf(cursorPosData, BUFFER_500, "%s%u\n%s%u\n%s%u\n\n%s0x%X [%u]",
-      CUR_POS_DATA_LINE, line,
-      CUR_POS_DATA_CHAR_COL, colPos,
-      CUR_POS_DATA_BYTE_COL, column,
+   snprintf(cursorPosData, BUFFER_500, "%s%llu\n%s%llu\n%s%llu\n\n%s0x%X [%u]",
+      CUR_POS_DATA_LINE, static_cast<long long>(line),
+      CUR_POS_DATA_CHAR_COL, static_cast<long long>(colPos),
+      CUR_POS_DATA_BYTE_COL, static_cast<long long>(column),
       CUR_POS_DATA_ANSI_BYTE, atChar, atChar);
 
    if ((atChar & 0x80) == 0 ||
       nppMessage(NPPM_GETBUFFERENCODING, nppMessage(NPPM_GETCURRENTBUFFERID, 0, 0), 0) == 0)
       return;
 
-   int utf8StartPos{ atPos };
+   intptr_t utf8StartPos{ atPos };
    UCHAR utf8StartChar{ atChar };
 
    while ((utf8StartChar & 0xC0) == 0x80 && atPos - utf8StartPos < 3) {
@@ -399,7 +395,7 @@ void GotoLineColPanel::initCursorPosData(HWND hScintilla, int line, int column, 
    }
 
    UCHAR utf8ByteChar;
-   int utf8BytePos{ utf8StartPos };
+   intptr_t utf8BytePos{ utf8StartPos };
    int unicodeHead{ 0 }, unicodeTail{ 0 };
    bool atMark;
    char utf8Text[BUFFER_100];
@@ -458,9 +454,9 @@ void GotoLineColPanel::loadCursorPosData() {
    HWND hScintilla{ getCurrentScintilla() };
    if (!hScintilla) return;
 
-   int curPos = static_cast<int>(SendMessage(hScintilla, SCI_GETCURRENTPOS, NULL, NULL));
-   int curLine = static_cast<int>(SendMessage(hScintilla, SCI_LINEFROMPOSITION, curPos, NULL));
-   int lineStart = static_cast<int>(SendMessage(hScintilla, SCI_POSITIONFROMLINE, curLine, NULL));
+   intptr_t curPos = SendMessage(hScintilla, SCI_GETCURRENTPOS, NULL, NULL);
+   intptr_t curLine = SendMessage(hScintilla, SCI_LINEFROMPOSITION, curPos, NULL);
+   intptr_t lineStart = SendMessage(hScintilla, SCI_POSITIONFROMLINE, curLine, NULL);
 
    initCursorPosData(hScintilla, (curLine + 1), (curPos - lineStart + 1), curPos);
 
@@ -488,8 +484,7 @@ DWORD WINAPI GotoLineColPanel::threadPositionHighlighter(void*) {
    SendMessage(hScintilla, SCI_SETCARETSTYLE, currCaret, 0);
 
    if (allPrefs.braceHilite) {
-      int pos = static_cast<int>(SendMessage(hScintilla, SCI_GETCURRENTPOS, 0, 0));
-      SendMessage(hScintilla, SCI_BRACEHIGHLIGHT, pos, -1);
+      SendMessage(hScintilla, SCI_BRACEHIGHLIGHT, SendMessage(hScintilla, SCI_GETCURRENTPOS, 0, 0), -1);
    }
 
    // Clear Idem Potency Hold

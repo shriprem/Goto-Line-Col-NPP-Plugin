@@ -193,8 +193,7 @@ bool CommandLineOptions::gotoCol(int& lineNum, int& colNum, bool bPersist) {
 
    if (nMatchIndex < 0) return FALSE;
 
-   int curPos = static_cast<int>(SendMessage(hScintilla, SCI_GETCURRENTPOS, NULL, NULL));
-   int curLine = static_cast<int>(SendMessage(hScintilla, SCI_LINEFROMPOSITION, curPos, NULL));
+   intptr_t curLine = SendMessage(hScintilla, SCI_LINEFROMPOSITION, SendMessage(hScintilla, SCI_GETCURRENTPOS, NULL, NULL), NULL);
 
    if (curLine + 1 == cmdLineNum) {
       if (!bPersist)

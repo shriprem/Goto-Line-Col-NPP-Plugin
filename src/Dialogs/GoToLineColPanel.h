@@ -27,6 +27,10 @@ public :
    virtual void display(bool toShow=true);
    void refreshDarkMode();
    void setParent(HWND parent2set);
+
+   void showPreferencesDialog();
+   void showAboutDialog();
+
    void reloadPanelPreferences();
    void updatePanelInfo();
    void clearCalltip();

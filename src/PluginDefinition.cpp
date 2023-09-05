@@ -16,8 +16,6 @@
 #include "PluginDefinition.h"
 #include "PreferencesIO.h"
 #include "Dialogs/GoToLineColPanel.h"
-#include "Dialogs/PreferencesDialog.h"
-#include "Dialogs/AboutDialog.h"
 
 #ifdef UNICODE
    #define generic_itoa _itow
@@ -31,8 +29,6 @@ NppData nppData;
 HINSTANCE _gModule;
 PreferencesIO _prefsIO;
 GotoLineColPanel _gotoPanel;
-PreferencesDialog _prefsDlg;
-AboutDialog _aboutDlg;
 
 void pluginInit(HANDLE hModule) {
    _gModule = (HINSTANCE)hModule;
@@ -122,20 +118,14 @@ void ShowGotoLineColPanel(bool show) {
 }
 
 void ShowPreferencesDialog() {
-   _prefsDlg.doDialog((HINSTANCE)_gModule);
+   _gotoPanel.showPreferencesDialog();
 }
 
 void ShowAboutDialog() {
-   _aboutDlg.doDialog((HINSTANCE)_gModule);
+   _gotoPanel.showAboutDialog();
 }
 
 void refreshDarkMode() {
    if (_gotoPanel.isCreated())
       _gotoPanel.refreshDarkMode();
-
-   if (_prefsDlg.isCreated())
-      _prefsDlg.refreshDarkMode();
-
-   if (_aboutDlg.isCreated())
-      _aboutDlg.refreshDarkMode();
 }

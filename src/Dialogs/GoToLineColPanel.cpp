@@ -1,7 +1,12 @@
 #include "GoToLineColPanel.h"
+#include "PreferencesDialog.h"
+#include "AboutDialog.h"
 #include <wchar.h>
 
+extern HINSTANCE _gModule;
 extern GotoLineColPanel _gotoPanel;
+PreferencesDialog _prefsDlg;
+AboutDialog _aboutDlg;
 
 INT_PTR CALLBACK GotoLineColPanel::run_dlgProc(UINT message, WPARAM wParam, LPARAM lParam) {
    switch (message) {
@@ -23,7 +28,7 @@ INT_PTR CALLBACK GotoLineColPanel::run_dlgProc(UINT message, WPARAM wParam, LPAR
 
       case IDC_GOLINECOL_PREFS:
          SetFocus(_hSelf);
-         ShowPreferencesDialog();
+         showPreferencesDialog();
          break;
 
       case IDC_GOCOL_PREF_USE_BYTE_CHAR:
@@ -33,7 +38,7 @@ INT_PTR CALLBACK GotoLineColPanel::run_dlgProc(UINT message, WPARAM wParam, LPAR
          break;
 
       case IDC_GOLINECOL_ABOUT_BUTTON:
-         ShowAboutDialog();
+         showAboutDialog();
          break;
       }
 
@@ -47,24 +52,31 @@ INT_PTR CALLBACK GotoLineColPanel::run_dlgProc(UINT message, WPARAM wParam, LPAR
       break;
 
    case WM_NOTIFY:
-      switch (((LPNMHDR)lParam)->code) {
-      case UDN_DELTAPOS:
-         bool bNext{ ((LPNMUPDOWN)lParam)->iDelta > 0 };
+   {
+      LPNMHDR pnmh = reinterpret_cast<LPNMHDR>(lParam);
 
-         switch (((LPNMHDR)lParam)->idFrom) {
-         case IDC_GOLINE_SPIN:
-            switchLine(bNext);
-            break;
+      if (pnmh->hwndFrom == _hParent && LOWORD(pnmh->code) == DMN_CLOSE) {
+         display(FALSE);
+      }
+      else {
+         switch (pnmh->code) {
+         case UDN_DELTAPOS:
+            bool bNext{ ((LPNMUPDOWN)lParam)->iDelta > 0 };
 
-         case IDC_GOCOL_SPIN:
-            switchCol(bNext);
+            switch (((LPNMHDR)lParam)->idFrom) {
+            case IDC_GOLINE_SPIN:
+               switchLine(bNext);
+               break;
+
+            case IDC_GOCOL_SPIN:
+               switchCol(bNext);
+               break;
+            }
             break;
          }
-         break;
-
       }
-
       break;
+   }
 
    case WM_INITDIALOG:
       NPPDM_AutoSubclassAndThemeChildControls(_hSelf);
@@ -158,15 +170,38 @@ void GotoLineColPanel::display(bool toShow) {
    if (toShow) {
       SetFocus(GetDlgItem(_hSelf, IDC_GOLINE_EDIT));
    }
+   else {
+      if (_prefsDlg.isCreated() && _prefsDlg.isVisible())
+         _prefsDlg.display(FALSE);
+
+      if (_aboutDlg.isCreated() && _aboutDlg.isVisible())
+         _aboutDlg.display(FALSE);
+   }
 }
+
 void GotoLineColPanel::refreshDarkMode() {
    NPPDM_AutoThemeChildControls(_hSelf);
    redraw();
-};
+
+   if (_prefsDlg.isCreated())
+      _prefsDlg.refreshDarkMode();
+
+   if (_aboutDlg.isCreated())
+      _aboutDlg.refreshDarkMode();
+}
 
 void GotoLineColPanel::setParent(HWND parent2set) {
    _hParent = parent2set;
-};
+}
+
+void GotoLineColPanel::showPreferencesDialog() {
+   _prefsDlg.doDialog((HINSTANCE)_gModule);
+}
+
+void GotoLineColPanel::showAboutDialog() {
+   _aboutDlg.doDialog((HINSTANCE)_gModule);
+}
+
 
 void GotoLineColPanel::reloadPanelPreferences() {
    allPrefs = _prefsIO.loadPreferences();

@@ -43,6 +43,8 @@ protected :
 
    static intptr_t getLineCount();
    static void setFocusOnEditor();
+   void onPanelResize(LPARAM lParam);
+
    intptr_t getLineMaxPos(intptr_t line);
    intptr_t getDocumentColumn(HWND hScintilla, intptr_t pos, intptr_t line);
    intptr_t setDocumentColumn(HWND hScintilla, intptr_t line, intptr_t lineStartPos, intptr_t lineMaxPos, intptr_t column);

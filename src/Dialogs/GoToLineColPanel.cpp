@@ -31,6 +31,10 @@ INT_PTR CALLBACK GotoLineColPanel::run_dlgProc(UINT message, WPARAM wParam, LPAR
          _prefsIO.saveByteCol(allPrefs.useByteCol);
          updatePanelInfo();
          break;
+
+      case IDC_GOLINECOL_ABOUT_BUTTON:
+         ShowAboutDialog();
+         break;
       }
 
       break;
@@ -57,6 +61,7 @@ INT_PTR CALLBACK GotoLineColPanel::run_dlgProc(UINT message, WPARAM wParam, LPAR
             break;
          }
          break;
+
       }
 
       break;
@@ -88,6 +93,10 @@ INT_PTR CALLBACK GotoLineColPanel::run_dlgProc(UINT message, WPARAM wParam, LPAR
          updatePanelColPos();
       break;
 
+   case WM_SIZE:
+      onPanelResize(lParam);
+      break;
+
    case WM_SHOWWINDOW:
       Utils::checkMenuItem(MI_GOTO_PANEL, wParam);
       break;
@@ -115,6 +124,10 @@ void GotoLineColPanel::initPanel() {
    Utils::setFontBold(_hSelf, IDOK);
    Utils::setFont(_hSelf, IDC_GOLINECOL_FIELD_LABEL, fontName, fontHeight, FW_BOLD, FALSE, TRUE);
    Utils::setFont(_hSelf, IDC_GOLINECOL_FIELD_INFO, fontName, fontHeight);
+
+   Utils::loadBitmap(_hSelf, IDC_GOLINECOL_ABOUT_BUTTON, IDB_GOLINECOL_ABOUT_BITMAP);
+   Utils::addTooltip(_hSelf, IDC_GOLINECOL_ABOUT_BUTTON, NULL, ABOUT_DIALOG_TITLE, TRUE);
+
    if (_gLanguage != LANG_ENGLISH) localize();
 }
 
@@ -215,7 +228,20 @@ void GotoLineColPanel::setFocusOnEditor() {
    if (!hScintilla) return;
 
    SendMessage(hScintilla, SCI_GRABFOCUS, 0, 0);
-};
+}
+
+void GotoLineColPanel::onPanelResize(LPARAM lParam) {
+   // About button
+   HWND hAboutBtn{ GetDlgItem(_hSelf, IDC_GOLINECOL_ABOUT_BUTTON) };
+   RECT rcAboutBtn;
+   GetWindowRect(hAboutBtn, &rcAboutBtn);
+
+   int aboutBtnWidth{ rcAboutBtn.right - rcAboutBtn.left };
+   int aboutBtnHeight{ rcAboutBtn.bottom - rcAboutBtn.top };
+
+   MoveWindow(hAboutBtn, (LOWORD(lParam) - aboutBtnWidth - 3), (HIWORD(lParam) - aboutBtnHeight - 3), aboutBtnWidth, aboutBtnHeight, TRUE);
+}
+
 
 intptr_t GotoLineColPanel::getLineMaxPos(intptr_t line) {
    HWND hScintilla{ getCurrentScintilla() };

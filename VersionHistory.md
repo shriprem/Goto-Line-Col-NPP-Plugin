@@ -1,5 +1,14 @@
 ## Version History
 
+### Version 2.4.3.0 [September 7, 2023]
+1. Support for large files in 64-bit mode. See commit: [#075a673](https://github.com/shriprem/Goto-Line-Col-NPP-Plugin/commit/075a673cb1cf5fb4ba91920846cc7b984f3afe74)
+2. Updated Scintilla & NPP headers to match Notepad++ v8.5.6. See commit: [#87ca01f](https://github.com/shriprem/Goto-Line-Col-NPP-Plugin/commit/38015376ad1a780cdd28a7b18960b87db96d2d2c)
+3. Changed Goto Column spinner orientation to horizontal. See commit: [#780fffc](https://github.com/shriprem/Goto-Line-Col-NPP-Plugin/commit/780fffc966eaca050de49798eb45151936c764fc)
+
+**Release:** [2.4.3.0 Release](https://github.com/shriprem/Goto-Line-Col-NPP-Plugin/releases/tag/v2.4.3.0)
+
+---
+
 ### Version 2.4.2.0 [June 11, 2022]
 1. For quicker and more convenient access, the **_Use byte count for column value computation_** checkbox is now available on the plugin side panel.
 2. Enhanced Darkmode support.

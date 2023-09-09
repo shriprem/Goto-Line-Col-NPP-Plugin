@@ -1,6 +1,12 @@
 # GotoLineCol Notepad++ Plugin
 
-![GitHub](https://img.shields.io/github/license/shriprem/Goto-Line-Col-NPP-Plugin) ![GitHub release (latest by date)](https://img.shields.io/github/v/release/shriprem/Goto-Line-Col-NPP-Plugin) ![GitHub all releases](https://img.shields.io/github/downloads/shriprem/Goto-Line-Col-NPP-Plugin/total)
+![GitHub](https://img.shields.io/github/license/shriprem/Goto-Line-Col-NPP-Plugin)
+![GitHub release (latest by date)](https://img.shields.io/github/v/release/shriprem/Goto-Line-Col-NPP-Plugin)
+![GitHub all releases](https://img.shields.io/github/downloads/shriprem/Goto-Line-Col-NPP-Plugin/total)
+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+![GitHub last commit (by committer)](https://img.shields.io/github/last-commit/shriprem/Goto-Line-Col-NPP-Plugin)
+![GitHub Workflow Status (with event)](https://img.shields.io/github/actions/workflow/status/shriprem/Goto-Line-Col-NPP-Plugin/CI_build.yml)
+![GitHub issues](https://img.shields.io/github/issues/shriprem/Goto-Line-Col-NPP-Plugin)
 
 [Current Version: 2.4.3.0](https://github.com/shriprem/Goto-Line-Col-NPP-Plugin/blob/master/VersionHistory.md)
 

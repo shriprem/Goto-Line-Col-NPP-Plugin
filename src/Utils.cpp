@@ -336,3 +336,13 @@ bool Utils::setFontItalic(HWND hDlg, int controlID) {
 bool Utils::setFontUnderline(HWND hDlg, int controlID) {
    return changeFontStyle(hDlg, controlID, FS_UNDERLINE);
 }
+
+bool Utils::checkDirectoryExists(LPCWSTR lpDirPath) {
+   DWORD dwAttrib = ::GetFileAttributesW(lpDirPath);
+   return (dwAttrib != INVALID_FILE_ATTRIBUTES && (dwAttrib & FILE_ATTRIBUTE_DIRECTORY));
+}
+
+bool Utils::checkFileExists(LPCWSTR lpFilePath) {
+   DWORD dwAttrib = ::GetFileAttributesW(lpFilePath);
+   return (dwAttrib != INVALID_FILE_ATTRIBUTES && !(dwAttrib & FILE_ATTRIBUTE_DIRECTORY));
+}

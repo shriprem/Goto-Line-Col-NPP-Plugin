@@ -1,16 +1,17 @@
+#include "Utils.h"
 #include "PreferencesIO.h"
 
 void PreferencesIO::init() {
    nppMessage(NPPM_GETPLUGINSCONFIGDIR, MAX_PATH, (LPARAM)iniFilePath);
 
    // if no existing config path, create it
-   if (!PathFileExists(iniFilePath))
+   if (!Utils::checkDirectoryExists(iniFilePath))
       CreateDirectory(iniFilePath, NULL);
 
    PathAppend(iniFilePath, configFileName);
 
    // if no existing config file, create it
-   if (!PathFileExists(iniFilePath)) {
+   if (!Utils::checkFileExists(iniFilePath)) {
       loadPreferences();
       saveByteCol(allPrefs.useByteCol);
       savePreferences(allPrefs);

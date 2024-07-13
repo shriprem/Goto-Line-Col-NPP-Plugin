@@ -24,12 +24,12 @@ public:
    ALL_PREFERENCES allPrefs;
 
    void init();
-   int getPref(LPCWSTR key, int default);
-   void setPref(LPCWSTR key, int val);
+   int getPref(LPCWSTR key, int defaultVal) const;
+   void setPref(LPCWSTR key, int val) const;
    ALL_PREFERENCES loadPreferences();
    ALL_PREFERENCES resetPreferences();
    void savePreferences(ALL_PREFERENCES prefs);
-   void saveByteCol(int useByteCol);
+   void saveByteCol(int useByteCol) const;
 
 protected:
    TCHAR iniFilePath[MAX_PATH];

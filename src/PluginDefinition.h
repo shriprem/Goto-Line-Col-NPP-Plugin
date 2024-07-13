@@ -48,7 +48,7 @@ void pluginInit(HANDLE hModule);
 void pluginCleanUp();
 void commandMenuInit();
 void commandMenuCleanUp();
-bool setCommand(size_t index, TCHAR *cmdName, PFUNCPLUGINCMD pFunc, ShortcutKey *sk = NULL, bool checkOnInit = false);
+bool setCommand(size_t index, const wstring& cmdName, PFUNCPLUGINCMD pFunc, ShortcutKey* sk = NULL, bool checkOnInit = false);
 
 HWND getCurrentScintilla();
 LRESULT nppMessage(UINT messageID, WPARAM wparam, LPARAM lparam);

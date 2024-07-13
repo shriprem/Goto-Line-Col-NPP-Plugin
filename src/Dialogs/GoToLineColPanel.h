@@ -35,7 +35,7 @@ public :
    void updatePanelInfo();
    void clearCalltip();
    void loadCursorPosData();
-   ALL_PREFERENCES getPrefs() { return allPrefs; }
+   ALL_PREFERENCES getPrefs() const { return allPrefs; }
 
 protected :
    ALL_PREFERENCES allPrefs{};
@@ -49,9 +49,9 @@ protected :
    static void setFocusOnEditor();
    void onPanelResize(LPARAM lParam);
 
-   intptr_t getLineMaxPos(intptr_t line);
-   intptr_t getDocumentColumn(HWND hScintilla, intptr_t pos, intptr_t line);
-   intptr_t setDocumentColumn(HWND hScintilla, intptr_t line, intptr_t lineStartPos, intptr_t lineMaxPos, intptr_t column);
+   intptr_t getLineMaxPos(intptr_t line) const;
+   intptr_t getDocumentColumn(HWND hScintilla, intptr_t pos, intptr_t line) const;
+   intptr_t setDocumentColumn(HWND hScintilla, intptr_t line, intptr_t lineStartPos, intptr_t lineMaxPos, intptr_t column) const;
    intptr_t getInputLineValidated();
    int getInputColumn() const;
    void updateLineRangeText();

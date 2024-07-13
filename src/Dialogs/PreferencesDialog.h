@@ -33,6 +33,6 @@ protected:
    void savePreferences();
 
    void createTooltips();
-   void setTooltipsDuration(int duration);
+   void setTooltipsDuration(int duration) const;
    void destroyTooltips();
 };

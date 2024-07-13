@@ -48,9 +48,9 @@ void commandMenuInit() {
    shKeyOpen->_key = VK_F7;
 
    setCommand(MI_GOTO_PANEL, MENU_SHOW_PANEL, ToggleGotoLineColPanel, shKeyOpen, _gotoPanel.isVisible());
-   setCommand(MI_PREFS_DIALOG, MENU_PREFERENCES, ShowPreferencesDialog, 0, 0);
-   setCommand(MI_SEPARATOR, TEXT("-"), NULL, NULL, false);
-   setCommand(MI_ABOUT_DIALOG, MENU_ABOUT, ShowAboutDialog, 0, 0);
+   setCommand(MI_PREFS_DIALOG, MENU_PREFERENCES, ShowPreferencesDialog);
+   setCommand(MI_SEPARATOR, L"-", NULL);
+   setCommand(MI_ABOUT_DIALOG, MENU_ABOUT, ShowAboutDialog);
 }
 
 
@@ -59,17 +59,15 @@ void commandMenuCleanUp() {
 }
 
 // Initialize plugin commands
-bool setCommand(size_t index, TCHAR *cmdName, PFUNCPLUGINCMD pFunc, ShortcutKey *sk, bool checkOnInit) {
-    if (index >= MI_COUNT)
-        return false;
+bool setCommand(size_t index, const wstring& cmdName, PFUNCPLUGINCMD pFunc, ShortcutKey *sk, bool checkOnInit) {
+    if (index >= MI_COUNT) return false;
 
-    if (!pFunc)
-        return false;
+    if (!pFunc) return false;
 
-    lstrcpy(pluginMenuItems[index]._itemName, cmdName);
+    lstrcpy(pluginMenuItems[index]._itemName, cmdName.c_str());
     pluginMenuItems[index]._pFunc = pFunc;
-    pluginMenuItems[index]._init2Check = checkOnInit;
     pluginMenuItems[index]._pShKey = sk;
+    pluginMenuItems[index]._init2Check = checkOnInit;
 
     return true;
 }

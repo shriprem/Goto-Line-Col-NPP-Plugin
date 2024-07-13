@@ -138,7 +138,7 @@ void GotoLineColPanel::initPanel() {
    Utils::setFont(_hSelf, IDC_GOLINECOL_FIELD_INFO, fontName, fontHeight);
 
    Utils::loadBitmap(_hSelf, IDC_GOLINECOL_ABOUT_BUTTON, IDB_GOLINECOL_ABOUT_BITMAP);
-   Utils::addTooltip(_hSelf, IDC_GOLINECOL_ABOUT_BUTTON, NULL, ABOUT_DIALOG_TITLE, TRUE);
+   Utils::addTooltip(_hSelf, IDC_GOLINECOL_ABOUT_BUTTON, L"", ABOUT_DIALOG_TITLE, TRUE);
 
    if (_gLanguage != LANG_ENGLISH) localize();
 }
@@ -278,7 +278,7 @@ void GotoLineColPanel::onPanelResize(LPARAM lParam) {
 }
 
 
-intptr_t GotoLineColPanel::getLineMaxPos(intptr_t line) {
+intptr_t GotoLineColPanel::getLineMaxPos(intptr_t line) const {
    HWND hScintilla{ getCurrentScintilla() };
    if (!hScintilla) return -1;
 
@@ -290,14 +290,14 @@ intptr_t GotoLineColPanel::getLineMaxPos(intptr_t line) {
    return col + 1;
 };
 
-intptr_t GotoLineColPanel::getDocumentColumn(HWND hScintilla, intptr_t pos, intptr_t line) {
+intptr_t GotoLineColPanel::getDocumentColumn(HWND hScintilla, intptr_t pos, intptr_t line) const {
    intptr_t col = (allPrefs.useByteCol) ?
       pos - SendMessage(hScintilla, SCI_POSITIONFROMLINE, line - 1, 0) : SendMessage(hScintilla, SCI_GETCOLUMN, pos, 0);
 
    return col + 1;
 }
 
-intptr_t GotoLineColPanel::setDocumentColumn(HWND hScintilla, intptr_t line, intptr_t lineStartPos, intptr_t lineMaxPos, intptr_t column) {
+intptr_t GotoLineColPanel::setDocumentColumn(HWND hScintilla, intptr_t line, intptr_t lineStartPos, intptr_t lineMaxPos, intptr_t column) const {
    column = (column < 1) ? 1 :
       (column > lineMaxPos) ? lineMaxPos : column;
 
@@ -418,8 +418,7 @@ int GotoLineColPanel::navigateToColPos(intptr_t line, intptr_t column) {
 
    // Flash caret
    HANDLE hThread = CreateThread(NULL, 0, threadPositionHighlighter, 0, 0, NULL);
-   if (hThread > 0)
-      CloseHandle(hThread);
+   if (hThread) CloseHandle(hThread);
 
    return TRUE;
 }

@@ -18,11 +18,11 @@ void PreferencesIO::init() {
    }
 }
 
-int PreferencesIO::getPref(LPCWSTR key, int default) {
-   return GetPrivateProfileInt(sectionName, key, default, iniFilePath);
+int PreferencesIO::getPref(LPCWSTR key, int defaultVal) const {
+   return GetPrivateProfileInt(sectionName, key, defaultVal, iniFilePath);
 }
 
-void PreferencesIO::setPref(LPCWSTR key, int val) {
+void PreferencesIO::setPref(LPCWSTR key, int val) const {
    WritePrivateProfileString(sectionName, key, to_wstring(val).c_str(), iniFilePath);
 }
 
@@ -88,6 +88,6 @@ void PreferencesIO::savePreferences(ALL_PREFERENCES prefs) {
    setPref(cmdProcPersistKey, prefs.cmdProcPersist);
 }
 
-void PreferencesIO::saveByteCol(int useByteCol) {
+void PreferencesIO::saveByteCol(int useByteCol) const {
    setPref(useByteColKey, useByteCol);
 }

@@ -257,7 +257,7 @@ void PreferencesDialog::createTooltips() {
       hTooltips[10] = addTooltip(_hSelf, IDC_PREFS_CARET_FLASH_VALUE, PREFS_LABEL_CARET_FLASH, PREFS_TIP_CARET_FLASH);
 }
 
-void PreferencesDialog::setTooltipsDuration(int duration) {
+void PreferencesDialog::setTooltipsDuration(int duration) const {
    for (int i = 0; i < TOOLTIPS_COUNT; i++) {
       if (hTooltips[i])
          SendMessage(hTooltips[i], TTM_SETDELAYTIME, TTDT_AUTOPOP, (LPARAM)(duration * 1000));

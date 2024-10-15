@@ -31,6 +31,7 @@
 #define CUR_POS_DATA_INVALID_UTF8   "Invalid UTF-8 Byte Sequence!"
 #define CUR_POS_DATA_UTF8_BYTES     "UTF-8 Bytes: "
 #define CUR_POS_DATA_UNICODE        "    Unicode: "
+#define CUR_POS_DATA_UNICODE_BLOCK  " Char Block: "
 
 
 // Preferences Dialog

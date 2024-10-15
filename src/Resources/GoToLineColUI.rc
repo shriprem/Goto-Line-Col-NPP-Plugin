@@ -28,7 +28,7 @@ BEGIN
     LTEXT           "ᴮ",IDC_GOCOL_FOOTNOTE_B,4,111,8,8
     LTEXT           "Each multibyte UTF-8 char will count as multiple columns",IDC_GOCOL_UTF8_CHAR_NOTE,10,114,185,8
     LTEXT           "Cursor Position Data",IDC_GOLINECOL_FIELD_LABEL,10,134,185,10
-    LTEXT           "",IDC_GOLINECOL_FIELD_INFO,10,146,179,75
+    LTEXT           "",IDC_GOLINECOL_FIELD_INFO,10,146,179,105
     PUSHBUTTON      "...",IDC_GOLINECOL_ABOUT_BUTTON,166,417,15,13,BS_BITMAP
 END
 

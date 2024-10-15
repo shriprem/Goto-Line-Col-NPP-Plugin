@@ -124,12 +124,15 @@ void GotoLineColPanel::initPrefs() {
    _prefsIO.init();
    allPrefs = _prefsIO.loadPreferences();
    scanCommandLine();
+   nb.init();
 }
 
 void GotoLineColPanel::initPanel() {
    bool recentOS = Utils::checkBaseOS(WV_VISTA);
    wstring fontName = recentOS ? L"Consolas" : L"Courier New";
    int fontHeight = recentOS ? 10 : 8;
+
+   hFieldInfo = GetDlgItem(_hSelf, IDC_GOLINECOL_FIELD_INFO);
 
    CheckDlgButton(_hSelf, IDC_GOCOL_PREF_USE_BYTE_CHAR, (allPrefs.useByteCol != FALSE) ? BST_CHECKED : BST_UNCHECKED);
 
@@ -266,6 +269,15 @@ void GotoLineColPanel::setFocusOnEditor() {
 }
 
 void GotoLineColPanel::onPanelResize(LPARAM lParam) {
+   RECT rcInfo;
+   GetWindowRect(hFieldInfo, &rcInfo);
+
+   // Get fieldInfo top-leftEdge coordinates relative to dock panel
+   POINT pt{ rcInfo.left, rcInfo.top };
+   ScreenToClient(_hSelf, &pt);
+
+   MoveWindow(hFieldInfo, pt.x, pt.y, (LOWORD(lParam) - pt.x - 3), (rcInfo.bottom - rcInfo.top), TRUE);
+
    // About button
    HWND hAboutBtn{ GetDlgItem(_hSelf, IDC_GOLINECOL_ABOUT_BUTTON) };
    RECT rcAboutBtn;
@@ -428,6 +440,9 @@ void GotoLineColPanel::initCursorPosData(HWND hScintilla, intptr_t line, intptr_
    UCHAR atChar;
    intptr_t colPos;
 
+   string unicodeBlock(MAX_PATH, '\0');
+   string unicodeName(MAX_PATH, '\0');
+
    colPos = SendMessage(hScintilla, SCI_GETCOLUMN, atPos, 0) + 1;
    atChar = static_cast<UCHAR>(SendMessage(hScintilla, SCI_GETCHARAT, atPos, 0));
 
@@ -437,9 +452,12 @@ void GotoLineColPanel::initCursorPosData(HWND hScintilla, intptr_t line, intptr_
       CUR_POS_DATA_BYTE_COL, static_cast<long long>(column),
       CUR_POS_DATA_ANSI_BYTE, atChar, atChar);
 
-   if ((atChar & 0x80) == 0 ||
-      nppMessage(NPPM_GETBUFFERENCODING, nppMessage(NPPM_GETCURRENTBUFFERID, 0, 0), 0) == 0)
+   if ((atChar & 0x80) == 0 || nppMessage(NPPM_GETBUFFERENCODING, nppMessage(NPPM_GETCURRENTBUFFERID, 0, 0), 0) == 0) {
+      nb.getUnicodeBlockAndName(atChar, unicodeBlock.data(), MAX_PATH, unicodeName.data(), MAX_PATH);
+      snprintf(cursorPosData, BUFFER_500, "%s\n%s%s\n%s", cursorPosData,
+         CUR_POS_DATA_UNICODE_BLOCK, unicodeBlock.c_str(), unicodeName.c_str());
       return;
+   }
 
    intptr_t utf8StartPos{ atPos };
    UCHAR utf8StartChar{ atChar };
@@ -500,14 +518,18 @@ void GotoLineColPanel::initCursorPosData(HWND hScintilla, intptr_t line, intptr_
 
    if (atPos > utf8BytePos) {
       snprintf(cursorPosData, BUFFER_100, "%s\n%s", cursorPosData, CUR_POS_DATA_INVALID_UTF8);
-      return;
+   }
+   else {
+      char unicodePoint[BUFFER_20];
+
+      snprintf(unicodePoint, BUFFER_20, "%X", (unicodeHead + unicodeTail));
+      snprintf(cursorPosData, BUFFER_500, "%s\n%s\n%sU+%s%s", cursorPosData, utf8Text,
+         CUR_POS_DATA_UNICODE, ((strlen(unicodePoint) % 2 == 0) ? "" : "0"), unicodePoint);
    }
 
-   char unicodePoint[BUFFER_20];
-
-   snprintf(unicodePoint, BUFFER_20, "%X", (unicodeHead + unicodeTail));
-   snprintf(cursorPosData, BUFFER_500, "%s\n%s\n%sU+%s%s", cursorPosData, utf8Text,
-      CUR_POS_DATA_UNICODE, ((strlen(unicodePoint) % 2 == 0) ? "" : "0"), unicodePoint);
+   nb.getUnicodeBlockAndName((unicodeHead + unicodeTail), unicodeBlock.data(), MAX_PATH, unicodeName.data(), MAX_PATH);
+   snprintf(cursorPosData, BUFFER_500, "%s\n%s%s\n%s", cursorPosData,
+      CUR_POS_DATA_UNICODE_BLOCK, unicodeBlock.c_str(), unicodeName.c_str());
 }
 
 void GotoLineColPanel::loadCursorPosData() {
@@ -520,7 +542,7 @@ void GotoLineColPanel::loadCursorPosData() {
 
    initCursorPosData(hScintilla, (curLine + 1), (curPos - lineStart + 1), curPos);
 
-   SetDlgItemTextA(_hSelf, IDC_GOLINECOL_FIELD_INFO, cursorPosData);
+   SetWindowTextA(hFieldInfo, cursorPosData);
 }
 
 DWORD WINAPI GotoLineColPanel::threadPositionHighlighter(void*) {

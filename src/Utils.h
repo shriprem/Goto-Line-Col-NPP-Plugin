@@ -13,6 +13,7 @@ namespace Utils {
    int StringtoInt(const string& str, int base = 10);
    int StringtoInt(const wstring& str, int base = 10);
    LPCWSTR ToUpper(LPWSTR str);
+   string& LTrim(string& s, const char* t = " ");
    wstring NarrowToWide(const string& str);
    string WideToNarrow(const wstring& wStr);
    bool isInvalidRegex(const string& expr);

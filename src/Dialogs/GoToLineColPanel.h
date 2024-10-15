@@ -1,6 +1,7 @@
 #pragma once
 
 #include "../CommandLineOptions.h"
+#include "../NameBlocks.h"
 #include "../Utils.h"
 #include "../PreferencesIO.h"
 #include "../NPP/DockingDlgInterface.h"
@@ -37,10 +38,12 @@ public :
    void loadCursorPosData();
    ALL_PREFERENCES getPrefs() const { return allPrefs; }
 
-protected :
+protected:
+   HWND hFieldInfo{};
    ALL_PREFERENCES allPrefs{};
    char cursorPosData[BUFFER_500]{};
    CommandLineOptions cmdOpt{};
+   NameBlocks nb{};
 
    virtual INT_PTR CALLBACK run_dlgProc(UINT message, WPARAM wParam, LPARAM lParam);
    static DWORD WINAPI threadPositionHighlighter(void*);

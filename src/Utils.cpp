@@ -76,6 +76,11 @@ LPCWSTR Utils::ToUpper(LPWSTR str) {
    return std::use_facet<std::ctype<wchar_t>>(std::locale()).toupper(str, str + wcslen(str));
 }
 
+string& Utils::LTrim(string& s, const char* t) {
+   s.erase(0, s.find_first_not_of(t));
+   return s;
+}
+
 wstring Utils::NarrowToWide(const string& str) {
    return std::wstring_convert<std::codecvt_utf8<wchar_t>>().from_bytes(str);
 }
@@ -151,7 +156,7 @@ wstring Utils::getKnownFolderPath(REFKNOWNFOLDERID folderID) {
 }
 
 HWND Utils::addTooltip(HWND hDlg, int controlID, const wstring& pTitle, const wstring& pMessage, bool bBalloon) {
-   if (!controlID || !hDlg || pMessage == L"")
+   if (!controlID || !hDlg || pMessage.empty())
       return FALSE;
 
    // Get the window of the tool.

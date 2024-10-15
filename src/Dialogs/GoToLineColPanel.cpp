@@ -277,6 +277,7 @@ void GotoLineColPanel::onPanelResize(LPARAM lParam) {
    ScreenToClient(_hSelf, &pt);
 
    MoveWindow(hFieldInfo, pt.x, pt.y, (LOWORD(lParam) - pt.x - 3), (rcInfo.bottom - rcInfo.top), TRUE);
+   SetWindowTextA(hFieldInfo, cursorPosData);
 
    // About button
    HWND hAboutBtn{ GetDlgItem(_hSelf, IDC_GOLINECOL_ABOUT_BUTTON) };

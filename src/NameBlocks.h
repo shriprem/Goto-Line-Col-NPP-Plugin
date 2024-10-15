@@ -6,9 +6,8 @@
 #include <vector>
 #include <filesystem>
 #include <fstream>
-#include <format>
 
-#define NA "N/A"
+#define NA "---"
 
 using std::vector;
 

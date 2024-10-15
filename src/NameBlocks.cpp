@@ -75,13 +75,11 @@ int NameBlocks::getUnicodeBlockAndName(const int codepoint, char* block, int blo
 
    snprintf(block, blocksize, "%s", blockName.c_str());
 
-   string cp{ std::format("{:x}", codepoint) };
-
-   while (cp.length() < 4) { cp = "0" + cp; }
-   cp = ((cp.length() % 2 == 0) ? "" : "0") + cp;
+   char cp[10]{};
+   snprintf(cp, 10, (codepoint > 0xFFFF ? "%06x" : "%04x"), static_cast<unsigned int>(codepoint));
 
    char uName[MAX_PATH]{};
-   GetPrivateProfileStringA(blockName.c_str(), cp.c_str(), NA, uName, MAX_PATH, namesFilePath);
+   GetPrivateProfileStringA(blockName.c_str(), cp, NA, uName, MAX_PATH, namesFilePath);
 
    string codeName{ uName };
    codeName = ((codeName.length() < 24) ? string("            ").substr(0, (24 - codeName.length()) / 2) : "") + codeName;

@@ -8,11 +8,13 @@
 ![GitHub Workflow Status (with event)](https://img.shields.io/github/actions/workflow/status/shriprem/Goto-Line-Col-NPP-Plugin/CI_build.yml)
 ![GitHub issues](https://img.shields.io/github/issues/shriprem/Goto-Line-Col-NPP-Plugin)
 
-[Current Version: 2.4.3.0](https://github.com/shriprem/Goto-Line-Col-NPP-Plugin/blob/master/VersionHistory.md)
+<a href='https://ko-fi.com/S6S417WICS' target='_blank'><img height='36' style='border:0px;height:36px;' src='https://storage.ko-fi.com/cdn/kofi5.png?v=6' border='0' alt='Buy Me a Coffee at ko-fi.com' /></a>
+
+[Current Version: 2.4.4.0](https://github.com/shriprem/Goto-Line-Col-NPP-Plugin/blob/master/VersionHistory.md)
 
 A plugin for navigating to a specified line and column position in a file. Depending on your requirement, the column positioning can be specified to use either byte counts or character counts.
 
-It is also handy for quickly inspecting byte-level content in files. The plugin will display the byte value at the document's current cursor position. In addition, for multi-byte-based characters in documents with Unicode-based encoding, the plugin will display the Unicode code point and its corresponding UTF-8 byte sequence (see: [Display character code at destination](https://github.com/shriprem/Goto-Line-Col-NPP-Plugin/blob/master/docs/PreferencesDialog.md#display-character-code-at-destination-checked)).
+It is also handy for quickly inspecting byte-level content in files. The plugin will display the byte value, Unicode code point block and name at the document's current cursor position. For multi-byte-based characters in documents with Unicode-based encoding, the plugin will display the Unicode code point and its corresponding UTF-8 byte sequence (see: [Display character code at destination](https://github.com/shriprem/Goto-Line-Col-NPP-Plugin/blob/master/docs/PreferencesDialog.md#display-character-code-at-destination-checked)).
 
 
 ## Plugin Panel
@@ -56,3 +58,6 @@ The spin controls on the line and column fields provide quick navigation between
 
 5. <a href="https://github.com/shriprem/Goto-Line-Col-NPP-Plugin/blob/master/VersionHistory.md">Version History</a>
 
+---
+
+<a href='https://ko-fi.com/S6S417WICS' target='_blank'><img height='36' style='border:0px;height:36px;' src='https://storage.ko-fi.com/cdn/kofi5.png?v=6' border='0' alt='Buy Me a Coffee at ko-fi.com' /></a>

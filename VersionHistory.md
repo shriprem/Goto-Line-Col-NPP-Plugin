@@ -1,5 +1,13 @@
 ## Version History
 
+### Version 2.4.4.0 [December 25, 2024]
+1. New Feature: Display Unicode code point Block and Name of the character at the cursor position. See commit: [#4b6328a](https://github.com/shriprem/Goto-Line-Col-NPP-Plugin/commit/4b6328aa2189b5f3370ee7799d70e16d4be9c16c)
+2. Updated Scintilla & NPP headers to match Notepad++ v8.7.0. See commit: [#c6b25bd](https://github.com/shriprem/Goto-Line-Col-NPP-Plugin/commit/c6b25bd939190532e1b86c0b4020afcf581d0e5e)
+
+**Release:** [2.4.4.0 Release](https://github.com/shriprem/Goto-Line-Col-NPP-Plugin/releases/tag/v2.4.4.0)
+
+---
+
 ### Version 2.4.3.0 [September 7, 2023]
 1. Support for large files in 64-bit mode. See commit: [#075a673](https://github.com/shriprem/Goto-Line-Col-NPP-Plugin/commit/075a673cb1cf5fb4ba91920846cc7b984f3afe74)
 2. Updated Scintilla & NPP headers to match Notepad++ v8.5.6. See commit: [#87ca01f](https://github.com/shriprem/Goto-Line-Col-NPP-Plugin/commit/38015376ad1a780cdd28a7b18960b87db96d2d2c)

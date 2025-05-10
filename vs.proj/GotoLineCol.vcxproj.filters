@@ -174,5 +174,8 @@
     <Image Include="..\src\Resources\goto_fluent.ico">
       <Filter>Resources\Icons</Filter>
     </Image>
+    <Image Include="..\src\Resources\goto_dock.ico">
+      <Filter>Resources\Icons</Filter>
+    </Image>
   </ItemGroup>
 </Project>

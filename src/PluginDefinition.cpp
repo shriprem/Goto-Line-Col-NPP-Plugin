@@ -102,8 +102,9 @@ void ShowGotoLineColPanel(bool show) {
          data.pszModuleName = _gotoPanel.getPluginFileName();
          data.dlgID = MI_GOTO_PANEL;
          data.pszName = MENU_PANEL_NAME;
-         data.hIconTab = (HICON)::LoadImage(_gModule, MAKEINTRESOURCE(IDI_GOTO_TOOL_BTN_STD), IMAGE_ICON, 14, 14,
-            LR_LOADMAP3DCOLORS | LR_LOADTRANSPARENT);
+         data.hIconTab = (HICON)::LoadImage(_gModule,
+            MAKEINTRESOURCE(nppMessage(NPPM_ISDARKMODEENABLED, 0, 0) ? IDI_GOTO_DOCK_ICO_DARK : IDI_GOTO_TOOL_BTN_STD),
+            IMAGE_ICON, 14, 14, LR_LOADMAP3DCOLORS | LR_LOADTRANSPARENT);
 
          nppMessage(NPPM_DMMREGASDCKDLG, 0, (LPARAM)& data);
 

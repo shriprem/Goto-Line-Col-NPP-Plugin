@@ -24,7 +24,8 @@
 #define IDI_GOTO_TOOL_BTN_STD           9052
 #define IDI_GOTO_TOOL_BTN_FLUENT        9053
 #define IDI_GOTO_TOOL_BTN_DARK          9054
-#define IDI_GOTO_DOCK_ICO_DARK          9055
+#define IDI_DOCK_DARK_MODE_ICON         9055
+#define IDI_DOCK_LITE_MODE_ICON         9056
 
 
 #define IDD_PREFERENCES_DIALOG          9100

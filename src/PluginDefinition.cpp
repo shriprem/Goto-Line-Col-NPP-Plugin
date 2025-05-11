@@ -85,6 +85,18 @@ LRESULT nppMessage(UINT messageID, WPARAM wparam, LPARAM lparam) {
    return SendMessage(nppData._nppHandle, messageID, wparam, lparam);
 }
 
+UINT getDockPanelIcon() {
+   wchar_t sConfigFilePath[MAX_PATH]{};
+
+   nppMessage(NPPM_GETNPPDIRECTORY, MAX_PATH, (LPARAM)sConfigFilePath);
+   PathAppend(sConfigFilePath, L"config.xml");
+
+   if (nppMessage(NPPM_ISDARKMODEENABLED, 0, 0))
+      return (Utils::matchStringInFile(sConfigFilePath, L"darkToolBarIconSet=\"4\"")) ? IDI_GOTO_TOOL_BTN_STD : IDI_DOCK_DARK_MODE_ICON;
+   else
+      return (Utils::matchStringInFile(sConfigFilePath, L"lightToolBarIconSet=\"4\"")) ? IDI_GOTO_TOOL_BTN_STD : IDI_DOCK_LITE_MODE_ICON;
+}
+
 // Dockable GotoLineCol Dialog
 void ToggleGotoLineColPanel() {
    ShowGotoLineColPanel(!_gotoPanel.isVisible());
@@ -103,8 +115,7 @@ void ShowGotoLineColPanel(bool show) {
          data.dlgID = MI_GOTO_PANEL;
          data.pszName = MENU_PANEL_NAME;
          data.hIconTab = (HICON)::LoadImage(_gModule,
-            MAKEINTRESOURCE(nppMessage(NPPM_ISDARKMODEENABLED, 0, 0) ? IDI_GOTO_DOCK_ICO_DARK : IDI_GOTO_TOOL_BTN_STD),
-            IMAGE_ICON, 14, 14, LR_LOADMAP3DCOLORS | LR_LOADTRANSPARENT);
+            MAKEINTRESOURCE(getDockPanelIcon()), IMAGE_ICON, 14, 14, LR_LOADMAP3DCOLORS | LR_LOADTRANSPARENT);
 
          nppMessage(NPPM_DMMREGASDCKDLG, 0, (LPARAM)& data);
 

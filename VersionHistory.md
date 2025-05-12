@@ -1,5 +1,16 @@
 ## Version History
 
+### Version 2.4.4.1 [May 12, 2025]
+1. New Feature: Dock Panel icon will be rendered with Fluent or Standard icon depending on the selection under `Notepad++ menu: Settings » Preferences... » Toolbar`. [_Note: To see this feature in action, you will need a build of Notepad++ with the new plugin API message: `NPPM_GETTOOLBARICONSETMODE`._]
+
+2. Enhancement: Fluent and standard toolbar icons have been tweaked.
+
+3. Updated Scintilla & NPP headers to match Notepad++ v8.8.1.
+
+**Release:** [2.4.4.1 Pre-release](https://github.com/shriprem/Goto-Line-Col-NPP-Plugin/releases/tag/v2.4.4.1)
+
+---
+
 ### Version 2.4.4.0 [December 25, 2024]
 1. New Feature: Display Unicode code point Block and Name of the character at the cursor position. See commit: [#4b6328a](https://github.com/shriprem/Goto-Line-Col-NPP-Plugin/commit/4b6328aa2189b5f3370ee7799d70e16d4be9c16c)
 2. Updated Scintilla & NPP headers to match Notepad++ v8.7.0. See commit: [#c6b25bd](https://github.com/shriprem/Goto-Line-Col-NPP-Plugin/commit/c6b25bd939190532e1b86c0b4020afcf581d0e5e)

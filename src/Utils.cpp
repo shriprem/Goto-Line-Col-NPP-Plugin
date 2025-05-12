@@ -351,20 +351,3 @@ bool Utils::checkFileExists(LPCWSTR lpFilePath) {
    DWORD dwAttrib = ::GetFileAttributesW(lpFilePath);
    return (dwAttrib != INVALID_FILE_ATTRIBUTES && !(dwAttrib & FILE_ATTRIBUTE_DIRECTORY));
 }
-
-bool Utils::matchStringInFile(wstring filePath, wstring text) {
-   std::wifstream file(filePath);
-
-   if (!file.is_open()) return false;
-
-   wstring line{};
-
-   while (std::getline(file, line)) {
-      if (line.find(text) != wstring::npos) {
-         file.close();
-         return true;
-      }
-   }
-
-   return false;
-}

@@ -74,7 +74,6 @@ extern "C" __declspec(dllexport) void beNotified(SCNotification *notifyCode) {
          break;
 
       case NPPN_DARKMODECHANGED:
-         NPPDM_QueryNPPDarkmode();
          refreshDarkMode();
          break;
 

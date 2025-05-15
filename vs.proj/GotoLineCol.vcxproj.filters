@@ -28,18 +28,6 @@
     <ClCompile Include="..\src\CommandLineOptions.cpp">
       <Filter>Base</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\Darkmode\DarkMode.cpp">
-      <Filter>Darkmode</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\Darkmode\NPP_Plugin_Darkmode.cpp">
-      <Filter>Darkmode</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\Darkmode\NppDarkMode.cpp">
-      <Filter>Darkmode</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\NPP\dpiManagerV2.cpp">
-      <Filter>_NPP Framework</Filter>
-    </ClCompile>
     <ClCompile Include="..\src\NameBlocks.cpp">
       <Filter>Base</Filter>
     </ClCompile>
@@ -102,23 +90,8 @@
     <ClInclude Include="..\src\CommandLineOptions.h">
       <Filter>Base</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\Darkmode\DarkMode.h">
-      <Filter>Darkmode</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\Darkmode\IatHook.h">
-      <Filter>Darkmode</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\Darkmode\NPP_Plugin_Darkmode.h">
-      <Filter>Darkmode</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\Darkmode\NppDarkMode.h">
-      <Filter>Darkmode</Filter>
-    </ClInclude>
     <ClInclude Include="..\src\Resources\control_ids.h">
       <Filter>Resources</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\NPP\dpiManagerV2.h">
-      <Filter>_NPP Framework</Filter>
     </ClInclude>
     <ClInclude Include="..\src\NameBlocks.h">
       <Filter>Base</Filter>
@@ -147,9 +120,6 @@
     </Filter>
     <Filter Include="Resources">
       <UniqueIdentifier>{dd30c9f9-fbbb-4bac-9914-ffbff288d148}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Darkmode">
-      <UniqueIdentifier>{30cde513-fb91-46bb-948c-0884abb10335}</UniqueIdentifier>
     </Filter>
     <Filter Include="Resources\Bitmaps">
       <UniqueIdentifier>{cb835a7a-1a6d-4d3c-a725-5e9bc5d14575}</UniqueIdentifier>

@@ -28,10 +28,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\CommandLineOptions.h" />
-    <ClInclude Include="..\src\Darkmode\DarkMode.h" />
-    <ClInclude Include="..\src\Darkmode\IatHook.h" />
-    <ClInclude Include="..\src\Darkmode\NppDarkMode.h" />
-    <ClInclude Include="..\src\Darkmode\NPP_Plugin_Darkmode.h" />
     <ClInclude Include="..\src\Dialogs\AboutDialog.h" />
     <ClInclude Include="..\src\Dialogs\GoToLineColPanel.h" />
     <ClInclude Include="..\src\Dialogs\PreferencesDialog.h" />
@@ -39,7 +35,6 @@
     <ClInclude Include="..\src\NPP\Docking.h" />
     <ClInclude Include="..\src\NPP\DockingDlgInterface.h" />
     <ClInclude Include="..\src\NPP\dockingResource.h" />
-    <ClInclude Include="..\src\NPP\dpiManagerV2.h" />
     <ClInclude Include="..\src\NPP\menuCmdID.h" />
     <ClInclude Include="..\src\NPP\Notepad_plus_msgs.h" />
     <ClInclude Include="..\src\NPP\PluginInterface.h" />
@@ -56,14 +51,10 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\CommandLineOptions.cpp" />
-    <ClCompile Include="..\src\Darkmode\DarkMode.cpp" />
-    <ClCompile Include="..\src\Darkmode\NppDarkMode.cpp" />
-    <ClCompile Include="..\src\Darkmode\NPP_Plugin_Darkmode.cpp" />
     <ClCompile Include="..\src\Dialogs\AboutDialog.cpp" />
     <ClCompile Include="..\src\Dialogs\GoToLineColPanel.cpp" />
     <ClCompile Include="..\src\Dialogs\PreferencesDialog.cpp" />
     <ClCompile Include="..\src\NameBlocks.cpp" />
-    <ClCompile Include="..\src\NPP\dpiManagerV2.cpp" />
     <ClCompile Include="..\src\NPP\StaticDialog.cpp" />
     <ClCompile Include="..\src\GotoLineColMain.cpp" />
     <ClCompile Include="..\src\PluginDefinition.cpp" />

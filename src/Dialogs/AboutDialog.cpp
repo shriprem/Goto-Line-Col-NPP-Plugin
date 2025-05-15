@@ -13,7 +13,7 @@ void AboutDialog::doDialog(HINSTANCE hInst) {
 }
 
 void AboutDialog::refreshDarkMode() {
-   NPPDM_AutoThemeChildControls(_hSelf);
+   nppMessage(NPPM_DARKMODESUBCLASSANDTHEME, static_cast<WPARAM>(NppDarkMode::dmfHandleChange), reinterpret_cast<LPARAM>(_hSelf));
    redraw();
 }
 
@@ -41,8 +41,7 @@ void AboutDialog::localize() {
 INT_PTR CALLBACK AboutDialog::run_dlgProc(UINT message, WPARAM wParam, LPARAM lParam) {
    switch (message) {
    case WM_INITDIALOG:
-      NPPDM_AutoSubclassAndThemeChildControls(_hSelf);
-      NPPDM_InitSysLink(GetDlgItem(_hSelf, IDC_ABOUT_PROD_URL));
+      nppMessage(NPPM_DARKMODESUBCLASSANDTHEME, static_cast<WPARAM>(NppDarkMode::dmfInit), reinterpret_cast<LPARAM>(_hSelf));
       break;
 
    case WM_COMMAND:
@@ -62,26 +61,6 @@ INT_PTR CALLBACK AboutDialog::run_dlgProc(UINT message, WPARAM wParam, LPARAM lP
          display(FALSE);
          return TRUE;
       }
-      break;
-
-   case WM_CTLCOLORDLG:
-      if (NPPDM_IsEnabled()) {
-         return NPPDM_OnCtlColorDarker(reinterpret_cast<HDC>(wParam));
-      }
-      break;
-
-   case WM_CTLCOLORSTATIC:
-      if (GetDlgCtrlID((HWND)lParam) == IDC_ABOUT_PROD_URL) {
-         return NPPDM_OnCtlColorSysLink(reinterpret_cast<HDC>(wParam));
-      }
-
-      if (NPPDM_IsEnabled()) {
-         return NPPDM_OnCtlColorDarker((HDC)wParam);
-      }
-      break;
-
-   case WM_PRINTCLIENT:
-      if (NPPDM_IsEnabled()) return TRUE;
       break;
    }
 

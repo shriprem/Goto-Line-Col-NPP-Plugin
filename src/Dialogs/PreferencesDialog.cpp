@@ -32,7 +32,7 @@ void PreferencesDialog::doDialog(HINSTANCE hInst) {
 }
 
 void PreferencesDialog::refreshDarkMode() {
-   NPPDM_AutoThemeChildControls(_hSelf);
+   nppMessage(NPPM_DARKMODESUBCLASSANDTHEME, static_cast<WPARAM>(NppDarkMode::dmfHandleChange), reinterpret_cast<LPARAM>(_hSelf));
    redraw();
 
    SendMessage(hEdgeBuffer, TBM_SETRANGEMIN, FALSE, 1);
@@ -110,39 +110,7 @@ INT_PTR CALLBACK PreferencesDialog::run_dlgProc(UINT message, WPARAM wParam, LPA
       break;
 
    case WM_INITDIALOG:
-      NPPDM_AutoSubclassAndThemeChildControls(_hSelf);
-      break;
-
-   case WM_CTLCOLORDLG:
-   case WM_CTLCOLORLISTBOX:
-      if (NPPDM_IsEnabled()) {
-         return NPPDM_OnCtlColorDarker(reinterpret_cast<HDC>(wParam));
-      }
-      break;
-
-   case WM_CTLCOLORSTATIC:
-      switch (GetDlgCtrlID((HWND)lParam)) {
-      case IDC_PREFS_EDGE_BUFFER_LABEL:
-         return NPPDM_OnCtlColorIfEnabled(reinterpret_cast<HDC>(wParam), !getCheckedState(IDC_PREFS_CENTER_CARET));
-
-      case IDC_PREFS_TOOLTIP_DUR_LABEL:
-         return NPPDM_OnCtlColorIfEnabled(reinterpret_cast<HDC>(wParam), getCheckedState(IDC_PREFS_TOOLTIP_SHOW));
-
-      default:
-         if (NPPDM_IsEnabled()) {
-            return NPPDM_OnCtlColorDarker(reinterpret_cast<HDC>(wParam));
-         }
-      }
-      break;
-
-   case WM_CTLCOLOREDIT:
-      if (NPPDM_IsEnabled()) {
-         return NPPDM_OnCtlColorSofter(reinterpret_cast<HDC>(wParam));
-      }
-      break;
-
-   case WM_PRINTCLIENT:
-      if (NPPDM_IsEnabled()) return TRUE;
+      nppMessage(NPPM_DARKMODESUBCLASSANDTHEME, static_cast<WPARAM>(NppDarkMode::dmfInit), reinterpret_cast<LPARAM>(_hSelf));
       break;
    }
 

@@ -78,28 +78,6 @@ INT_PTR CALLBACK GotoLineColPanel::run_dlgProc(UINT message, WPARAM wParam, LPAR
       break;
    }
 
-   case WM_INITDIALOG:
-      NPPDM_AutoSubclassAndThemeChildControls(_hSelf);
-      break;
-
-   case WM_CTLCOLORDLG:
-   case WM_CTLCOLORLISTBOX:
-   case WM_CTLCOLORSTATIC:
-      if (NPPDM_IsEnabled()) {
-         return NPPDM_OnCtlColorDarker(reinterpret_cast<HDC>(wParam));
-      }
-      break;
-
-   case WM_CTLCOLOREDIT:
-      if (NPPDM_IsEnabled()) {
-         return NPPDM_OnCtlColorSofter(reinterpret_cast<HDC>(wParam));
-      }
-      break;
-
-   case WM_PRINTCLIENT:
-      if (NPPDM_IsEnabled()) return TRUE;
-      break;
-
    case WM_SETFOCUS:
       if (allPrefs.fillOnFocus)
          updatePanelColPos();
@@ -183,7 +161,6 @@ void GotoLineColPanel::display(bool toShow) {
 }
 
 void GotoLineColPanel::refreshDarkMode() {
-   NPPDM_AutoThemeChildControls(_hSelf);
    redraw();
 
    if (_prefsDlg.isCreated())

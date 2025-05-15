@@ -1,7 +1,7 @@
 ## Version History
 
 ### Version 2.4.4.1 [May 12, 2025]
-1. New Feature: Dock Panel icon will be rendered with Fluent or Standard icon depending on the selection under `Notepad++ menu: Settings » Preferences... » Toolbar`. [_Note: To see this feature in action, you will need a build of Notepad++ with the new plugin API message: `NPPM_GETTOOLBARICONSETMODE`._]
+1. New Feature: Dock Panel icon will be rendered with Fluent or Standard icon depending on the selection under `Notepad++ menu: Settings » Preferences... » Toolbar`. [_Note: To see this feature in action, you will need a build of Notepad++ with the new plugin API message: `NPPM_GETTOOLBARICONSETCHOICE`._]
 
 2. Enhancement: Fluent and standard toolbar icons have been tweaked.
 

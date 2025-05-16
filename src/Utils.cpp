@@ -81,80 +81,6 @@ string& Utils::LTrim(string& s, const char* t) {
    return s;
 }
 
-wstring Utils::NarrowToWide(const string& str) {
-   return std::wstring_convert<std::codecvt_utf8<wchar_t>>().from_bytes(str);
-}
-
-string Utils::WideToNarrow(const wstring& wStr) {
-   return std::wstring_convert<std::codecvt_utf8<wchar_t>>().to_bytes(wStr);
-}
-
-bool Utils::isInvalidRegex(const string& expr) {
-   try {
-      std::regex re(expr);
-   }
-   catch (const std::regex_error&) {
-      return true;
-   }
-
-   return false;
-}
-
-bool Utils::isInvalidRegex(const wstring& expr, HWND hWnd, const wstring& context) {
-   try {
-      std::wregex re(expr);
-   }
-   catch (const std::regex_error& e) {
-      MessageBox(hWnd,
-         (context + ((!context.empty()) ? L"\r\n" : L"") + NarrowToWide(e.what())).c_str(),
-         UTILS_REGEX_ERROR,
-         MB_OK | MB_ICONERROR);
-      return true;
-   }
-
-   return false;
-}
-
-COLORREF Utils::intToRGB(int color) {
-   return RGB(GetRValue(color), GetGValue(color), GetBValue(color));
-}
-
-int Utils::scaleDPIX(int x) {
-   HDC hdc = GetDC(NULL);
-   if (!hdc) return 0;
-
-   int scaleX{ MulDiv(x, GetDeviceCaps(hdc, LOGPIXELSX), 96) };
-   ReleaseDC(NULL, hdc);
-   return scaleX;
-}
-
-int Utils::scaleDPIY(int y) {
-   HDC hdc = GetDC(NULL);
-   if (!hdc) return 0;
-
-   int scaleY{ MulDiv(y, GetDeviceCaps(hdc, LOGPIXELSY), 96) };
-   ReleaseDC(NULL, hdc);
-   return scaleY;
-}
-
-wstring Utils::getSpecialFolder(int folderID) {
-   TCHAR sFolderPath[MAX_PATH]{};
-   const HRESULT ret = SHGetFolderPath(NULL, folderID, NULL, SHGFP_TYPE_CURRENT, sFolderPath);
-
-   return ((ret == S_OK) ? wstring{ sFolderPath } : L"");
-}
-
-wstring Utils::getKnownFolderPath(REFKNOWNFOLDERID folderID) {
-   PWSTR path;
-
-   const HRESULT ret = SHGetKnownFolderPath(folderID, KF_FLAG_DEFAULT, NULL, &path);
-   if (ret != S_OK) return L"";
-
-   wstring sFolderPath{ path };
-   CoTaskMemFree(path);
-   return sFolderPath;
-}
-
 HWND Utils::addTooltip(HWND hDlg, int controlID, const wstring& pTitle, const wstring& pMessage, bool bBalloon) {
    if (!controlID || !hDlg || pMessage.empty())
       return FALSE;
@@ -229,40 +155,6 @@ float Utils::getNPPVersion() {
    long versionNum{ static_cast<long>(nppMessage(NPPM_GETNPPVERSION, 0, 0)) };
 
    return std::stof(to_wstring(HIWORD(versionNum)) + L"." + to_wstring(LOWORD(versionNum)));
-}
-
-bool Utils::checkKeyHeldDown(int vKey) {
-   return (GetKeyState(vKey) & 0x8000) > 0;
-}
-
-void Utils::setComboBoxSelection(HWND hList, int index) {
-   SendMessage(hList, CB_SETCURSEL, (WPARAM)index, 0);
-   InvalidateRect(hList, nullptr, FALSE);
-}
-
-bool Utils::getClipboardText(HWND hwnd, wstring& clipText) {
-   bool bRet{ FALSE };
-
-   if (!IsClipboardFormatAvailable(CF_UNICODETEXT))
-      return bRet;
-
-   if (!OpenClipboard(hwnd))
-      return bRet;
-
-   HGLOBAL hglb = GetClipboardData(CF_UNICODETEXT);
-   if (hglb != NULL) {
-
-      LPTSTR lpClipData = (LPTSTR)GlobalLock(hglb);
-      if (lpClipData != NULL) {
-         bRet = TRUE;
-         clipText = wstring{ lpClipData };
-         GlobalUnlock(hglb);
-      }
-
-      CloseClipboard();
-   }
-
-   return bRet;
 }
 
 wstring Utils::getVersionInfo(LPCWSTR key) {

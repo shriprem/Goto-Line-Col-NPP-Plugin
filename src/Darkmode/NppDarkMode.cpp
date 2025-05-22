@@ -2052,13 +2052,14 @@ namespace NppDarkMode
       case WM_PRINTCLIENT:
       case WM_PAINT:
       {
-         if (!NppDarkMode::isEnabled())
+         if (!isEnabled())
          {
             break;
          }
 
          const auto style = ::GetWindowLongPtr(hWnd, GWL_STYLE);
          const bool isHorizontal = ((style & UDS_HORZ) == UDS_HORZ);
+         const bool isDisabled = ::IsWindowEnabled(hWnd) == FALSE;
 
          bool hasTheme = pSpinData->ensureTheme(hWnd);
 
@@ -2068,7 +2069,7 @@ namespace NppDarkMode
          PAINTSTRUCT ps{};
          auto hdc = ::BeginPaint(hWnd, &ps);
 
-         ::FillRect(hdc, &rcClient, NppDarkMode::getDlgBackgroundBrush());
+         ::FillRect(hdc, &rcClient, getDlgBackgroundBrush());
 
          RECT rcArrowPrev{};
          RECT rcArrowNext{};
@@ -2113,40 +2114,47 @@ namespace NppDarkMode
 
          ::SetBkMode(hdc, TRANSPARENT);
 
-         if (hasTheme)
+         if (hasTheme && IsWindows11())
          {
-            //auto statePrev = isHotPrev ? UPS_HOT : UPS_NORMAL;
-            //auto stateNext = isHotNext ? DNS_HOT : DNS_NORMAL;
-            auto statePrev = isHorizontal ? (isHotPrev ? DNHZS_HOT : DNHZS_NORMAL) : (isHotPrev ? UPS_HOT : UPS_NORMAL);
-            auto stateNext = isHorizontal ? (isHotNext ? UPHZS_HOT : UPHZS_NORMAL) : (isHotNext ? DNS_HOT : DNS_NORMAL);
+            auto statePrev = isDisabled ? UPS_DISABLED : (isHotPrev ? UPS_HOT : UPS_NORMAL);
+            auto stateNext = isDisabled ? UPS_DISABLED : (isHotNext ? DNS_HOT : DNS_NORMAL);
 
             ::DrawThemeBackground(pSpinData->hTheme, hdc, isHorizontal ? SPNP_DOWNHORZ : SPNP_UP, statePrev, &rcArrowPrev, nullptr);
             ::DrawThemeBackground(pSpinData->hTheme, hdc, isHorizontal ? SPNP_UPHORZ : SPNP_DOWN, stateNext, &rcArrowNext, nullptr);
          }
          else
          {
-            ::FillRect(hdc, &rcArrowPrev, isHotPrev ? NppDarkMode::getHotBackgroundBrush() : NppDarkMode::getCtrlBackgroundBrush());
-            ::FillRect(hdc, &rcArrowNext, isHotNext ? NppDarkMode::getHotBackgroundBrush() : NppDarkMode::getCtrlBackgroundBrush());
+            ::FillRect(hdc, &rcArrowPrev, isHotPrev ? getHotBackgroundBrush() : getCtrlBackgroundBrush());
+            ::FillRect(hdc, &rcArrowNext, isHotNext ? getHotBackgroundBrush() : getCtrlBackgroundBrush());
 
-            const auto arrowTextFlags = DT_NOPREFIX | DT_CENTER | DT_VCENTER | DT_SINGLELINE | DT_NOCLIP;
+            auto hFont = reinterpret_cast<HFONT>(::SendMessage(hWnd, WM_GETFONT, 0, 0));
+            auto holdFont = static_cast<HFONT>(::SelectObject(hdc, hFont));
 
-            ::SetTextColor(hdc, isHotPrev ? NppDarkMode::getTextColor() : NppDarkMode::getDarkerTextColor());
-            ::DrawText(hdc, isHorizontal ? L"<" : L"˄", -1, &rcArrowPrev, arrowTextFlags);
+            constexpr UINT dtFlags = DT_NOPREFIX | DT_CENTER | DT_VCENTER | DT_SINGLELINE | DT_NOCLIP;
+            const COLORREF clrText = isDisabled ? getDisabledTextColor() : getDarkerTextColor();
 
-            ::SetTextColor(hdc, isHotNext ? NppDarkMode::getTextColor() : NppDarkMode::getDarkerTextColor());
-            ::DrawText(hdc, isHorizontal ? L">" : L"˅", -1, &rcArrowNext, arrowTextFlags);
+            const LONG offset = isHorizontal ? scaleDPIY(1) : 0;
+            RECT rcTectPrev{ rcArrowPrev.left, rcArrowPrev.top, rcArrowPrev.right, rcArrowPrev.bottom - offset };
+            ::SetTextColor(hdc, isHotPrev ? getTextColor() : clrText);
+            ::DrawText(hdc, isHorizontal ? L"<" : L"˄", -1, &rcTectPrev, dtFlags);
+
+            RECT rcTectNext{ rcArrowNext.left + offset, rcArrowNext.top, rcArrowNext.right, rcArrowNext.bottom - offset };
+            ::SetTextColor(hdc, isHotNext ? getTextColor() : clrText);
+            ::DrawText(hdc, isHorizontal ? L">" : L"˅", -1, &rcTectNext, dtFlags);
+
+            ::SelectObject(hdc, holdFont);
          }
 
-         const int roundCornerValue = NppDarkMode::isWindows11() ? 4 : 0;
+         const int roundCornerValue = isWindows11() ? 4 : 0;
 
          if (isHotPrev)
          {
-            NppDarkMode::paintRoundFrameRect(hdc, rcArrowPrev, NppDarkMode::getHotEdgePen(), roundCornerValue, roundCornerValue);
+            paintRoundFrameRect(hdc, rcArrowPrev, getHotEdgePen(), roundCornerValue, roundCornerValue);
          }
 
          if (isHotNext)
          {
-            NppDarkMode::paintRoundFrameRect(hdc, rcArrowNext, NppDarkMode::getHotEdgePen(), roundCornerValue, roundCornerValue);
+            paintRoundFrameRect(hdc, rcArrowNext, getHotEdgePen(), roundCornerValue, roundCornerValue);
          }
 
          ::EndPaint(hWnd, &ps);

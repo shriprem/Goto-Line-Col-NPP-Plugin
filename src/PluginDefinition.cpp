@@ -24,6 +24,7 @@
 #endif
 
 FuncItem pluginMenuItems[MI_COUNT];
+tTbData  _dockpanelData{};
 
 NppData nppData;
 HINSTANCE _gModule;
@@ -85,13 +86,17 @@ LRESULT nppMessage(UINT messageID, WPARAM wparam, LPARAM lparam) {
    return SendMessage(nppData._nppHandle, messageID, wparam, lparam);
 }
 
-UINT getDockPanelIcon() {
-   bool bStandardIcons{ nppMessage(NPPM_GETTOOLBARICONSETCHOICE, 0, 0) == 4 };
+void RegisterDockPanelIcon() {
+   const bool bStandardIcons{ nppMessage(NPPM_GETTOOLBARICONSETCHOICE, 0, 0) == 4 };
 
-   if (nppMessage(NPPM_ISDARKMODEENABLED, 0, 0))
-      return bStandardIcons ? IDI_GOTO_TOOL_BTN_STD : IDI_DOCK_DARK_MODE_ICON;
-   else
-      return bStandardIcons ? IDI_GOTO_TOOL_BTN_STD : IDI_DOCK_LITE_MODE_ICON;
+   const UINT iconID = (nppMessage(NPPM_ISDARKMODEENABLED, 0, 0)) ?
+      (bStandardIcons ? IDI_GOTO_TOOL_BTN_STD : IDI_DOCK_DARK_MODE_ICON) :
+      (bStandardIcons ? IDI_GOTO_TOOL_BTN_STD : IDI_DOCK_LITE_MODE_ICON);
+
+   _dockpanelData.hIconTab = static_cast<HICON>(LoadImage(_gModule, MAKEINTRESOURCE(iconID),
+      IMAGE_ICON, 14, 14, LR_LOADMAP3DCOLORS | LR_LOADTRANSPARENT));
+
+   nppMessage(NPPM_DMMREGASDCKDLG, 0, reinterpret_cast<LPARAM>(&_dockpanelData));
 }
 
 // Dockable GotoLineCol Dialog
@@ -102,19 +107,15 @@ void ToggleGotoLineColPanel() {
 void ShowGotoLineColPanel(bool show) {
    if (show && !_gotoPanel.isVisible()) {
       _gotoPanel.setParent(nppData._nppHandle);
-      tTbData  data {};
 
       if (!_gotoPanel.isCreated()) {
-         _gotoPanel.create(&data);
+         _gotoPanel.create(&_dockpanelData);
 
-         data.uMask = DWS_DF_CONT_RIGHT | DWS_ICONTAB | DWS_USEOWNDARKMODE;
-         data.pszModuleName = _gotoPanel.getPluginFileName();
-         data.dlgID = MI_GOTO_PANEL;
-         data.pszName = MENU_PANEL_NAME;
-         data.hIconTab = (HICON)::LoadImage(_gModule,
-            MAKEINTRESOURCE(getDockPanelIcon()), IMAGE_ICON, 14, 14, LR_LOADMAP3DCOLORS | LR_LOADTRANSPARENT);
-
-         nppMessage(NPPM_DMMREGASDCKDLG, 0, (LPARAM)& data);
+         _dockpanelData.uMask = DWS_DF_CONT_RIGHT | DWS_ICONTAB | DWS_USEOWNDARKMODE;
+         _dockpanelData.pszModuleName = _gotoPanel.getPluginFileName();
+         _dockpanelData.dlgID = MI_GOTO_PANEL;
+         _dockpanelData.pszName = MENU_PANEL_NAME;
+         RegisterDockPanelIcon();
 
          _gotoPanel.initPanel();
       }
@@ -132,7 +133,7 @@ void ShowAboutDialog() {
    _gotoPanel.showAboutDialog();
 }
 
-void refreshDarkMode() {
+void RefreshDarkMode() {
    if (_gotoPanel.isCreated())
       _gotoPanel.refreshDarkMode();
 }

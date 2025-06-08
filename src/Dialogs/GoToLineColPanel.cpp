@@ -184,6 +184,7 @@ void GotoLineColPanel::display(bool toShow) {
 
 void GotoLineColPanel::refreshDarkMode() {
    NPPDM_AutoThemeChildControls(_hSelf);
+   RegisterDockPanelIcon();
    redraw();
 
    if (_prefsDlg.isCreated())

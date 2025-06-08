@@ -52,7 +52,6 @@ bool setCommand(size_t index, const wstring& cmdName, PFUNCPLUGINCMD pFunc, Shor
 
 HWND getCurrentScintilla();
 LRESULT nppMessage(UINT messageID, WPARAM wparam, LPARAM lparam);
-UINT getDockPanelIcon();
 
 // Plugin Command Functions
 void ToggleGotoLineColPanel();
@@ -60,4 +59,6 @@ void ShowGotoLineColPanel(bool show);
 
 void ShowPreferencesDialog();
 void ShowAboutDialog();
-void refreshDarkMode();
+
+void RegisterDockPanelIcon();
+void RefreshDarkMode();

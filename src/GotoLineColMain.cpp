@@ -75,7 +75,11 @@ extern "C" __declspec(dllexport) void beNotified(SCNotification *notifyCode) {
 
       case NPPN_DARKMODECHANGED:
          NPPDM_QueryNPPDarkmode();
-         refreshDarkMode();
+         RefreshDarkMode();
+         break;
+
+      case NPPN_TOOLBARICONSETCHANGED:
+         RegisterDockPanelIcon();
          break;
 
       case NPPN_CMDLINEPLUGINMSG:

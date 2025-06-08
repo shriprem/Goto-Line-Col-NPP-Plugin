@@ -55,7 +55,7 @@ bool setCommand(size_t index, const wstring& cmdName, PFUNCPLUGINCMD pFunc, Shor
 
 // Internal/External use functions
 LRESULT NppMessage(UINT messageID, WPARAM wparam, LPARAM lparam);
-HWND getCurrentScintilla();
+HWND GetCurrentScintilla();
 
 void ToggleGotoLineColPanel();
 void ShowGotoLineColPanel(bool show);

@@ -172,7 +172,7 @@ bool CommandLineOptions::gotoCol(int& lineNum, int& colNum, bool bPersist) {
    int fileCount{ static_cast<int>(filePaths.size()) };
    if (fileCount < 1) return FALSE;
 
-   HWND hScintilla{ getCurrentScintilla() };
+   HWND hScintilla{ GetCurrentScintilla() };
    if (!hScintilla) return FALSE;
 
    TCHAR filePath[MAX_PATH]{};

@@ -213,7 +213,7 @@ void GotoLineColPanel::reloadPanelPreferences() {
 }
 
 void GotoLineColPanel::updatePanelInfo() {
-   HWND hScintilla{ getCurrentScintilla() };
+   HWND hScintilla{ GetCurrentScintilla() };
    if (!hScintilla) return;
 
    SetDlgItemText(_hSelf, IDC_GOCOL_STATIC,
@@ -232,7 +232,7 @@ void GotoLineColPanel::updatePanelInfo() {
 }
 
 void GotoLineColPanel::updatePanelColPos() {
-   HWND hScintilla{ getCurrentScintilla() };
+   HWND hScintilla{ GetCurrentScintilla() };
    if (!hScintilla) return;
 
    intptr_t pos = SendMessage(hScintilla, SCI_GETCURRENTPOS, 0, 0);
@@ -247,7 +247,7 @@ void GotoLineColPanel::updatePanelColPos() {
 }
 
 void GotoLineColPanel::clearCalltip() {
-   HWND hScintilla{ getCurrentScintilla() };
+   HWND hScintilla{ GetCurrentScintilla() };
    if (!hScintilla) return;
 
    SendMessage(hScintilla, SCI_CALLTIPCANCEL, NULL, NULL);
@@ -256,14 +256,14 @@ void GotoLineColPanel::clearCalltip() {
 /// *** Private Functions: *** ///
 
 intptr_t GotoLineColPanel::getLineCount() {
-   HWND hScintilla{ getCurrentScintilla() };
+   HWND hScintilla{ GetCurrentScintilla() };
    if (!hScintilla) return -1;
 
    return SendMessage(hScintilla, SCI_GETLINECOUNT, 0, 0);
 };
 
 void GotoLineColPanel::setFocusOnEditor() {
-   HWND hScintilla{ getCurrentScintilla() };
+   HWND hScintilla{ GetCurrentScintilla() };
    if (!hScintilla) return;
 
    SendMessage(hScintilla, SCI_GRABFOCUS, 0, 0);
@@ -293,7 +293,7 @@ void GotoLineColPanel::onPanelResize(LPARAM lParam) {
 
 
 intptr_t GotoLineColPanel::getLineMaxPos(intptr_t line) const {
-   HWND hScintilla{ getCurrentScintilla() };
+   HWND hScintilla{ GetCurrentScintilla() };
    if (!hScintilla) return -1;
 
    intptr_t endPos = SendMessage(hScintilla, SCI_GETLINEENDPOSITION, line - 1, 0);
@@ -397,7 +397,7 @@ int GotoLineColPanel::navigateToColPos() {
 }
 
 int GotoLineColPanel::navigateToColPos(intptr_t line, intptr_t column) {
-   HWND hScintilla{ getCurrentScintilla() };
+   HWND hScintilla{ GetCurrentScintilla() };
    if (!hScintilla) return FALSE;
 
    SendMessage(hScintilla, SCI_ENSUREVISIBLE, line - 1, 0);
@@ -535,7 +535,7 @@ void GotoLineColPanel::initCursorPosData(HWND hScintilla, intptr_t line, intptr_
 }
 
 void GotoLineColPanel::loadCursorPosData() {
-   HWND hScintilla{ getCurrentScintilla() };
+   HWND hScintilla{ GetCurrentScintilla() };
    if (!hScintilla) return;
 
    intptr_t curPos = SendMessage(hScintilla, SCI_GETCURRENTPOS, NULL, NULL);
@@ -548,7 +548,7 @@ void GotoLineColPanel::loadCursorPosData() {
 }
 
 DWORD WINAPI GotoLineColPanel::threadPositionHighlighter(void*) {
-   HWND hScintilla{ getCurrentScintilla() };
+   HWND hScintilla{ GetCurrentScintilla() };
    if (!hScintilla) return FALSE;
 
    ALL_PREFERENCES allPrefs = _gotoPanel.getPrefs();

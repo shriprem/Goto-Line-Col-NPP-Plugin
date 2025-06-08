@@ -73,7 +73,7 @@ bool setCommand(size_t index, const wstring& cmdName, PFUNCPLUGINCMD pFunc, Shor
     return true;
 }
 
-HWND getCurrentScintilla() {
+HWND GetCurrentScintilla() {
    int which {-1};
 
    NppMessage(NPPM_GETCURRENTSCINTILLA, 0, (LPARAM)&which);

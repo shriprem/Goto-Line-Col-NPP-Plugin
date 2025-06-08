@@ -2,7 +2,7 @@
 #include "PreferencesIO.h"
 
 void PreferencesIO::init() {
-   nppMessage(NPPM_GETPLUGINSCONFIGDIR, MAX_PATH, (LPARAM)iniFilePath);
+   NppMessage(NPPM_GETPLUGINSCONFIGDIR, MAX_PATH, (LPARAM)iniFilePath);
 
    // if no existing config path, create it
    if (!Utils::checkDirectoryExists(iniFilePath))

@@ -76,27 +76,27 @@ bool setCommand(size_t index, const wstring& cmdName, PFUNCPLUGINCMD pFunc, Shor
 HWND getCurrentScintilla() {
    int which {-1};
 
-   nppMessage(NPPM_GETCURRENTSCINTILLA, 0, (LPARAM)&which);
+   NppMessage(NPPM_GETCURRENTSCINTILLA, 0, (LPARAM)&which);
    if (which < 0) return (HWND)NULL;
 
    return (HWND) (which ?  nppData._scintillaSecondHandle : nppData._scintillaMainHandle);
 }
 
-LRESULT nppMessage(UINT messageID, WPARAM wparam, LPARAM lparam) {
+LRESULT NppMessage(UINT messageID, WPARAM wparam, LPARAM lparam) {
    return SendMessage(nppData._nppHandle, messageID, wparam, lparam);
 }
 
 void RegisterDockPanelIcon() {
-   const bool bStandardIcons{ nppMessage(NPPM_GETTOOLBARICONSETCHOICE, 0, 0) == 4 };
+   const bool bStandardIcons{ NppMessage(NPPM_GETTOOLBARICONSETCHOICE, 0, 0) == 4 };
 
-   const UINT iconID = (nppMessage(NPPM_ISDARKMODEENABLED, 0, 0)) ?
+   const UINT iconID = (NppMessage(NPPM_ISDARKMODEENABLED, 0, 0)) ?
       (bStandardIcons ? IDI_GOTO_TOOL_BTN_STD : IDI_DOCK_DARK_MODE_ICON) :
       (bStandardIcons ? IDI_GOTO_TOOL_BTN_STD : IDI_DOCK_LITE_MODE_ICON);
 
    _dockpanelData.hIconTab = static_cast<HICON>(LoadImage(_gModule, MAKEINTRESOURCE(iconID),
       IMAGE_ICON, 14, 14, LR_LOADMAP3DCOLORS | LR_LOADTRANSPARENT));
 
-   nppMessage(NPPM_DMMREGASDCKDLG, 0, reinterpret_cast<LPARAM>(&_dockpanelData));
+   NppMessage(NPPM_DMMREGASDCKDLG, 0, reinterpret_cast<LPARAM>(&_dockpanelData));
 }
 
 // Dockable GotoLineCol Dialog

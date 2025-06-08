@@ -7,9 +7,9 @@ void CommandLineOptions::scan(ALL_PREFERENCES& allPrefs) {
    wstring quote{ L"\"" };
    wregex leadingSpaces{ L"^[ ]*" };
 
-   int cmdLen{ static_cast<int>(nppMessage(NPPM_GETCURRENTCMDLINE, 0, NULL)) + 1 };
+   int cmdLen{ static_cast<int>(NppMessage(NPPM_GETCURRENTCMDLINE, 0, NULL)) + 1 };
    wstring cmdLine(cmdLen, '\0');
-   nppMessage(NPPM_GETCURRENTCMDLINE, cmdLen, (LPARAM)cmdLine.data());
+   NppMessage(NPPM_GETCURRENTCMDLINE, cmdLen, (LPARAM)cmdLine.data());
 
    // Strip any leading spaces & adjacent multiple spaces in the command line
    cmdLine = regex_replace(cmdLine, leadingSpaces, L"");
@@ -176,11 +176,11 @@ bool CommandLineOptions::gotoCol(int& lineNum, int& colNum, bool bPersist) {
    if (!hScintilla) return FALSE;
 
    TCHAR filePath[MAX_PATH]{};
-   nppMessage(NPPM_GETFULLCURRENTPATH, MAX_PATH, (LPARAM)filePath);
+   NppMessage(NPPM_GETFULLCURRENTPATH, MAX_PATH, (LPARAM)filePath);
    Utils::ToUpper(filePath);
 
    TCHAR fileName[MAX_PATH]{};
-   nppMessage(NPPM_GETFILENAME, MAX_PATH, (LPARAM)fileName);
+   NppMessage(NPPM_GETFILENAME, MAX_PATH, (LPARAM)fileName);
    Utils::ToUpper(fileName);
 
    int nMatchIndex{ -1 };

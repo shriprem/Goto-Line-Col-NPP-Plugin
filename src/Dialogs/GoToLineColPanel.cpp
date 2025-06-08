@@ -454,7 +454,7 @@ void GotoLineColPanel::initCursorPosData(HWND hScintilla, intptr_t line, intptr_
       CUR_POS_DATA_BYTE_COL, static_cast<long long>(column),
       CUR_POS_DATA_ANSI_BYTE, atChar, atChar);
 
-   if ((atChar & 0x80) == 0 || nppMessage(NPPM_GETBUFFERENCODING, nppMessage(NPPM_GETCURRENTBUFFERID, 0, 0), 0) == 0) {
+   if ((atChar & 0x80) == 0 || NppMessage(NPPM_GETBUFFERENCODING, NppMessage(NPPM_GETCURRENTBUFFERID, 0, 0), 0) == 0) {
       nb.getUnicodeBlockAndName(atChar, unicodeBlock.data(), MAX_PATH, unicodeName.data(), MAX_PATH);
       snprintf(cursorPosData, BUFFER_500, "%s\n%s%s\n%s", cursorPosData,
          CUR_POS_DATA_UNICODE_BLOCK, unicodeBlock.c_str(), unicodeName.c_str());

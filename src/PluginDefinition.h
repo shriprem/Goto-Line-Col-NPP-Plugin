@@ -44,16 +44,19 @@ const enum MenuIndex {
    MI_COUNT
 };
 
+
+// Internal use functions
 void pluginInit(HANDLE hModule);
 void pluginCleanUp();
 void commandMenuInit();
 void commandMenuCleanUp();
 bool setCommand(size_t index, const wstring& cmdName, PFUNCPLUGINCMD pFunc, ShortcutKey* sk = NULL, bool checkOnInit = false);
 
-HWND getCurrentScintilla();
-LRESULT nppMessage(UINT messageID, WPARAM wparam, LPARAM lparam);
 
-// Plugin Command Functions
+// Internal/External use functions
+LRESULT NppMessage(UINT messageID, WPARAM wparam, LPARAM lparam);
+HWND getCurrentScintilla();
+
 void ToggleGotoLineColPanel();
 void ShowGotoLineColPanel(bool show);
 

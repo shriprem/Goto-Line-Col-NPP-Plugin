@@ -1,13 +1,15 @@
 ## Version History
 
-### Version 2.4.4.1 [May 12, 2025]
-1. New Feature: Dock Panel icon will be rendered with Fluent or Standard icon depending on the selection under `Notepad++ menu: Settings » Preferences... » Toolbar`. [_Note: To see this feature in action, you will need a build of Notepad++ with the new plugin API message: `NPPM_GETTOOLBARICONSETCHOICE`._]
+### Version 2.4.5.0 [June 16, 2025]
+1. New Feature: Dock Panel icon will be rendered with Fluent or Standard icon depending on the selection under `Notepad++ menu: Settings » Preferences... » Toolbar`.  [Until Notepad++ implements the new *NPPN_TOOLBARICONSETCHANGED* notification message, a restart of Notepad++ will be required for the icon change to occur.]
 
 2. Enhancement: Fluent and standard toolbar icons have been tweaked.
 
-3. Updated Scintilla & NPP headers to match Notepad++ v8.8.1.
+3. Enhancement: In Windows11, the Up/Down & Left/Right spin controls on the plugin panel will render using Windows11 API.
 
-**Release:** [2.4.4.1 Pre-release](https://github.com/shriprem/Goto-Line-Col-NPP-Plugin/releases/tag/v2.4.4.1)
+4. Updated Scintilla & NPP headers to match Notepad++ v8.8.2.
+
+**Release:** [2.4.5.0 Release](https://github.com/shriprem/Goto-Line-Col-NPP-Plugin/releases/tag/v2.4.5.0)
 
 ---
 

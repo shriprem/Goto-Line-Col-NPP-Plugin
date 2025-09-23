@@ -170,6 +170,8 @@ void GotoLineColPanel::localize() {
 void GotoLineColPanel::display(bool toShow) {
    DockingDlgInterface::display(toShow);
 
+   panelMounted = toShow;
+
    if (toShow) {
       SetFocus(GetDlgItem(_hSelf, IDC_GOLINE_EDIT));
    }

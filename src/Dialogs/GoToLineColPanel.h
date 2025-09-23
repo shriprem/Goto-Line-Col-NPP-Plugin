@@ -26,6 +26,7 @@ public :
    void onBufferActivated();
    void localize();
    virtual void display(bool toShow=true);
+   bool isPanelMounted() { return panelMounted; }
    void refreshDarkMode();
    void setParent(HWND parent2set);
 
@@ -42,6 +43,7 @@ protected:
    HWND hFieldInfo{};
    ALL_PREFERENCES allPrefs{};
    char cursorPosData[BUFFER_500]{};
+   bool panelMounted{};
    CommandLineOptions cmdOpt{};
    NameBlocks nb{};
 

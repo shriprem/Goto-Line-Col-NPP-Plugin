@@ -79,7 +79,7 @@ extern "C" __declspec(dllexport) void beNotified(SCNotification *notifyCode) {
          break;
 
       case NPPN_TOOLBARICONSETCHANGED:
-         if (_gotoPanel.isVisible()) RegisterDockPanelIcon();
+         if (_gotoPanel.isPanelMounted()) RegisterDockPanelIcon();
          break;
 
       case NPPN_CMDLINEPLUGINMSG:

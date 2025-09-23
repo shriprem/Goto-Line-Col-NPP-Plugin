@@ -8,7 +8,7 @@
 ![GitHub Workflow Status (with event)](https://img.shields.io/github/actions/workflow/status/shriprem/Goto-Line-Col-NPP-Plugin/CI_build.yml)
 ![GitHub issues](https://img.shields.io/github/issues/shriprem/Goto-Line-Col-NPP-Plugin)
 
-[Current Version: 2.4.5.0](https://github.com/shriprem/Goto-Line-Col-NPP-Plugin/blob/master/VersionHistory.md)
+[Current Version: 2.4.5.1](https://github.com/shriprem/Goto-Line-Col-NPP-Plugin/blob/master/VersionHistory.md)
 
 A plugin for navigating to a specified line and column position in a file. Depending on your requirement, the column positioning can be specified to use either byte counts or character counts.
 

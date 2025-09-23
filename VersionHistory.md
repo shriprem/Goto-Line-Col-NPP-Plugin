@@ -1,5 +1,15 @@
 ## Version History
 
+### Version 2.4.5.1 [September 23, 2025]
+
+### Fixed Issues
+1. With plugin panel closed during NPP launch, changing NPP preferences for Dark Mode or Toolbar Icon set will crash Notepad++.
+Issue [#42](https://github.com/shriprem/Goto-Line-Col-NPP-Plugin/issues/42)
+
+**Release:** [2.4.5.1 Release](https://github.com/shriprem/Goto-Line-Col-NPP-Plugin/releases/tag/v2.4.5.1)
+
+---
+
 ### Version 2.4.5.0 [June 16, 2025]
 1. New Feature: Dock Panel icon will be rendered with Fluent or Standard icon depending on the selection under `Notepad++ menu: Settings » Preferences... » Toolbar`. This feature requires Notepad++ v8.8.2 or later.
 

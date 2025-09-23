@@ -64,4 +64,3 @@ void ShowPreferencesDialog();
 void ShowAboutDialog();
 
 void RegisterDockPanelIcon();
-void RefreshDarkMode();

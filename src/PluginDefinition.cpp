@@ -115,14 +115,17 @@ void ShowGotoLineColPanel(bool show) {
          _dockpanelData.pszModuleName = _gotoPanel.getPluginFileName();
          _dockpanelData.dlgID = MI_GOTO_PANEL;
          _dockpanelData.pszName = MENU_PANEL_NAME;
-         RegisterDockPanelIcon();
 
          _gotoPanel.initPanel();
       }
    }
 
    _gotoPanel.display(show);
-   if (show) _gotoPanel.updatePanelInfo();
+
+   if (show) {
+      RegisterDockPanelIcon();
+      _gotoPanel.updatePanelInfo();
+   }
 }
 
 void ShowPreferencesDialog() {
@@ -131,9 +134,4 @@ void ShowPreferencesDialog() {
 
 void ShowAboutDialog() {
    _gotoPanel.showAboutDialog();
-}
-
-void RefreshDarkMode() {
-   if (_gotoPanel.isCreated())
-      _gotoPanel.refreshDarkMode();
 }

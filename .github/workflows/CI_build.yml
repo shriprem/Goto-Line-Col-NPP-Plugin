@@ -8,7 +8,7 @@ on: [push, pull_request]
 jobs:
   build:
 
-    runs-on: windows-latest
+    runs-on: windows-2022
     strategy:
       max-parallel: 6
       matrix:
@@ -19,8 +19,10 @@ jobs:
     - name: Checkout repo
       uses: actions/checkout@v7
 
-    - name: Add msbuild to PATH
+    - name: Add msbuild (Visual Studio 2022)
       uses: microsoft/setup-msbuild@v3
+      with:
+        vsVersion: '17.0'
 
     - name: MSBuild of plugin dll
       working-directory: vs.proj

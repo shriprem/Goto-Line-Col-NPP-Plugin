@@ -22,7 +22,7 @@ jobs:
     - name: Add msbuild (Visual Studio 2022)
       uses: microsoft/setup-msbuild@v3
       with:
-        vsVersion: '17.0'
+        vs-version: '17.0'
 
     - name: MSBuild of plugin dll
       working-directory: vs.proj
